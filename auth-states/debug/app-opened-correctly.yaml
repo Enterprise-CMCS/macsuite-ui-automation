@@ -1,0 +1,648 @@
+- generic [active]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - link "Skip to Navigation" [ref=e5] [cursor=pointer]:
+        - /url: javascript:void(0);
+      - link "Skip to Main Content" [ref=e6] [cursor=pointer]:
+        - /url: javascript:void(0);
+      - generic [ref=e8]:
+        - generic [ref=e9]:
+          - img [ref=e13]
+          - generic [ref=e16]: Salesforce enforces new security requirements in June 2026.
+          - link "See What's Changing" [ref=e17] [cursor=pointer]:
+            - /url: https://help.salesforce.com/s/articleView?id=005317465&type=1
+        - generic [ref=e18]:
+          - generic [ref=e19]: "Sandbox: CMCSMCUAT |"
+          - link "Log out" [ref=e20] [cursor=pointer]:
+            - /url: /secur/logout.jsp
+      - generic [ref=e21]:
+        - button "Search" [ref=e27]:
+          - img [ref=e29]
+          - text: Search...
+        - navigation "Global Header" [ref=e32]:
+          - list [ref=e34]:
+            - listitem [ref=e35]:
+              - group [ref=e36]:
+                - button "This item doesn't support favorites" [ref=e38] [cursor=pointer]:
+                  - generic [ref=e39]:
+                    - img [ref=e43]
+                    - tooltip "This item doesn't support favorites"
+                - button "Favorites list" [ref=e47] [cursor=pointer]:
+                  - generic [ref=e48]:
+                    - img [ref=e52]
+                    - tooltip "Favorites list"
+            - listitem [ref=e55]:
+              - button "Global Actions" [ref=e61] [cursor=pointer]:
+                - generic [ref=e62]:
+                  - img [ref=e66]
+                  - tooltip "Global Actions"
+            - listitem [ref=e69]:
+              - button "Guidance Center" [ref=e71] [cursor=pointer]:
+                - generic [ref=e72]:
+                  - img [ref=e76]
+                  - tooltip "Guidance Center"
+            - listitem [ref=e79]:
+              - button "Salesforce Help" [ref=e82] [cursor=pointer]:
+                - generic [ref=e83]:
+                  - img [ref=e87]
+                  - tooltip "Salesforce Help"
+            - listitem [ref=e90]:
+              - button "Setup" [ref=e96] [cursor=pointer]:
+                - generic [ref=e97]:
+                  - img [ref=e101]
+                  - tooltip "Setup"
+            - listitem [ref=e104]:
+              - button "Notifications" [ref=e107] [cursor=pointer]:
+                - generic [ref=e108]:
+                  - img [ref=e113]
+                  - tooltip "Notifications"
+            - listitem [ref=e117]:
+              - button "View profile" [ref=e120] [cursor=pointer]:
+                - generic [ref=e121]:
+                  - tooltip "View profile"
+    - generic [ref=e125]:
+      - generic [ref=e128]:
+        - generic [ref=e130]:
+          - navigation "App" [ref=e131]:
+            - button "App Launcher" [ref=e133] [cursor=pointer]:
+              - generic [ref=e144]: App Launcher
+          - heading "CMCS Inquiry Tracker" [level=1] [ref=e145]:
+            - generic "CMCS Inquiry Tracker" [ref=e146]
+        - navigation "Global" [ref=e149]:
+          - list [ref=e150]:
+            - listitem [ref=e151] [cursor=pointer]:
+              - link "Home" [ref=e152]:
+                - /url: /lightning/page/home
+                - generic [ref=e153]: Home
+            - listitem [ref=e154]:
+              - link "CMCS TA" [ref=e155] [cursor=pointer]:
+                - /url: /lightning/o/MCOG_Issue__c/home
+                - generic [ref=e156]: CMCS TA
+              - button "CMCS TA List" [ref=e160] [cursor=pointer]:
+                - img [ref=e164]
+                - generic [ref=e167]: CMCS TA List
+            - listitem [ref=e168]:
+              - link "Dashboards" [ref=e169] [cursor=pointer]:
+                - /url: /lightning/o/Dashboard/home
+                - generic [ref=e170]: Dashboards
+              - button "Dashboards List" [ref=e174] [cursor=pointer]:
+                - img [ref=e178]
+                - generic [ref=e181]: Dashboards List
+            - listitem [ref=e182]:
+              - link "Reports" [ref=e183] [cursor=pointer]:
+                - /url: /lightning/o/Report/home
+                - generic [ref=e184]: Reports
+              - button "Reports List" [ref=e188] [cursor=pointer]:
+                - img [ref=e192]
+                - generic [ref=e195]: Reports List
+            - listitem [ref=e196]:
+              - link "Knowledge" [ref=e197] [cursor=pointer]:
+                - /url: /lightning/o/Knowledge__kav/home
+                - generic [ref=e198]: Knowledge
+              - button "Knowledge List" [ref=e202] [cursor=pointer]:
+                - img [ref=e206]
+                - generic [ref=e209]: Knowledge List
+      - main [ref=e211]:
+        - generic [ref=e219]:
+          - generic [ref=e220]:
+            - heading "Home" [level=1] [ref=e221]
+            - iframe [ref=e227]:
+              - generic [ref=f7e3]:
+                - status [ref=f7e4]: Dashboard refreshed
+                - generic [ref=f7e9]:
+                  - generic [ref=f7e11]:
+                    - generic [ref=f7e12]:
+                      - generic [ref=f7e13]:
+                        - generic [ref=f7e15]:
+                          - img [ref=f7e18]
+                          - heading "Dashboard TA CMCS Inquiries" [level=1] [ref=f7e23]:
+                            - text: Dashboard
+                            - generic "TA CMCS Inquiries" [ref=f7e24]
+                        - toolbar "Dashboard Actions" [ref=f7e31]:
+                          - listitem [ref=f7e32]:
+                            - group [ref=f7e33]:
+                              - button "Open" [ref=f7e34] [cursor=pointer]
+                              - button "Refresh" [ref=f7e35] [cursor=pointer]
+                              - button "Subscribe" [ref=f7e36] [cursor=pointer]
+                              - button "More Dashboard Actions" [ref=f7e38] [cursor=pointer]:
+                                - img [ref=f7e39]
+                                - generic [ref=f7e41]: More Dashboard Actions
+                      - generic [ref=f7e45]:
+                        - paragraph [ref=f7e47]: includes TA and TA WFTCL graphs
+                        - generic [ref=f7e48]:
+                          - text: As of May 13, 2026, 7:00 AM∙
+                          - generic [ref=f7e49]:
+                            - button "About dashboard refresh time" [ref=f7e51] [cursor=pointer]:
+                              - img [ref=f7e52]
+                              - generic [ref=f7e54]: About dashboard refresh time
+                            - text: ∙
+                          - text: Viewing as SEI Admin
+                    - generic [ref=f7e66]:
+                      - generic [ref=f7e67]: Group
+                      - button "Group" [ref=f7e69] [cursor=pointer]:
+                        - generic [ref=f7e70]: All
+                        - img [ref=f7e71]
+                      - listbox [ref=f7e73]:
+                        - group "Selected Options:"
+                  - generic [ref=f7e76]:
+                    - article [ref=f7e79]:
+                      - heading "TA CMCS Inquiries by Stage" [level=2] [ref=f7e81]:
+                        - generic "TA CMCS Inquiries by Stage" [ref=f7e82]
+                      - generic [ref=f7e83]:
+                        - button "Refresh \"TA CMCS Inquiries by Stage\"" [ref=f7e84] [cursor=pointer]:
+                          - img [ref=f7e85]
+                          - generic [ref=f7e87]: Refresh "TA CMCS Inquiries by Stage"
+                        - button "Expand \"TA CMCS Inquiries by Stage\"" [ref=f7e88] [cursor=pointer]:
+                          - img [ref=f7e89]
+                          - generic [ref=f7e91]: Expand "TA CMCS Inquiries by Stage"
+                      - generic [ref=f7e92]:
+                        - generic:
+                          - generic:
+                            - button "Enable table equivalent for screen reader users" [ref=f7e96] [cursor=pointer]
+                            - list [ref=f7e97]:
+                              - listitem [ref=f7e98]:
+                                - button "Stage Submitted,Record Count 430, 48.26% of 891" [ref=f7e99]: Stage Submitted, Record Count 430, 48.26% of 891, i.e., 430
+                      - generic [ref=f7e102]:
+                        - link "View Report (TA CMCS Inquiries by Stage) for \"TA CMCS Inquiries by Stage\"" [ref=f7e106] [cursor=pointer]:
+                          - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/one/one.app#/sObject/00OSJ000002rfVQ2AY/view
+                          - text: View Report (TA CMCS Inquiries by Stage)
+                          - generic [ref=f7e107]: for "TA CMCS Inquiries by Stage"
+                        - generic [ref=f7e108]: As of May 13, 2026, 7:00 AM
+                    - article [ref=f7e111]:
+                      - heading "TA WFTCL CMCS Inquiries by Stage" [level=2] [ref=f7e113]:
+                        - generic "TA WFTCL CMCS Inquiries by Stage" [ref=f7e114]
+                      - generic [ref=f7e115]:
+                        - button "Refresh \"TA WFTCL CMCS Inquiries by Stage\"" [ref=f7e116] [cursor=pointer]:
+                          - img [ref=f7e117]
+                          - generic [ref=f7e119]: Refresh "TA WFTCL CMCS Inquiries by Stage"
+                        - button "Expand \"TA WFTCL CMCS Inquiries by Stage\"" [ref=f7e120] [cursor=pointer]:
+                          - img [ref=f7e121]
+                          - generic [ref=f7e123]: Expand "TA WFTCL CMCS Inquiries by Stage"
+                      - generic [ref=f7e124]:
+                        - generic:
+                          - generic:
+                            - button "Enable table equivalent for screen reader users" [ref=f7e128] [cursor=pointer]
+                            - list [ref=f7e129]:
+                              - listitem [ref=f7e130]:
+                                - button "Stage Submitted,Record Count 74, 50.68% of 146" [ref=f7e131]: Stage Submitted, Record Count 74, 50.68% of 146, i.e., 74
+                          - list [ref=f7e135]:
+                            - listitem [ref=f7e136]:
+                              - button "Other" [ref=f7e137]
+                      - generic [ref=f7e140]:
+                        - link "View Report (TA WFTCL CMCS Inquiries by Stage) for \"TA WFTCL CMCS Inquiries by Stage\"" [ref=f7e144] [cursor=pointer]:
+                          - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/one/one.app#/sObject/00OSL000002g0df2AA/view
+                          - text: View Report (TA WFTCL CMCS Inquiries by Stage)
+                          - generic [ref=f7e145]: for "TA WFTCL CMCS Inquiries by Stage"
+                        - generic [ref=f7e146]: As of May 13, 2026, 7:00 AM
+                    - article [ref=f7e149]:
+                      - heading "TA CMCS Inquiries by Category" [level=2] [ref=f7e151]:
+                        - generic "TA CMCS Inquiries by Category" [ref=f7e152]
+                      - generic [ref=f7e153]:
+                        - button "Refresh \"TA CMCS Inquiries by Category\"" [ref=f7e154] [cursor=pointer]:
+                          - img [ref=f7e155]
+                          - generic [ref=f7e157]: Refresh "TA CMCS Inquiries by Category"
+                        - button "Expand \"TA CMCS Inquiries by Category\"" [ref=f7e158] [cursor=pointer]:
+                          - img [ref=f7e159]
+                          - generic [ref=f7e161]: Expand "TA CMCS Inquiries by Category"
+                      - generic [ref=f7e162]:
+                        - generic:
+                          - generic:
+                            - button "Enable table equivalent for screen reader users" [ref=f7e166] [cursor=pointer]
+                            - list [ref=f7e167]:
+                              - listitem [ref=f7e168]:
+                                - button "Category 1115 Demonstration,Record Count 397, 70.02% of 567" [ref=f7e169]: Category 1115 Demonstration, Record Count 397, 70.02% of 567, i.e., 397
+                          - list [ref=f7e173]:
+                            - listitem [ref=f7e174]:
+                              - button "1115 Demonstration" [ref=f7e175]
+                      - generic [ref=f7e178]:
+                        - link "View Report (TA CMCS Inquiries by Category) for \"TA CMCS Inquiries by Category\"" [ref=f7e182] [cursor=pointer]:
+                          - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/one/one.app#/sObject/00OSJ000002rfVN2AY/view
+                          - text: View Report (TA CMCS Inquiries by Category)
+                          - generic [ref=f7e183]: for "TA CMCS Inquiries by Category"
+                        - generic [ref=f7e184]: As of May 13, 2026, 7:00 AM
+                    - article [ref=f7e187]:
+                      - heading "TA WFTCL CMCS Inquiries by Category" [level=2] [ref=f7e189]:
+                        - generic "TA WFTCL CMCS Inquiries by Category" [ref=f7e190]
+                      - generic [ref=f7e191]:
+                        - button "Refresh \"TA WFTCL CMCS Inquiries by Category\"" [ref=f7e192] [cursor=pointer]:
+                          - img [ref=f7e193]
+                          - generic [ref=f7e195]: Refresh "TA WFTCL CMCS Inquiries by Category"
+                        - button "Expand \"TA WFTCL CMCS Inquiries by Category\"" [ref=f7e196] [cursor=pointer]:
+                          - img [ref=f7e197]
+                          - generic [ref=f7e199]: Expand "TA WFTCL CMCS Inquiries by Category"
+                      - generic [ref=f7e200]:
+                        - generic:
+                          - generic:
+                            - button "Enable table equivalent for screen reader users" [ref=f7e206] [cursor=pointer]
+                            - list [ref=f7e207]:
+                              - listitem [ref=f7e208]:
+                                - button "Category 1115 Demonstration,Record Count 28, 19.18% of 146" [ref=f7e209]: Category 1115 Demonstration, Record Count 28, 19.18% of 146, i.e., 28
+                      - generic [ref=f7e212]:
+                        - link "View Report (TA WFTCL CMCS Inquiries by Category) for \"TA WFTCL CMCS Inquiries by Category\"" [ref=f7e216] [cursor=pointer]:
+                          - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/one/one.app#/sObject/00OSL000002g0da2AA/view
+                          - text: View Report (TA WFTCL CMCS Inquiries by Category)
+                          - generic [ref=f7e217]: for "TA WFTCL CMCS Inquiries by Category"
+                        - generic [ref=f7e218]: As of May 13, 2026, 7:00 AM
+                    - button "Load more widgets" [ref=f7e219] [cursor=pointer]:
+                      - generic [ref=f7e221]: Load more widgets
+                    - article [ref=f7e224]:
+                      - heading "Open TA CMCS Inquiries" [level=2] [ref=f7e226]:
+                        - generic "Open TA CMCS Inquiries" [ref=f7e227]
+                      - generic [ref=f7e228]:
+                        - button "Refresh \"Open TA CMCS Inquiries\"" [ref=f7e229] [cursor=pointer]:
+                          - img [ref=f7e230]
+                          - generic [ref=f7e232]: Refresh "Open TA CMCS Inquiries"
+                        - button "Expand \"Open TA CMCS Inquiries\"" [ref=f7e233] [cursor=pointer]:
+                          - img [ref=f7e234]
+                          - generic [ref=f7e236]: Expand "Open TA CMCS Inquiries"
+                      - generic [ref=f7e237]:
+                        - generic:
+                          - generic:
+                            - button "Enable table equivalent for screen reader users" [ref=f7e241] [cursor=pointer]
+                            - list [ref=f7e242]:
+                              - listitem "Record Count 812, 100% of 812" [ref=f7e243]
+                      - generic [ref=f7e246]:
+                        - link "View Report (Open TA CMCS Inquiries) for \"Open TA CMCS Inquiries\"" [ref=f7e250] [cursor=pointer]:
+                          - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/one/one.app#/sObject/00OSJ000002rfVK2AY/view
+                          - text: View Report (Open TA CMCS Inquiries)
+                          - generic [ref=f7e251]: for "Open TA CMCS Inquiries"
+                        - generic [ref=f7e252]: As of May 13, 2026, 7:00 AM
+                    - article [ref=f7e255]:
+                      - heading "Open TA WFTCL CMCS Inquiries" [level=2] [ref=f7e257]:
+                        - generic "Open TA WFTCL CMCS Inquiries" [ref=f7e258]
+                      - generic [ref=f7e259]:
+                        - button "Refresh \"Open TA WFTCL CMCS Inquiries\"" [ref=f7e260] [cursor=pointer]:
+                          - img [ref=f7e261]
+                          - generic [ref=f7e263]: Refresh "Open TA WFTCL CMCS Inquiries"
+                        - button "Expand \"Open TA WFTCL CMCS Inquiries\"" [ref=f7e264] [cursor=pointer]:
+                          - img [ref=f7e265]
+                          - generic [ref=f7e267]: Expand "Open TA WFTCL CMCS Inquiries"
+                      - generic [ref=f7e268]:
+                        - generic:
+                          - generic:
+                            - button "Enable table equivalent for screen reader users" [ref=f7e272] [cursor=pointer]
+                            - list [ref=f7e273]:
+                              - listitem "Record Count 131, 100% of 131" [ref=f7e274]
+                      - generic [ref=f7e277]:
+                        - link "View Report (Open TA WFTCL CMCS Inquiries) for \"Open TA WFTCL CMCS Inquiries\"" [ref=f7e281] [cursor=pointer]:
+                          - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/one/one.app#/sObject/00OSL000002g0dZ2AQ/view
+                          - text: View Report (Open TA WFTCL CMCS Inquiries)
+                          - generic [ref=f7e282]: for "Open TA WFTCL CMCS Inquiries"
+                        - generic [ref=f7e283]: As of May 13, 2026, 7:00 AM
+                    - article [ref=f7e286]:
+                      - heading "TA CMCS Inquiries by Priority" [level=2] [ref=f7e288]:
+                        - generic "TA CMCS Inquiries by Priority" [ref=f7e289]
+                      - generic [ref=f7e290]:
+                        - button "Refresh \"TA CMCS Inquiries by Priority\"" [ref=f7e291] [cursor=pointer]:
+                          - img [ref=f7e292]
+                          - generic [ref=f7e294]: Refresh "TA CMCS Inquiries by Priority"
+                        - button "Expand \"TA CMCS Inquiries by Priority\"" [ref=f7e295] [cursor=pointer]:
+                          - img [ref=f7e296]
+                          - generic [ref=f7e298]: Expand "TA CMCS Inquiries by Priority"
+                      - generic [ref=f7e299]:
+                        - generic:
+                          - generic:
+                            - button "Enable table equivalent for screen reader users" [ref=f7e303] [cursor=pointer]
+                            - list [ref=f7e304]:
+                              - listitem [ref=f7e305]:
+                                - button "Priority Routine,Record Count 781, 87.65% of 891" [ref=f7e306]: Priority Routine, Record Count 781, 87.65% of 891, i.e., 781
+                          - list [ref=f7e310]:
+                            - listitem [ref=f7e311]:
+                              - button "Routine" [ref=f7e312]
+                      - generic [ref=f7e315]:
+                        - link "View Report (TA CMCS Inquiries by Priority) for \"TA CMCS Inquiries by Priority\"" [ref=f7e319] [cursor=pointer]:
+                          - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/one/one.app#/sObject/00OSJ000002rfVP2AY/view
+                          - text: View Report (TA CMCS Inquiries by Priority)
+                          - generic [ref=f7e320]: for "TA CMCS Inquiries by Priority"
+                        - generic [ref=f7e321]: As of May 13, 2026, 7:00 AM
+                    - article [ref=f7e324]:
+                      - heading "TA WFTCL CMCS Inquiries by Priority" [level=2] [ref=f7e326]:
+                        - generic "TA WFTCL CMCS Inquiries by Priority" [ref=f7e327]
+                      - generic [ref=f7e328]:
+                        - button "Refresh \"TA WFTCL CMCS Inquiries by Priority\"" [ref=f7e329] [cursor=pointer]:
+                          - img [ref=f7e330]
+                          - generic [ref=f7e332]: Refresh "TA WFTCL CMCS Inquiries by Priority"
+                        - button "Expand \"TA WFTCL CMCS Inquiries by Priority\"" [ref=f7e333] [cursor=pointer]:
+                          - img [ref=f7e334]
+                          - generic [ref=f7e336]: Expand "TA WFTCL CMCS Inquiries by Priority"
+                      - generic [ref=f7e337]:
+                        - generic:
+                          - generic:
+                            - button "Enable table equivalent for screen reader users" [ref=f7e341] [cursor=pointer]
+                            - list [ref=f7e342]:
+                              - listitem [ref=f7e343]:
+                                - button "Priority Routine,Record Count 144, 98.63% of 146" [ref=f7e344]: Priority Routine, Record Count 144, 98.63% of 146, i.e., 144
+                          - list [ref=f7e348]:
+                            - listitem [ref=f7e349]:
+                              - button "Other" [ref=f7e350]
+                      - generic [ref=f7e353]:
+                        - link "View Report (TA WFTCL CMCS Inquiries by Priority) for \"TA WFTCL CMCS Inquiries by Priority\"" [ref=f7e357] [cursor=pointer]:
+                          - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/one/one.app#/sObject/00OSL000002g0dc2AA/view
+                          - text: View Report (TA WFTCL CMCS Inquiries by Priority)
+                          - generic [ref=f7e358]: for "TA WFTCL CMCS Inquiries by Priority"
+                        - generic [ref=f7e359]: As of May 13, 2026, 7:00 AM
+                    - article [ref=f7e362]:
+                      - heading "TA CMCS Inquiries by Stage, Category" [level=2] [ref=f7e364]:
+                        - generic "TA CMCS Inquiries by Stage, Category" [ref=f7e365]
+                      - generic [ref=f7e366]:
+                        - button "Refresh \"TA CMCS Inquiries by Stage, Category\"" [ref=f7e367] [cursor=pointer]:
+                          - img [ref=f7e368]
+                          - generic [ref=f7e370]: Refresh "TA CMCS Inquiries by Stage, Category"
+                        - button "Expand \"TA CMCS Inquiries by Stage, Category\"" [ref=f7e371] [cursor=pointer]:
+                          - img [ref=f7e372]
+                          - generic [ref=f7e374]: Expand "TA CMCS Inquiries by Stage, Category"
+                      - generic [ref=f7e375]:
+                        - generic:
+                          - generic:
+                            - button "Enable table equivalent for screen reader users" [ref=f7e381] [cursor=pointer]
+                            - list [ref=f7e382]:
+                              - listitem [ref=f7e383]:
+                                - button "Stage Submitted,Category 1115 Demonstration,Record Count 195, 45.35% of 430 for Submitted" [ref=f7e384]: Stage Submitted, Category 1115 Demonstration, Record Count 195, 45.35% of 430 for Submitted, i.e., 195
+                          - list [ref=f7e390]:
+                            - listitem [ref=f7e391]:
+                              - button "1115 Demonstration" [ref=f7e392]
+                      - generic [ref=f7e395]:
+                        - link "View Report (TA CMCS Inquiries by Stage, Category) for \"TA CMCS Inquiries by Stage, Category\"" [ref=f7e399] [cursor=pointer]:
+                          - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/one/one.app#/sObject/00OSJ000004eXFt2AM/view
+                          - text: View Report (TA CMCS Inquiries by Stage, Category)
+                          - generic [ref=f7e400]: for "TA CMCS Inquiries by Stage, Category"
+                        - generic [ref=f7e401]: As of May 13, 2026, 7:00 AM
+                    - article [ref=f7e404]:
+                      - heading "TA WFTCL CMCS Inquiries by Stage, Catego" [level=2] [ref=f7e406]:
+                        - generic "TA WFTCL CMCS Inquiries by Stage, Catego" [ref=f7e407]
+                      - generic [ref=f7e408]:
+                        - button "Refresh \"TA WFTCL CMCS Inquiries by Stage, Catego\"" [ref=f7e409] [cursor=pointer]:
+                          - img [ref=f7e410]
+                          - generic [ref=f7e412]: Refresh "TA WFTCL CMCS Inquiries by Stage, Catego"
+                        - button "Expand \"TA WFTCL CMCS Inquiries by Stage, Catego\"" [ref=f7e413] [cursor=pointer]:
+                          - img [ref=f7e414]
+                          - generic [ref=f7e416]: Expand "TA WFTCL CMCS Inquiries by Stage, Catego"
+                      - generic [ref=f7e417]:
+                        - generic:
+                          - generic:
+                            - button "Enable table equivalent for screen reader users" [ref=f7e423] [cursor=pointer]
+                            - list [ref=f7e424]:
+                              - listitem [ref=f7e425]:
+                                - button "Stage Submitted,Category 1115 Demonstration,Record Count 23, 31.08% of 74 for Submitted" [ref=f7e426]: Stage Submitted, Category 1115 Demonstration, Record Count 23, 31.08% of 74 for Submitted, i.e., 23
+                          - list [ref=f7e432]:
+                            - listitem [ref=f7e433]:
+                              - button "1115 Demonstration" [ref=f7e434]
+                      - generic [ref=f7e437]:
+                        - link "View Report (TA WFTCL CMCS Inquiries by Stage, Catego) for \"TA WFTCL CMCS Inquiries by Stage, Catego\"" [ref=f7e441] [cursor=pointer]:
+                          - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/one/one.app#/sObject/00OSL000002g0de2AA/view
+                          - text: View Report (TA WFTCL CMCS Inquiries by Stage, Catego)
+                          - generic [ref=f7e442]: for "TA WFTCL CMCS Inquiries by Stage, Catego"
+                        - generic [ref=f7e443]: As of May 13, 2026, 7:00 AM
+                    - article [ref=f7e446]:
+                      - heading "TA CMCS Inquiries by Triager" [level=2] [ref=f7e448]:
+                        - generic "TA CMCS Inquiries by Triager" [ref=f7e449]
+                      - generic [ref=f7e450]:
+                        - button "Refresh \"TA CMCS Inquiries by Triager\"" [ref=f7e451] [cursor=pointer]:
+                          - img [ref=f7e452]
+                          - generic [ref=f7e454]: Refresh "TA CMCS Inquiries by Triager"
+                        - button "Expand \"TA CMCS Inquiries by Triager\"" [ref=f7e455] [cursor=pointer]:
+                          - img [ref=f7e456]
+                          - generic [ref=f7e458]: Expand "TA CMCS Inquiries by Triager"
+                      - generic [ref=f7e459]:
+                        - generic:
+                          - generic:
+                            - button "Enable table equivalent for screen reader users" [ref=f7e465] [cursor=pointer]
+                            - list [ref=f7e466]:
+                              - listitem [ref=f7e467]:
+                                - button "Triager Abby Kahn,Record Count 2, 0.55% of 363" [ref=f7e468]: Triager Abby Kahn, Record Count 2, 0.55% of 363, i.e., 2
+                      - generic [ref=f7e471]:
+                        - link "View Report (TA CMCS Inquiries by Triager) for \"TA CMCS Inquiries by Triager\"" [ref=f7e475] [cursor=pointer]:
+                          - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/one/one.app#/sObject/00OSJ000002rfVM2AY/view
+                          - text: View Report (TA CMCS Inquiries by Triager)
+                          - generic [ref=f7e476]: for "TA CMCS Inquiries by Triager"
+                        - generic [ref=f7e477]: As of May 13, 2026, 7:00 AM
+                    - article [ref=f7e480]:
+                      - heading "TA WFTCL CMCS Inquiries by Triager" [level=2] [ref=f7e482]:
+                        - generic "TA WFTCL CMCS Inquiries by Triager" [ref=f7e483]
+                      - generic [ref=f7e484]:
+                        - button "Refresh \"TA WFTCL CMCS Inquiries by Triager\"" [ref=f7e485] [cursor=pointer]:
+                          - img [ref=f7e486]
+                          - generic [ref=f7e488]: Refresh "TA WFTCL CMCS Inquiries by Triager"
+                        - button "Expand \"TA WFTCL CMCS Inquiries by Triager\"" [ref=f7e489] [cursor=pointer]:
+                          - img [ref=f7e490]
+                          - generic [ref=f7e492]: Expand "TA WFTCL CMCS Inquiries by Triager"
+                      - generic [ref=f7e493]:
+                        - generic:
+                          - generic:
+                            - button "Enable table equivalent for screen reader users" [ref=f7e499] [cursor=pointer]
+                            - list [ref=f7e500]:
+                              - listitem [ref=f7e501]:
+                                - button "Triager Abby Kahn,Record Count 1, 2% of 50" [ref=f7e502]: Triager Abby Kahn, Record Count 1, 2% of 50, i.e., 1
+                      - generic [ref=f7e505]:
+                        - link "View Report (TA WFTCL CMCS Inquiries by Triager) for \"TA WFTCL CMCS Inquiries by Triager\"" [ref=f7e509] [cursor=pointer]:
+                          - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/one/one.app#/sObject/00OSL000002g0dg2AA/view
+                          - text: View Report (TA WFTCL CMCS Inquiries by Triager)
+                          - generic [ref=f7e510]: for "TA WFTCL CMCS Inquiries by Triager"
+                        - generic [ref=f7e511]: As of May 13, 2026, 7:00 AM
+                    - article [ref=f7e514]:
+                      - heading "TA CMCS Inquiries by Escalation Level" [level=2] [ref=f7e516]:
+                        - generic "TA CMCS Inquiries by Escalation Level" [ref=f7e517]
+                      - generic [ref=f7e518]:
+                        - button "Refresh \"TA CMCS Inquiries by Escalation Level\"" [ref=f7e519] [cursor=pointer]:
+                          - img [ref=f7e520]
+                          - generic [ref=f7e522]: Refresh "TA CMCS Inquiries by Escalation Level"
+                        - button "Expand \"TA CMCS Inquiries by Escalation Level\"" [ref=f7e523] [cursor=pointer]:
+                          - img [ref=f7e524]
+                          - generic [ref=f7e526]: Expand "TA CMCS Inquiries by Escalation Level"
+                      - generic [ref=f7e527]:
+                        - generic:
+                          - generic:
+                            - button "Enable table equivalent for screen reader users" [ref=f7e531] [cursor=pointer]
+                            - list [ref=f7e532]:
+                              - listitem [ref=f7e533]:
+                                - button "Stage Escalated,Sum of Escalated? 68, 29.31% of 232" [ref=f7e534]: Stage Escalated, Sum of Escalated? 68, 29.31% of 232, i.e., 68
+                      - generic [ref=f7e537]:
+                        - link "View Report (TA CMCS Inquiries by Escalation Level) for \"TA CMCS Inquiries by Escalation Level\"" [ref=f7e541] [cursor=pointer]:
+                          - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/one/one.app#/sObject/00OSJ000004bg1B2AQ/view
+                          - text: View Report (TA CMCS Inquiries by Escalation Level)
+                          - generic [ref=f7e542]: for "TA CMCS Inquiries by Escalation Level"
+                        - generic [ref=f7e543]: As of May 13, 2026, 7:00 AM
+                    - article [ref=f7e546]:
+                      - heading "TA WFTCL CMCS Inquiries by Escalation Lv" [level=2] [ref=f7e548]:
+                        - generic "TA WFTCL CMCS Inquiries by Escalation Lv" [ref=f7e549]
+                      - generic [ref=f7e550]:
+                        - button "Refresh \"TA WFTCL CMCS Inquiries by Escalation Lv\"" [ref=f7e551] [cursor=pointer]:
+                          - img [ref=f7e552]
+                          - generic [ref=f7e554]: Refresh "TA WFTCL CMCS Inquiries by Escalation Lv"
+                        - button "Expand \"TA WFTCL CMCS Inquiries by Escalation Lv\"" [ref=f7e555] [cursor=pointer]:
+                          - img [ref=f7e556]
+                          - generic [ref=f7e558]: Expand "TA WFTCL CMCS Inquiries by Escalation Lv"
+                      - generic [ref=f7e559]:
+                        - generic:
+                          - generic:
+                            - button "Enable table equivalent for screen reader users" [ref=f7e563] [cursor=pointer]
+                            - list [ref=f7e564]:
+                              - listitem [ref=f7e565]:
+                                - button "Stage Triage,Sum of Escalated? 1, 7.14% of 14" [ref=f7e566]: Stage Triage, Sum of Escalated? 1, 7.14% of 14, i.e., 1
+                      - generic [ref=f7e569]:
+                        - link "View Report (TA WFTCL CMCS Inquiries by Escalation Lv) for \"TA WFTCL CMCS Inquiries by Escalation Lv\"" [ref=f7e573] [cursor=pointer]:
+                          - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/one/one.app#/sObject/00OSL000002g0db2AA/view
+                          - text: View Report (TA WFTCL CMCS Inquiries by Escalation Lv)
+                          - generic [ref=f7e574]: for "TA WFTCL CMCS Inquiries by Escalation Lv"
+                        - generic [ref=f7e575]: As of May 13, 2026, 7:00 AM
+                    - article [ref=f7e578]:
+                      - heading "TA Highest Level of Review Report" [level=2] [ref=f7e580]:
+                        - generic "TA Highest Level of Review Report" [ref=f7e581]
+                      - generic [ref=f7e582]:
+                        - button "Refresh \"TA Highest Level of Review Report\"" [ref=f7e583] [cursor=pointer]:
+                          - img [ref=f7e584]
+                          - generic [ref=f7e586]: Refresh "TA Highest Level of Review Report"
+                        - button "Expand \"TA Highest Level of Review Report\"" [ref=f7e587] [cursor=pointer]:
+                          - img [ref=f7e588]
+                          - generic [ref=f7e590]: Expand "TA Highest Level of Review Report"
+                      - generic [ref=f7e591]:
+                        - generic:
+                          - generic:
+                            - button "Enable table equivalent for screen reader users" [ref=f7e595] [cursor=pointer]
+                            - list [ref=f7e596]:
+                              - listitem [ref=f7e597]:
+                                - button "Highest Level of Review -,Sum of Age 118,217, 66.46% of 178ᴋ" [ref=f7e598]: Highest Level of Review -, Sum of Age 118,217, 66.46% of 178ᴋ, i.e., 118ᴋ
+                      - generic [ref=f7e601]:
+                        - link "View Report (TA Highest Level of Review Report) for \"TA Highest Level of Review Report\"" [ref=f7e605] [cursor=pointer]:
+                          - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/one/one.app#/sObject/00OSJ000004eZzF2AU/view
+                          - text: View Report (TA Highest Level of Review Report)
+                          - generic [ref=f7e606]: for "TA Highest Level of Review Report"
+                        - generic [ref=f7e607]: As of May 13, 2026, 7:00 AM
+                    - article [ref=f7e610]:
+                      - heading "TA WFTCL Highest Level of Review Report" [level=2] [ref=f7e612]:
+                        - generic "TA WFTCL Highest Level of Review Report" [ref=f7e613]
+                      - generic [ref=f7e614]:
+                        - button "Refresh \"TA WFTCL Highest Level of Review Report\"" [ref=f7e615] [cursor=pointer]:
+                          - img [ref=f7e616]
+                          - generic [ref=f7e618]: Refresh "TA WFTCL Highest Level of Review Report"
+                        - button "Expand \"TA WFTCL Highest Level of Review Report\"" [ref=f7e619] [cursor=pointer]:
+                          - img [ref=f7e620]
+                          - generic [ref=f7e622]: Expand "TA WFTCL Highest Level of Review Report"
+                      - generic [ref=f7e623]:
+                        - generic:
+                          - generic:
+                            - button "Enable table equivalent for screen reader users" [ref=f7e627] [cursor=pointer]
+                            - list [ref=f7e628]:
+                              - listitem [ref=f7e629]:
+                                - button "Highest Level of Review -,Sum of Age 27,213, 67.03% of 41ᴋ" [ref=f7e630]: Highest Level of Review -, Sum of Age 27,213, 67.03% of 41ᴋ, i.e., 27ᴋ
+                      - generic [ref=f7e633]:
+                        - link "View Report (TA WFTCL Highest Level of Review Report) for \"TA WFTCL Highest Level of Review Report\"" [ref=f7e637] [cursor=pointer]:
+                          - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/one/one.app#/sObject/00OSL000002g0dh2AA/view
+                          - text: View Report (TA WFTCL Highest Level of Review Report)
+                          - generic [ref=f7e638]: for "TA WFTCL Highest Level of Review Report"
+                        - generic [ref=f7e639]: As of May 13, 2026, 7:00 AM
+                    - article [ref=f7e642]:
+                      - heading "WFTCL by Group" [level=2] [ref=f7e644]:
+                        - generic "WFTCL by Group" [ref=f7e645]
+                      - generic [ref=f7e646]:
+                        - button "Refresh \"WFTCL by Group\"" [ref=f7e647] [cursor=pointer]:
+                          - img [ref=f7e648]
+                          - generic [ref=f7e650]: Refresh "WFTCL by Group"
+                        - button "Expand \"WFTCL by Group\"" [ref=f7e651] [cursor=pointer]:
+                          - img [ref=f7e652]
+                          - generic [ref=f7e654]: Expand "WFTCL by Group"
+                      - generic [ref=f7e655]:
+                        - generic:
+                          - generic:
+                            - button "Enable table equivalent for screen reader users" [ref=f7e659] [cursor=pointer]
+                            - list [ref=f7e660]:
+                              - listitem [ref=f7e661]:
+                                - button "Group CAHPG,Record Count 26, 17.81% of 146" [ref=f7e662]: Group CAHPG, Record Count 26, 17.81% of 146, i.e., 26
+                          - list [ref=f7e666]:
+                            - listitem [ref=f7e667]:
+                              - button "CAHPG" [ref=f7e668]
+                      - generic [ref=f7e671]:
+                        - link "View Report (WFTCL by Group) for \"WFTCL by Group\"" [ref=f7e675] [cursor=pointer]:
+                          - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/one/one.app#/sObject/00OSL000002g0di2AA/view
+                          - text: View Report (WFTCL by Group)
+                          - generic [ref=f7e676]: for "WFTCL by Group"
+                        - generic [ref=f7e677]: As of May 13, 2026, 7:00 AM
+                    - article [ref=f7e680]:
+                      - heading "TA WFTCL CMCS Inquiries by Provision" [level=2] [ref=f7e682]:
+                        - generic "TA WFTCL CMCS Inquiries by Provision" [ref=f7e683]
+                      - generic [ref=f7e684]:
+                        - button "Refresh \"TA WFTCL CMCS Inquiries by Provision\"" [ref=f7e685] [cursor=pointer]:
+                          - img [ref=f7e686]
+                          - generic [ref=f7e688]: Refresh "TA WFTCL CMCS Inquiries by Provision"
+                        - button "Expand \"TA WFTCL CMCS Inquiries by Provision\"" [ref=f7e689] [cursor=pointer]:
+                          - img [ref=f7e690]
+                          - generic [ref=f7e692]: Expand "TA WFTCL CMCS Inquiries by Provision"
+                      - generic [ref=f7e693]:
+                        - generic:
+                          - generic:
+                            - button "Enable table equivalent for screen reader users" [ref=f7e699] [cursor=pointer]
+                            - list [ref=f7e700]:
+                              - listitem [ref=f7e701]:
+                                - button "Provisions -,Record Count 2, 1.37% of 146" [ref=f7e702]: Provisions -, Record Count 2, 1.37% of 146, i.e., 2
+                      - generic [ref=f7e705]:
+                        - link "View Report (TA WFTCL CMCS Inquiries by Provision) for \"TA WFTCL CMCS Inquiries by Provision\"" [ref=f7e709] [cursor=pointer]:
+                          - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/one/one.app#/sObject/00OSL000002g0dd2AA/view
+                          - text: View Report (TA WFTCL CMCS Inquiries by Provision)
+                          - generic [ref=f7e710]: for "TA WFTCL CMCS Inquiries by Provision"
+                        - generic [ref=f7e711]: As of May 13, 2026, 7:00 AM
+          - generic [ref=e228]:
+            - article [ref=e232]:
+              - generic [ref=e234]:
+                - img [ref=e239]
+                - heading "App Launcher" [level=2] [ref=e243]:
+                  - generic [ref=e244]: App Launcher
+              - button "CMCS Inquiry Tracker CMCS Inquiry Tracker" [ref=e249] [cursor=pointer]:
+                - img "CMCS Inquiry Tracker" [ref=e251]
+                - generic [ref=e252]: CMCS Inquiry Tracker
+            - generic [ref=e263]:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - paragraph
+            - article [ref=e267]:
+              - heading "Recent Records" [level=2] [ref=e271]:
+                - generic "Recent Records" [ref=e272]
+              - list [ref=e274]:
+                - listitem [ref=e275]:
+                  - generic [ref=e276]:
+                    - img [ref=e280]
+                    - link "TA CMCS Inquiries" [ref=e283] [cursor=pointer]:
+                      - /url: /lightning/r/01ZSL000001iqFF2AY/view
+                - listitem [ref=e284]:
+                  - generic [ref=e285]:
+                    - img [ref=e289]
+                    - link "TA User Dashboard" [ref=e292] [cursor=pointer]:
+                      - /url: /lightning/r/01ZSJ000000evFj2AI/view
+                - listitem [ref=e293]:
+                  - generic [ref=e294]:
+                    - img [ref=e298]
+                    - link "TA Managers Dashboard" [ref=e301] [cursor=pointer]:
+                      - /url: /lightning/r/01ZSJ000000evFi2AI/view
+                - listitem [ref=e302]:
+                  - generic [ref=e303]:
+                    - img [ref=e307]
+                    - link "Pankaj TA App Ghosh" [ref=e310] [cursor=pointer]:
+                      - /url: /lightning/r/005SL00000FRMwhYAH/view
+                - listitem [ref=e311]:
+                  - generic [ref=e312]:
+                    - img [ref=e316]
+                    - link "TA-26-1233" [ref=e319] [cursor=pointer]:
+                      - /url: /lightning/r/a09SL00000GFQCHYA5/view
+              - button "View All Recent Records" [ref=e321] [cursor=pointer]: View All
+            - article [ref=e324]:
+              - generic [ref=e325]:
+                - heading "Today’s Tasks" [level=2] [ref=e328]:
+                  - generic "Today’s Tasks" [ref=e329]
+                - button "Select a view of your tasks" [ref=e332] [cursor=pointer]:
+                  - img [ref=e334]
+                  - generic [ref=e337]: Select a view of your tasks
+              - generic [ref=e341]:
+                - img [ref=e342]
+                - generic [ref=e343]: Nothing due today. Be a go-getter, and check back soon.
+              - button "View All Tasks" [ref=e345] [cursor=pointer]: View All
+            - article [ref=e348]:
+              - heading "Today's Events" [level=2] [ref=e352]:
+                - generic "Today's Events" [ref=e353]
+              - generic [ref=e357]:
+                - img [ref=e358]
+                - generic [ref=e359]: Looks like you're free and clear the rest of the day.
+              - button "View Calendar" [ref=e361] [cursor=pointer]
+  - generic:
+    - status

@@ -1,0 +1,104 @@
+- generic [active]:
+  - generic [ref=e2]:
+    - generic [ref=e3]:
+      - link "Skip to Navigation" [ref=e4] [cursor=pointer]:
+        - /url: javascript:void(0);
+      - link "Skip to Main Content" [ref=e5] [cursor=pointer]:
+        - /url: javascript:void(0);
+      - generic [ref=e7]:
+        - generic [ref=e8]:
+          - img [ref=e12]
+          - generic [ref=e15]: Salesforce enforces new security requirements in June 2026.
+          - link "See What's Changing" [ref=e16] [cursor=pointer]:
+            - /url: https://help.salesforce.com/s/articleView?id=005317465&type=1
+        - generic [ref=e17]:
+          - generic [ref=e18]: "Sandbox: CMCSMCUAT |"
+          - link "Log out" [ref=e19] [cursor=pointer]:
+            - /url: /secur/logout.jsp
+      - generic [ref=e20]:
+        - button "Search" [ref=e26]:
+          - img [ref=e28]
+          - text: Search...
+        - navigation "Global Header" [ref=e31]:
+          - list [ref=e33]:
+            - listitem [ref=e34]:
+              - group [ref=e35]:
+                - button "This item doesn't support favorites" [ref=e37] [cursor=pointer]:
+                  - generic [ref=e38]:
+                    - img [ref=e42]
+                    - tooltip "This item doesn't support favorites"
+                - button "Favorites list" [ref=e46] [cursor=pointer]:
+                  - generic [ref=e47]:
+                    - img [ref=e51]
+                    - tooltip "Favorites list"
+            - listitem [ref=e54]:
+              - button "Global Actions" [ref=e56]:
+                - img [ref=e60]
+            - listitem [ref=e63]:
+              - button "Salesforce Help" [ref=e66] [cursor=pointer]:
+                - generic [ref=e67]:
+                  - img [ref=e71]
+                  - tooltip "Salesforce Help"
+            - listitem [ref=e74]:
+              - button "Setup" [ref=e80] [cursor=pointer]:
+                - generic [ref=e81]:
+                  - img [ref=e85]
+                  - tooltip "Setup"
+            - listitem [ref=e88]:
+              - button "Notifications" [ref=e91] [cursor=pointer]:
+                - generic [ref=e92]:
+                  - img [ref=e97]
+                  - tooltip "Notifications"
+            - listitem [ref=e101]:
+              - generic [ref=e103]:
+                - button "View profile":
+                  - generic:
+                    - tooltip "View profile"
+    - generic [ref=e104]:
+      - generic [ref=e107]:
+        - generic [ref=e109]:
+          - navigation "App" [ref=e110]:
+            - button "App Launcher" [ref=e112] [cursor=pointer]:
+              - generic [ref=e123]: App Launcher
+          - heading "MACTrack" [level=1] [ref=e124]:
+            - generic "MACTrack" [ref=e125]
+        - navigation "Global" [ref=e128]:
+          - list [ref=e129]:
+            - listitem [ref=e130] [cursor=pointer]:
+              - link "Home" [ref=e131]:
+                - /url: /lightning/page/home
+                - generic [ref=e132]: Home
+      - main [ref=e134]:
+        - generic [ref=e145]:
+          - generic [ref=e153]:
+            - status
+          - generic [ref=e158]:
+            - generic [ref=e159]:
+              - article [ref=e163]:
+                - generic [ref=e165]:
+                  - img [ref=e170]
+                  - heading "App Launcher" [level=2] [ref=e172]:
+                    - generic [ref=e173]: App Launcher
+                - paragraph [ref=e178]: No apps found
+              - generic [ref=e185]:
+                - status
+              - generic [ref=e196]:
+                - status
+            - generic [ref=e201]:
+              - generic [ref=e208]:
+                - status
+              - generic [ref=e213]:
+                - heading "Tabs" [level=2] [ref=e214]
+                - generic [ref=e215]:
+                  - tablist [ref=e216]:
+                    - tab "Help Center" [selected] [ref=e217] [cursor=pointer]:
+                      - generic [ref=e218]: Help Center
+                    - button "More" [ref=e223] [cursor=pointer]
+                  - tabpanel [ref=e224]:
+                    - link "Access Knowledge" [ref=e227] [cursor=pointer]:
+                      - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/o/Knowledge__kav/list?filterName=published_articles
+                    - paragraph [ref=e231]:
+                      - link "Email Help Desk" [ref=e232] [cursor=pointer]:
+                        - /url: mailto:MACTRACKSUPPORT@cms.hhs.gov
+  - generic:
+    - status

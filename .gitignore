@@ -1,0 +1,70 @@
+# IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+*.code-workspace
+.project
+.classpath
+.settings/
+
+skills/eng-practices/*
+
+# Build
+target/
+build/
+dist/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Authentication States (contain session tokens - DO NOT COMMIT)
+auth-states/**/*.json
+!auth-states/README.md
+!auth-states/*.
+
+report/
+
+
+./claude/*/*
+# Logs
+logs/
+*.log
+*.log.*
+
+# Test artifacts
+target/allure-results/
+allure-report/
+.allure/
+test-output/
+screenshots/
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Maven
+.mvn/
+mvn
+mvnw
+mvnw.cmd
+
+# Node (if using Playwright CLI)
+node_modules/
+
+# Temporary files
+*.tmp
+*.bak
+*.backup
+*~
+
+
+.playwright-cli
+
+# Local framework knowledge and requirement intake
+framework-memory/

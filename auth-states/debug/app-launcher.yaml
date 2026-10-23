@@ -1,0 +1,188 @@
+- generic:
+  - generic:
+    - generic [ref=e2]:
+      - generic [ref=e3]:
+        - link "Skip to Navigation" [ref=e4] [cursor=pointer]:
+          - /url: javascript:void(0);
+        - link "Skip to Main Content" [ref=e5] [cursor=pointer]:
+          - /url: javascript:void(0);
+        - generic [ref=e7]:
+          - generic [ref=e8]:
+            - img [ref=e12]
+            - generic [ref=e15]: Salesforce enforces new security requirements in June 2026.
+            - link "See What's Changing" [ref=e16] [cursor=pointer]:
+              - /url: https://help.salesforce.com/s/articleView?id=005317465&type=1
+          - generic [ref=e17]:
+            - generic [ref=e18]: "Sandbox: CMCSMCUAT |"
+            - link "Log out" [ref=e19] [cursor=pointer]:
+              - /url: /secur/logout.jsp
+        - generic [ref=e20]:
+          - button "Search" [ref=e26]:
+            - img [ref=e28]
+            - text: Search...
+          - navigation "Global Header" [ref=e31]:
+            - list [ref=e33]:
+              - listitem [ref=e34]:
+                - group [ref=e35]:
+                  - button "This item doesn't support favorites" [ref=e37] [cursor=pointer]:
+                    - generic [ref=e38]:
+                      - img [ref=e42]
+                      - tooltip "This item doesn't support favorites"
+                  - button "Favorites list" [ref=e46] [cursor=pointer]:
+                    - generic [ref=e47]:
+                      - img [ref=e51]
+                      - tooltip "Favorites list"
+              - listitem [ref=e54]:
+                - button "Global Actions" [ref=e237] [cursor=pointer]:
+                  - generic [ref=e238]:
+                    - img [ref=e242]
+                    - tooltip "Global Actions"
+              - listitem [ref=e245]:
+                - button "Guidance Center" [ref=e247] [cursor=pointer]:
+                  - generic [ref=e248]:
+                    - img [ref=e252]
+                    - tooltip "Guidance Center"
+              - listitem [ref=e63]:
+                - button "Salesforce Help" [ref=e66] [cursor=pointer]:
+                  - generic [ref=e67]:
+                    - img [ref=e71]
+                    - tooltip "Salesforce Help"
+              - listitem [ref=e74]:
+                - button "Setup" [ref=e80] [cursor=pointer]:
+                  - generic [ref=e81]:
+                    - img [ref=e85]
+                    - tooltip "Setup"
+              - listitem [ref=e88]:
+                - button "Notifications" [ref=e91] [cursor=pointer]:
+                  - generic [ref=e92]:
+                    - img [ref=e97]
+                    - tooltip "Notifications"
+              - listitem [ref=e101]:
+                - button "View profile" [ref=e255] [cursor=pointer]:
+                  - generic [ref=e256]:
+                    - tooltip "View profile"
+      - generic [ref=e104]:
+        - generic [ref=e107]:
+          - generic [ref=e109]:
+            - navigation "App" [ref=e110]:
+              - button "App Launcher" [expanded] [ref=e112] [cursor=pointer]:
+                - generic [ref=e123]: App Launcher
+            - heading "MACTrack" [level=1] [ref=e124]:
+              - generic "MACTrack" [ref=e125]
+          - navigation "Global" [ref=e128]:
+            - list [ref=e129]:
+              - listitem [ref=e130] [cursor=pointer]:
+                - link "Home" [ref=e131]:
+                  - /url: /lightning/page/home
+                  - generic [ref=e132]: Home
+        - main [ref=e134]:
+          - generic [ref=e145]:
+            - generic [ref=e271]:
+              - paragraph
+              - paragraph [ref=e272]:
+                - strong [ref=e273]: Welcome to the MACTrack Salesforce Application Space
+              - paragraph [ref=e274]: The mission of these applications is to create an innovative and efficient work management system that leverages Salesforce to automate and streamline workflows, enabling seamless collaboration, improved accuracy, and faster turnaround times. By utilizing Salesforce’s robust automation tools, we aim to reduce manual processes, enhance transparency, and empower our team to focus on delivering exceptional service and driving organizational success.
+              - paragraph [ref=e275]:
+                - text: To access a Tracker application, select the appropriate tile below.
+                - text: If you do not see any tiles displayed, please contact the MACTRACK Help Desk to confirm your access authorization by clicking on the link in Help Center.
+            - generic [ref=e158]:
+              - generic [ref=e159]:
+                - article [ref=e163]:
+                  - generic [ref=e165]:
+                    - img [ref=e276]
+                    - heading "App Launcher" [level=2] [ref=e172]:
+                      - generic [ref=e173]: App Launcher
+                  - button "CMCS Inquiry Tracker CMCS Inquiry Tracker For tracking regular TAs, WFTC legislation TAs, SO events, and PHE TAs" [ref=e280] [cursor=pointer]:
+                    - img "CMCS Inquiry Tracker" [ref=e282]
+                    - generic [ref=e283]:
+                      - generic [ref=e284]: CMCS Inquiry Tracker
+                      - generic [ref=e285]: For tracking regular TAs, WFTC legislation TAs, SO events, and PHE TAs
+                - generic [ref=e297]:
+                  - paragraph
+                  - heading "General Announcements" [level=1] [ref=e298]:
+                    - strong [ref=e299]: General Announcements
+                  - strong
+                  - paragraph [ref=e300]:
+                    - strong [ref=e301]: General announcements regarding upgrades to all Salesforce applications will be displayed in this section.
+                  - strong
+                  - paragraph [ref=e302]:
+                    - strong [ref=e303]: Tracker-specific deployment updates will appear on the specific Trackers Home page in the upper right corner.
+                  - strong
+                  - paragraph [ref=e304]:
+                    - text: Here is a list of general enhancements deployed into production on
+                    - strong [ref=e305]: "January 28, 2026:"
+                  - paragraph
+                  - heading "Upgrading Users to Salesforce Service Cloud License" [level=2] [ref=e306]:
+                    - strong [ref=e307]: Upgrading Users to Salesforce Service Cloud License
+                  - text: This license upgrade will not impact your experience. Users will not see any changes within the Tracker applications.
+                  - heading "Creation of a New MACTrack landing page" [level=2] [ref=e308]:
+                    - strong [ref=e309]: Creation of a New MACTrack landing page
+                  - text: To standardize the log in experience for all users, a new MACTrack landing page was created. There are several sections to the new landing page we will describe below, This landing page will display all of the applications your user profile is authorized access to.
+                  - list [ref=e310]:
+                    - heading "App Launcher Section" [level=3] [ref=e311]:
+                      - strong [ref=e312]: App Launcher Section
+                  - text: Salesforce will display the trackers that are available to your profile. If an application tile is not visible in this section, it may indicate that access has not been granted. To request access, please email the Help Desk and include the specific Tracker application you need, along with the name of the manager who approved your request.
+                  - list [ref=e313]:
+                    - heading "New App Launcher Section on the Application Home Screen" [level=3] [ref=e314]:
+                      - strong [ref=e315]: New App Launcher Section on the Application Home Screen
+                  - text: To improve navigation, users can now switch between Tracker applications directly from within any Tracker. A new App Launcher section is available on the upper‑right side of each Tracker’s Home screen, displaying icons for all applications you are authorized to access. Select any icon to open that application. You may also return to the main MACTrack landing page by clicking the 9‑dot App Launcher icon in the upper‑left corner next to the Tracker name, typing “MACTrack”, and selecting the MACTrack option.
+                  - list [ref=e316]:
+                    - heading "Quick Links and Help Center Section" [level=3] [ref=e317]:
+                      - strong [ref=e318]: Quick Links and Help Center Section
+                  - text: The links in these sections provides users quick access to webpages, forms and ability to communicate quickly to the help desk to submit questions and/or concerns.
+                  - list [ref=e319]:
+                    - heading "Frequently Asked Question Section" [level=3] [ref=e320]:
+                      - strong [ref=e321]: Frequently Asked Question Section
+                  - text: This section is coming soon. We will post the most frequently asked questions and answers to the questions.
+                - generic [ref=e333]:
+                  - paragraph
+                  - paragraph [ref=e334]:
+                    - strong [ref=e335]: Frequently Asked Questions (FAQs)
+                  - paragraph [ref=e336]:
+                    - strong [ref=e337]: COMING SOON
+              - generic [ref=e201]:
+                - generic [ref=e349]:
+                  - paragraph
+                  - heading "Quick Links" [level=1] [ref=e350]:
+                    - strong [ref=e351]: Quick Links
+                  - link "Click To Navigate To The Medicaid.gov Website" [ref=e352] [cursor=pointer]:
+                    - /url: https://www.medicaid.gov/
+                    - strong [ref=e353]: Click To Navigate To The Medicaid.gov Website
+                  - link "Click To Submit An Enhancement Request Form" [ref=e354] [cursor=pointer]:
+                    - /url: https://confluenceent.cms.gov/spaces/MCBTAT/pages/1245102183/MACTrack+Enhancement+Change+Request
+                    - strong [ref=e355]: Click To Submit An Enhancement Request Form
+                  - text: "Please note: User must have permission to log into CMS Enterprise Confluence to access the form."
+                - generic [ref=e213]:
+                  - heading "Tabs" [level=2] [ref=e214]
+                  - generic [ref=e215]:
+                    - tablist [ref=e216]:
+                      - tab "Help Center" [selected] [ref=e217] [cursor=pointer]:
+                        - generic [ref=e218]: Help Center
+                    - tabpanel [ref=e224]:
+                      - link "Access Knowledge" [ref=e227] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/o/Knowledge__kav/list?filterName=published_articles
+                      - paragraph [ref=e231]:
+                        - link "Email Help Desk" [ref=e232] [cursor=pointer]:
+                          - /url: mailto:MACTRACKSUPPORT@cms.hhs.gov
+    - dialog "App Launcher" [ref=e356]:
+      - generic [ref=e357]:
+        - generic [ref=e358]:
+          - heading "App Launcher" [level=2] [ref=e359]
+          - button "Close" [ref=e360] [cursor=pointer]:
+            - img [ref=e362]
+            - generic [ref=e365]: Close
+        - generic [ref=e368]:
+          - generic [ref=e372]:
+            - generic [ref=e373]: Search apps and items...
+            - generic [ref=e374]:
+              - combobox "Search apps and items..." [expanded] [active] [ref=e375]
+              - img [ref=e376]
+          - heading "Apps" [level=3] [ref=e380]
+          - listbox "Apps" [ref=e381]:
+            - option "CMCS Inquiry Tracker" [ref=e383] [cursor=pointer]:
+              - paragraph [ref=e389]: CMCS Inquiry Tracker
+            - option "MACTrack" [ref=e391] [cursor=pointer]:
+              - paragraph [ref=e397]: MACTrack
+          - button "View All Applications" [ref=e399] [cursor=pointer]: View All
+  - generic:
+    - status

@@ -1,0 +1,602 @@
+- generic:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - link "Skip to Navigation" [ref=e5] [cursor=pointer]:
+        - /url: javascript:void(0);
+      - link "Skip to Main Content" [ref=e6] [cursor=pointer]:
+        - /url: javascript:void(0);
+      - generic [ref=e8]:
+        - generic [ref=e9]:
+          - img [ref=e13]
+          - generic [ref=e16]: Salesforce enforces new security requirements in June 2026.
+          - link "See What's Changing" [ref=e17] [cursor=pointer]:
+            - /url: https://help.salesforce.com/s/articleView?id=005317465&type=1
+        - generic [ref=e18]:
+          - generic [ref=e19]: "Sandbox: CMCSMCUAT |"
+          - link "Log out" [ref=e20] [cursor=pointer]:
+            - /url: /secur/logout.jsp
+      - generic [ref=e21]:
+        - button "Search" [ref=e27]:
+          - img [ref=e29]
+          - text: Search...
+        - navigation "Global Header" [ref=e32]:
+          - list [ref=e34]:
+            - listitem [ref=e35]:
+              - group [ref=e36]:
+                - button "Add favorite" [ref=e365] [cursor=pointer]:
+                  - generic [ref=e39]:
+                    - img [ref=e43]
+                    - tooltip "Add favorite"
+                - button "Favorites list" [ref=e47] [cursor=pointer]:
+                  - generic [ref=e48]:
+                    - img [ref=e52]
+                    - tooltip "Favorites list"
+            - listitem [ref=e55]:
+              - button "Global Actions" [ref=e61] [cursor=pointer]:
+                - generic [ref=e62]:
+                  - img [ref=e66]
+                  - tooltip "Global Actions"
+            - listitem [ref=e69]:
+              - button "Guidance Center" [ref=e71] [cursor=pointer]:
+                - generic [ref=e72]:
+                  - img [ref=e76]
+                  - tooltip "Guidance Center"
+            - listitem [ref=e79]:
+              - button "Salesforce Help" [ref=e82] [cursor=pointer]:
+                - generic [ref=e83]:
+                  - img [ref=e87]
+                  - tooltip "Salesforce Help"
+            - listitem [ref=e90]:
+              - button "Setup" [ref=e96] [cursor=pointer]:
+                - generic [ref=e97]:
+                  - img [ref=e101]
+                  - tooltip "Setup"
+            - listitem [ref=e104]:
+              - button "Notifications" [ref=e107] [cursor=pointer]:
+                - generic [ref=e108]:
+                  - img [ref=e113]
+                  - tooltip "Notifications"
+            - listitem [ref=e117]:
+              - button "View profile" [ref=e120] [cursor=pointer]:
+                - generic [ref=e121]:
+                  - tooltip "View profile"
+    - generic [ref=e125]:
+      - generic [ref=e128]:
+        - generic [ref=e130]:
+          - navigation "App" [ref=e131]:
+            - button "App Launcher" [ref=e133] [cursor=pointer]:
+              - generic [ref=e144]: App Launcher
+          - heading "CMCS Inquiry Tracker" [level=1] [ref=e145]:
+            - generic "CMCS Inquiry Tracker" [ref=e146]
+        - navigation "Global" [ref=e149]:
+          - list [ref=e150]:
+            - listitem [ref=e151]:
+              - link "Home" [ref=e152] [cursor=pointer]:
+                - /url: /lightning/page/home
+                - generic [ref=e153]: Home
+            - listitem [ref=e154]:
+              - link "CMCS TA" [ref=e155] [cursor=pointer]:
+                - /url: /lightning/o/MCOG_Issue__c/home
+                - generic [ref=e156]: CMCS TA
+              - button "CMCS TA List" [ref=e160] [cursor=pointer]:
+                - img [ref=e164]
+                - generic [ref=e167]: CMCS TA List
+            - listitem [ref=e168]:
+              - link "Dashboards" [ref=e169] [cursor=pointer]:
+                - /url: /lightning/o/Dashboard/home
+                - generic [ref=e170]: Dashboards
+              - button "Dashboards List" [ref=e174] [cursor=pointer]:
+                - img [ref=e178]
+                - generic [ref=e181]: Dashboards List
+            - listitem [ref=e182] [cursor=pointer]:
+              - link "Reports" [ref=e183]:
+                - /url: /lightning/o/Report/home
+                - generic [ref=e184]: Reports
+              - button "Reports List" [ref=e188]:
+                - img [ref=e192]
+                - generic [ref=e195]: Reports List
+            - listitem [ref=e196]:
+              - link "Knowledge" [ref=e197] [cursor=pointer]:
+                - /url: /lightning/o/Knowledge__kav/home
+                - generic [ref=e198]: Knowledge
+              - button "Knowledge List" [ref=e202] [cursor=pointer]:
+                - img [ref=e206]
+                - generic [ref=e209]: Knowledge List
+      - main [ref=e211]:
+        - generic [ref=e367]:
+          - banner [ref=e368]:
+            - generic [ref=e369]:
+              - generic [ref=e372]:
+                - paragraph [ref=e373]:
+                  - heading "Reports" [level=2] [ref=e376]
+                - navigation "Breadcrumbs" [ref=e377]:
+                  - heading [level=1]
+                  - list [ref=e378]:
+                    - listitem [ref=e379]: Recent
+                - status [ref=e380]:
+                  - generic [ref=e382]: 21 items
+              - generic [ref=e383]:
+                - generic "Search recent reports..." [ref=e384]:
+                  - generic [ref=e385]:
+                    - img [ref=e389]
+                    - textbox "Search recent reports..." [ref=e392]
+                - list [ref=e394]:
+                  - listitem [ref=e395]:
+                    - button "New Report" [ref=e396] [cursor=pointer]:
+                      - generic "New Report" [ref=e397]
+                - button "Personalize your list view settings." [ref=e399] [cursor=pointer]:
+                  - img [ref=e401]
+                  - img [ref=e405]
+                  - generic [ref=e408]: Personalize your list view settings.
+          - generic [ref=e410]:
+            - navigation [ref=e413]:
+              - region "Reports" [ref=e414]:
+                - heading "Reports" [level=2] [ref=e415]
+                - tablist [ref=e416]:
+                  - tab "Recent" [selected] [ref=e417] [cursor=pointer]
+                  - tab "Created by Me" [ref=e418] [cursor=pointer]
+                  - tab "Private Reports" [ref=e419] [cursor=pointer]
+                  - tab "Public Reports" [ref=e420] [cursor=pointer]
+                  - tab "All Reports" [ref=e421] [cursor=pointer]
+              - region "Folders" [ref=e422]:
+                - heading "Folders" [level=2] [ref=e423]
+                - tablist [ref=e424]:
+                  - tab "All Folders" [ref=e425] [cursor=pointer]
+                  - tab "Created by Me" [ref=e426] [cursor=pointer]
+                  - tab "Shared with Me" [ref=e427] [cursor=pointer]
+              - region "Favorites" [ref=e428]:
+                - heading "Favorites" [level=2] [ref=e429]
+                - tablist [ref=e430]:
+                  - tab "All Favorites" [ref=e431] [cursor=pointer]
+            - generic [ref=e433]:
+              - generic [ref=e434]: Navigation Mode
+              - grid "Recent Reports" [ref=e438]:
+                - rowgroup:
+                  - row "Report Name Description Folder Created By Created On Subscribed Actions":
+                    - columnheader "Report Name":
+                      - generic [ref=e440]:
+                        - 'button "Sort by: Report Name" [ref=e441] [cursor=pointer]':
+                          - generic [ref=e442]: "Sort by:"
+                          - generic "Report Name" [ref=e443]
+                        - generic [ref=e444]: "Sorted: None"
+                        - button "Show Report Name column actions" [ref=e446] [cursor=pointer]:
+                          - img [ref=e448]
+                          - generic [ref=e451]: Show Report Name column actions
+                        - slider "Report Name column width" [ref=e452]: "134"
+                    - columnheader "Description":
+                      - generic [ref=e456]:
+                        - 'button "Sort by: Description" [ref=e457] [cursor=pointer]':
+                          - generic [ref=e458]: "Sort by:"
+                          - generic "Description" [ref=e459]
+                        - generic [ref=e460]: "Sorted: None"
+                        - button "Show Description column actions" [ref=e462] [cursor=pointer]:
+                          - img [ref=e464]
+                          - generic [ref=e467]: Show Description column actions
+                        - slider "Description column width" [ref=e468]: "134"
+                    - columnheader "Folder":
+                      - generic [ref=e472]:
+                        - 'button "Sort by: Folder" [ref=e473] [cursor=pointer]':
+                          - generic [ref=e474]: "Sort by:"
+                          - generic "Folder" [ref=e475]
+                        - generic [ref=e476]: "Sorted: None"
+                        - button "Show Folder column actions" [ref=e478] [cursor=pointer]:
+                          - img [ref=e480]
+                          - generic [ref=e483]: Show Folder column actions
+                        - slider "Folder column width" [ref=e484]: "134"
+                    - columnheader "Created By":
+                      - generic [ref=e488]:
+                        - 'button "Sort by: Created By" [ref=e489] [cursor=pointer]':
+                          - generic [ref=e490]: "Sort by:"
+                          - generic "Created By" [ref=e491]
+                        - generic [ref=e492]: "Sorted: None"
+                        - button "Show Created By column actions" [ref=e494] [cursor=pointer]:
+                          - img [ref=e496]
+                          - generic [ref=e499]: Show Created By column actions
+                        - slider "Created By column width" [ref=e500]: "134"
+                    - columnheader "Created On":
+                      - generic [ref=e504]:
+                        - 'button "Sort by: Created On" [ref=e505] [cursor=pointer]':
+                          - generic [ref=e506]: "Sort by:"
+                          - generic "Created On" [ref=e507]
+                        - generic [ref=e508]: "Sorted: None"
+                        - button "Show Created On column actions" [ref=e510] [cursor=pointer]:
+                          - img [ref=e512]
+                          - generic [ref=e515]: Show Created On column actions
+                        - slider "Created On column width" [ref=e516]: "134"
+                    - columnheader "Subscribed":
+                      - generic [ref=e520]:
+                        - 'button "Sort by: Subscribed" [ref=e521] [cursor=pointer]':
+                          - generic [ref=e522]: "Sort by:"
+                          - generic "Subscribed" [ref=e523]
+                        - generic [ref=e524]: "Sorted: None"
+                        - slider "Subscribed column width" [ref=e525]: "134"
+                    - columnheader "Actions":
+                      - generic [ref=e530]:
+                        - generic "Actions"
+                - rowgroup [ref=e531]:
+                  - row "TA Highest Level of Review Report TA User Reports Peter Gutmann 3/31/2025, 1:07 AM False Show actions" [ref=e532]:
+                    - rowheader "TA Highest Level of Review Report" [ref=e533]:
+                      - link "TA Highest Level of Review Report" [ref=e538] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00OSJ000004eZzF2AU/view?queryScope=userFolders
+                    - gridcell [ref=e539]
+                    - gridcell "TA User Reports" [ref=e540]:
+                      - link "TA User Reports" [ref=e545] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00lSJ000000VUkzYAG/view?queryScope=userFolders
+                    - gridcell "Peter Gutmann" [ref=e546]:
+                      - link "Peter Gutmann" [ref=e551] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/005820000016cFwAAI/view?queryScope=userFolders
+                    - gridcell "3/31/2025, 1:07 AM" [ref=e552]:
+                      - generic [ref=e555]: 3/31/2025, 1:07 AM
+                    - gridcell "False" [ref=e556]:
+                      - generic [ref=e557]: "False"
+                    - gridcell "Show actions" [ref=e558]:
+                      - button "Show actions" [ref=e564] [cursor=pointer]:
+                        - img [ref=e566]
+                        - generic [ref=e569]: Show actions
+                  - row "TA CMCS Inquiries by Escalation Level TA User Reports Copado Deployment User 3/27/2025, 1:04 PM False Show actions" [ref=e570]:
+                    - rowheader "TA CMCS Inquiries by Escalation Level" [ref=e571]:
+                      - link "TA CMCS Inquiries by Escalation Level" [ref=e576] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00OSJ000004bg1B2AQ/view?queryScope=userFolders
+                    - gridcell [ref=e577]
+                    - gridcell "TA User Reports" [ref=e578]:
+                      - link "TA User Reports" [ref=e583] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00lSJ000000VUkzYAG/view?queryScope=userFolders
+                    - gridcell "Copado Deployment User" [ref=e584]:
+                      - link "Copado Deployment User" [ref=e589] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/005SJ000003VAZIYA4/view?queryScope=userFolders
+                    - gridcell "3/27/2025, 1:04 PM" [ref=e590]:
+                      - generic [ref=e593]: 3/27/2025, 1:04 PM
+                    - gridcell "False" [ref=e594]:
+                      - generic [ref=e595]: "False"
+                    - gridcell "Show actions" [ref=e596]:
+                      - button "Show actions" [ref=e602] [cursor=pointer]:
+                        - img [ref=e604]
+                        - generic [ref=e607]: Show actions
+                  - row "TA CMCS Inquiries by Priority TA User Reports Madhuri Jampani 12/19/2024, 1:13 PM False Show actions" [ref=e608]:
+                    - rowheader "TA CMCS Inquiries by Priority" [ref=e609]:
+                      - link "TA CMCS Inquiries by Priority" [ref=e614] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00OSJ000002rfVP2AY/view?queryScope=userFolders
+                    - gridcell [ref=e615]
+                    - gridcell "TA User Reports" [ref=e616]:
+                      - link "TA User Reports" [ref=e621] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00lSJ000000VUkzYAG/view?queryScope=userFolders
+                    - gridcell "Madhuri Jampani" [ref=e622]:
+                      - link "Madhuri Jampani" [ref=e627] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00582000001QKUuAAO/view?queryScope=userFolders
+                    - gridcell "12/19/2024, 1:13 PM" [ref=e628]:
+                      - generic [ref=e631]: 12/19/2024, 1:13 PM
+                    - gridcell "False" [ref=e632]:
+                      - generic [ref=e633]: "False"
+                    - gridcell "Show actions" [ref=e634]:
+                      - button "Show actions" [ref=e640] [cursor=pointer]:
+                        - img [ref=e642]
+                        - generic [ref=e645]: Show actions
+                  - row "Open TA CMCS Inquiries TA User Reports Madhuri Jampani 12/19/2024, 1:13 PM False Show actions" [ref=e646]:
+                    - rowheader "Open TA CMCS Inquiries" [ref=e647]:
+                      - link "Open TA CMCS Inquiries" [ref=e652] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00OSJ000002rfVK2AY/view?queryScope=userFolders
+                    - gridcell [ref=e653]
+                    - gridcell "TA User Reports" [ref=e654]:
+                      - link "TA User Reports" [ref=e659] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00lSJ000000VUkzYAG/view?queryScope=userFolders
+                    - gridcell "Madhuri Jampani" [ref=e660]:
+                      - link "Madhuri Jampani" [ref=e665] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00582000001QKUuAAO/view?queryScope=userFolders
+                    - gridcell "12/19/2024, 1:13 PM" [ref=e666]:
+                      - generic [ref=e669]: 12/19/2024, 1:13 PM
+                    - gridcell "False" [ref=e670]:
+                      - generic [ref=e671]: "False"
+                    - gridcell "Show actions" [ref=e672]:
+                      - button "Show actions" [ref=e678] [cursor=pointer]:
+                        - img [ref=e680]
+                        - generic [ref=e683]: Show actions
+                  - row "TA CMCS Inquiries by Triager TA User Reports Madhuri Jampani 12/19/2024, 1:13 PM False Show actions" [ref=e684]:
+                    - rowheader "TA CMCS Inquiries by Triager" [ref=e685]:
+                      - link "TA CMCS Inquiries by Triager" [ref=e690] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00OSJ000002rfVM2AY/view?queryScope=userFolders
+                    - gridcell [ref=e691]
+                    - gridcell "TA User Reports" [ref=e692]:
+                      - link "TA User Reports" [ref=e697] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00lSJ000000VUkzYAG/view?queryScope=userFolders
+                    - gridcell "Madhuri Jampani" [ref=e698]:
+                      - link "Madhuri Jampani" [ref=e703] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00582000001QKUuAAO/view?queryScope=userFolders
+                    - gridcell "12/19/2024, 1:13 PM" [ref=e704]:
+                      - generic [ref=e707]: 12/19/2024, 1:13 PM
+                    - gridcell "False" [ref=e708]:
+                      - generic [ref=e709]: "False"
+                    - gridcell "Show actions" [ref=e710]:
+                      - button "Show actions" [ref=e716] [cursor=pointer]:
+                        - img [ref=e718]
+                        - generic [ref=e721]: Show actions
+                  - row "TA CMCS Inquiries by Category TA User Reports Madhuri Jampani 12/19/2024, 1:13 PM False Show actions" [ref=e722]:
+                    - rowheader "TA CMCS Inquiries by Category" [ref=e723]:
+                      - link "TA CMCS Inquiries by Category" [ref=e728] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00OSJ000002rfVN2AY/view?queryScope=userFolders
+                    - gridcell [ref=e729]
+                    - gridcell "TA User Reports" [ref=e730]:
+                      - link "TA User Reports" [ref=e735] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00lSJ000000VUkzYAG/view?queryScope=userFolders
+                    - gridcell "Madhuri Jampani" [ref=e736]:
+                      - link "Madhuri Jampani" [ref=e741] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00582000001QKUuAAO/view?queryScope=userFolders
+                    - gridcell "12/19/2024, 1:13 PM" [ref=e742]:
+                      - generic [ref=e745]: 12/19/2024, 1:13 PM
+                    - gridcell "False" [ref=e746]:
+                      - generic [ref=e747]: "False"
+                    - gridcell "Show actions" [ref=e748]:
+                      - button "Show actions" [ref=e754] [cursor=pointer]:
+                        - img [ref=e756]
+                        - generic [ref=e759]: Show actions
+                  - row "TA CMCS Inquiries by Stage TA User Reports Madhuri Jampani 12/19/2024, 1:13 PM False Show actions" [ref=e760]:
+                    - rowheader "TA CMCS Inquiries by Stage" [ref=e761]:
+                      - link "TA CMCS Inquiries by Stage" [ref=e766] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00OSJ000002rfVQ2AY/view?queryScope=userFolders
+                    - gridcell [ref=e767]
+                    - gridcell "TA User Reports" [ref=e768]:
+                      - link "TA User Reports" [ref=e773] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00lSJ000000VUkzYAG/view?queryScope=userFolders
+                    - gridcell "Madhuri Jampani" [ref=e774]:
+                      - link "Madhuri Jampani" [ref=e779] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00582000001QKUuAAO/view?queryScope=userFolders
+                    - gridcell "12/19/2024, 1:13 PM" [ref=e780]:
+                      - generic [ref=e783]: 12/19/2024, 1:13 PM
+                    - gridcell "False" [ref=e784]:
+                      - generic [ref=e785]: "False"
+                    - gridcell "Show actions" [ref=e786]:
+                      - button "Show actions" [ref=e792] [cursor=pointer]:
+                        - img [ref=e794]
+                        - generic [ref=e797]: Show actions
+                  - row "WFTCL by Group TA User Reports Packiaraj Devaraj 10/16/2025, 3:02 PM False Show actions" [ref=e798]:
+                    - rowheader "WFTCL by Group" [ref=e799]:
+                      - link "WFTCL by Group" [ref=e804] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00OSL000002g0di2AA/view?queryScope=userFolders
+                    - gridcell [ref=e805]
+                    - gridcell "TA User Reports" [ref=e806]:
+                      - link "TA User Reports" [ref=e811] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00lSJ000000VUkzYAG/view?queryScope=userFolders
+                    - gridcell "Packiaraj Devaraj" [ref=e812]:
+                      - link "Packiaraj Devaraj" [ref=e817] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/005SJ00000TYAsHYAX/view?queryScope=userFolders
+                    - gridcell "10/16/2025, 3:02 PM" [ref=e818]:
+                      - generic [ref=e821]: 10/16/2025, 3:02 PM
+                    - gridcell "False" [ref=e822]:
+                      - generic [ref=e823]: "False"
+                    - gridcell "Show actions" [ref=e824]:
+                      - button "Show actions" [ref=e830] [cursor=pointer]:
+                        - img [ref=e832]
+                        - generic [ref=e835]: Show actions
+                  - row "TA WFTCL CMCS Inquiries by Provision TA WFTCL CMCS Inquiries by Provision TA User Reports Packiaraj Devaraj 10/16/2025, 3:02 PM False Show actions" [ref=e836]:
+                    - rowheader "TA WFTCL CMCS Inquiries by Provision" [ref=e837]:
+                      - link "TA WFTCL CMCS Inquiries by Provision" [ref=e842] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00OSL000002g0dd2AA/view?queryScope=userFolders
+                    - gridcell "TA WFTCL CMCS Inquiries by Provision" [ref=e843]:
+                      - generic [ref=e846]: TA WFTCL CMCS Inquiries by Provision
+                    - gridcell "TA User Reports" [ref=e847]:
+                      - link "TA User Reports" [ref=e852] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00lSJ000000VUkzYAG/view?queryScope=userFolders
+                    - gridcell "Packiaraj Devaraj" [ref=e853]:
+                      - link "Packiaraj Devaraj" [ref=e858] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/005SJ00000TYAsHYAX/view?queryScope=userFolders
+                    - gridcell "10/16/2025, 3:02 PM" [ref=e859]:
+                      - generic [ref=e862]: 10/16/2025, 3:02 PM
+                    - gridcell "False" [ref=e863]:
+                      - generic [ref=e864]: "False"
+                    - gridcell "Show actions" [ref=e865]:
+                      - button "Show actions" [ref=e871] [cursor=pointer]:
+                        - img [ref=e873]
+                        - generic [ref=e876]: Show actions
+                  - row "TA WFTCL Highest Level of Review Report TA User Reports Packiaraj Devaraj 10/16/2025, 3:02 PM False Show actions" [ref=e877]:
+                    - rowheader "TA WFTCL Highest Level of Review Report" [ref=e878]:
+                      - link "TA WFTCL Highest Level of Review Report" [ref=e883] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00OSL000002g0dh2AA/view?queryScope=userFolders
+                    - gridcell [ref=e884]
+                    - gridcell "TA User Reports" [ref=e885]:
+                      - link "TA User Reports" [ref=e890] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00lSJ000000VUkzYAG/view?queryScope=userFolders
+                    - gridcell "Packiaraj Devaraj" [ref=e891]:
+                      - link "Packiaraj Devaraj" [ref=e896] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/005SJ00000TYAsHYAX/view?queryScope=userFolders
+                    - gridcell "10/16/2025, 3:02 PM" [ref=e897]:
+                      - generic [ref=e900]: 10/16/2025, 3:02 PM
+                    - gridcell "False" [ref=e901]:
+                      - generic [ref=e902]: "False"
+                    - gridcell "Show actions" [ref=e903]:
+                      - button "Show actions" [ref=e909] [cursor=pointer]:
+                        - img [ref=e911]
+                        - generic [ref=e914]: Show actions
+                  - row "TA WFTCL CMCS Inquiries by Escalation Lv uses User object TA User Reports Packiaraj Devaraj 10/16/2025, 3:02 PM False Show actions" [ref=e915]:
+                    - rowheader "TA WFTCL CMCS Inquiries by Escalation Lv" [ref=e916]:
+                      - link "TA WFTCL CMCS Inquiries by Escalation Lv" [ref=e921] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00OSL000002g0db2AA/view?queryScope=userFolders
+                    - gridcell "uses User object" [ref=e922]:
+                      - generic [ref=e925]: uses User object
+                    - gridcell "TA User Reports" [ref=e926]:
+                      - link "TA User Reports" [ref=e931] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00lSJ000000VUkzYAG/view?queryScope=userFolders
+                    - gridcell "Packiaraj Devaraj" [ref=e932]:
+                      - link "Packiaraj Devaraj" [ref=e937] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/005SJ00000TYAsHYAX/view?queryScope=userFolders
+                    - gridcell "10/16/2025, 3:02 PM" [ref=e938]:
+                      - generic [ref=e941]: 10/16/2025, 3:02 PM
+                    - gridcell "False" [ref=e942]:
+                      - generic [ref=e943]: "False"
+                    - gridcell "Show actions" [ref=e944]:
+                      - button "Show actions" [ref=e950] [cursor=pointer]:
+                        - img [ref=e952]
+                        - generic [ref=e955]: Show actions
+                  - row "TA WFTCL CMCS Inquiries by Triager TA User Reports Packiaraj Devaraj 10/16/2025, 3:02 PM False Show actions" [ref=e956]:
+                    - rowheader "TA WFTCL CMCS Inquiries by Triager" [ref=e957]:
+                      - link "TA WFTCL CMCS Inquiries by Triager" [ref=e962] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00OSL000002g0dg2AA/view?queryScope=userFolders
+                    - gridcell [ref=e963]
+                    - gridcell "TA User Reports" [ref=e964]:
+                      - link "TA User Reports" [ref=e969] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00lSJ000000VUkzYAG/view?queryScope=userFolders
+                    - gridcell "Packiaraj Devaraj" [ref=e970]:
+                      - link "Packiaraj Devaraj" [ref=e975] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/005SJ00000TYAsHYAX/view?queryScope=userFolders
+                    - gridcell "10/16/2025, 3:02 PM" [ref=e976]:
+                      - generic [ref=e979]: 10/16/2025, 3:02 PM
+                    - gridcell "False" [ref=e980]:
+                      - generic [ref=e981]: "False"
+                    - gridcell "Show actions" [ref=e982]:
+                      - button "Show actions" [ref=e988] [cursor=pointer]:
+                        - img [ref=e990]
+                        - generic [ref=e993]: Show actions
+                  - row "TA WFTCL CMCS Inquiries by Stage, Catego TA CMCS Inquiries by Stage and Category TA User Reports Packiaraj Devaraj 10/16/2025, 3:02 PM False Show actions" [ref=e994]:
+                    - rowheader "TA WFTCL CMCS Inquiries by Stage, Catego" [ref=e995]:
+                      - link "TA WFTCL CMCS Inquiries by Stage, Catego" [ref=e1000] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00OSL000002g0de2AA/view?queryScope=userFolders
+                    - gridcell "TA CMCS Inquiries by Stage and Category" [ref=e1001]:
+                      - generic [ref=e1004]: TA CMCS Inquiries by Stage and Category
+                    - gridcell "TA User Reports" [ref=e1005]:
+                      - link "TA User Reports" [ref=e1010] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00lSJ000000VUkzYAG/view?queryScope=userFolders
+                    - gridcell "Packiaraj Devaraj" [ref=e1011]:
+                      - link "Packiaraj Devaraj" [ref=e1016] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/005SJ00000TYAsHYAX/view?queryScope=userFolders
+                    - gridcell "10/16/2025, 3:02 PM" [ref=e1017]:
+                      - generic [ref=e1020]: 10/16/2025, 3:02 PM
+                    - gridcell "False" [ref=e1021]:
+                      - generic [ref=e1022]: "False"
+                    - gridcell "Show actions" [ref=e1023]:
+                      - button "Show actions" [ref=e1029] [cursor=pointer]:
+                        - img [ref=e1031]
+                        - generic [ref=e1034]: Show actions
+                  - row "TA WFTCL CMCS Inquiries by Priority TA User Reports Packiaraj Devaraj 10/16/2025, 3:02 PM False Show actions" [ref=e1035]:
+                    - rowheader "TA WFTCL CMCS Inquiries by Priority" [ref=e1036]:
+                      - link "TA WFTCL CMCS Inquiries by Priority" [ref=e1041] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00OSL000002g0dc2AA/view?queryScope=userFolders
+                    - gridcell [ref=e1042]
+                    - gridcell "TA User Reports" [ref=e1043]:
+                      - link "TA User Reports" [ref=e1048] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00lSJ000000VUkzYAG/view?queryScope=userFolders
+                    - gridcell "Packiaraj Devaraj" [ref=e1049]:
+                      - link "Packiaraj Devaraj" [ref=e1054] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/005SJ00000TYAsHYAX/view?queryScope=userFolders
+                    - gridcell "10/16/2025, 3:02 PM" [ref=e1055]:
+                      - generic [ref=e1058]: 10/16/2025, 3:02 PM
+                    - gridcell "False" [ref=e1059]:
+                      - generic [ref=e1060]: "False"
+                    - gridcell "Show actions" [ref=e1061]:
+                      - button "Show actions" [ref=e1067] [cursor=pointer]:
+                        - img [ref=e1069]
+                        - generic [ref=e1072]: Show actions
+                  - row "TA WFTCL CMCS Inquiries by Stage TA User Reports Packiaraj Devaraj 10/16/2025, 3:02 PM False Show actions" [ref=e1073]:
+                    - rowheader "TA WFTCL CMCS Inquiries by Stage" [ref=e1074]:
+                      - link "TA WFTCL CMCS Inquiries by Stage" [ref=e1079] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00OSL000002g0df2AA/view?queryScope=userFolders
+                    - gridcell [ref=e1080]
+                    - gridcell "TA User Reports" [ref=e1081]:
+                      - link "TA User Reports" [ref=e1086] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00lSJ000000VUkzYAG/view?queryScope=userFolders
+                    - gridcell "Packiaraj Devaraj" [ref=e1087]:
+                      - link "Packiaraj Devaraj" [ref=e1092] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/005SJ00000TYAsHYAX/view?queryScope=userFolders
+                    - gridcell "10/16/2025, 3:02 PM" [ref=e1093]:
+                      - generic [ref=e1096]: 10/16/2025, 3:02 PM
+                    - gridcell "False" [ref=e1097]:
+                      - generic [ref=e1098]: "False"
+                    - gridcell "Show actions" [ref=e1099]:
+                      - button "Show actions" [ref=e1105] [cursor=pointer]:
+                        - img [ref=e1107]
+                        - generic [ref=e1110]: Show actions
+                  - row "TA WFTCL CMCS Inquiries by Category TA User Reports Packiaraj Devaraj 10/16/2025, 3:02 PM False Show actions" [ref=e1111]:
+                    - rowheader "TA WFTCL CMCS Inquiries by Category" [ref=e1112]:
+                      - link "TA WFTCL CMCS Inquiries by Category" [ref=e1117] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00OSL000002g0da2AA/view?queryScope=userFolders
+                    - gridcell [ref=e1118]
+                    - gridcell "TA User Reports" [ref=e1119]:
+                      - link "TA User Reports" [ref=e1124] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00lSJ000000VUkzYAG/view?queryScope=userFolders
+                    - gridcell "Packiaraj Devaraj" [ref=e1125]:
+                      - link "Packiaraj Devaraj" [ref=e1130] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/005SJ00000TYAsHYAX/view?queryScope=userFolders
+                    - gridcell "10/16/2025, 3:02 PM" [ref=e1131]:
+                      - generic [ref=e1134]: 10/16/2025, 3:02 PM
+                    - gridcell "False" [ref=e1135]:
+                      - generic [ref=e1136]: "False"
+                    - gridcell "Show actions" [ref=e1137]:
+                      - button "Show actions" [ref=e1143] [cursor=pointer]:
+                        - img [ref=e1145]
+                        - generic [ref=e1148]: Show actions
+                  - row "TA CMCS Inquiries by Stage, Category TA CMCS Inquiries by Stage and Category TA User Reports Peter Gutmann 3/31/2025, 1:00 AM False Show actions" [ref=e1149]:
+                    - rowheader "TA CMCS Inquiries by Stage, Category" [ref=e1150]:
+                      - link "TA CMCS Inquiries by Stage, Category" [ref=e1155] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00OSJ000004eXFt2AM/view?queryScope=userFolders
+                    - gridcell "TA CMCS Inquiries by Stage and Category" [ref=e1156]:
+                      - generic [ref=e1159]: TA CMCS Inquiries by Stage and Category
+                    - gridcell "TA User Reports" [ref=e1160]:
+                      - link "TA User Reports" [ref=e1165] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00lSJ000000VUkzYAG/view?queryScope=userFolders
+                    - gridcell "Peter Gutmann" [ref=e1166]:
+                      - link "Peter Gutmann" [ref=e1171] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/005820000016cFwAAI/view?queryScope=userFolders
+                    - gridcell "3/31/2025, 1:00 AM" [ref=e1172]:
+                      - generic [ref=e1175]: 3/31/2025, 1:00 AM
+                    - gridcell "False" [ref=e1176]:
+                      - generic [ref=e1177]: "False"
+                    - gridcell "Show actions" [ref=e1178]:
+                      - button "Show actions" [ref=e1184] [cursor=pointer]:
+                        - img [ref=e1186]
+                        - generic [ref=e1189]: Show actions
+                  - row "UAT MFP Accounts Public Reports Peter Gutmann 3/6/2026, 6:26 PM False Show actions" [ref=e1190]:
+                    - rowheader "UAT MFP Accounts" [ref=e1191]:
+                      - link "UAT MFP Accounts" [ref=e1196] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00OSL000004L2fd2AC/view?queryScope=userFolders
+                    - gridcell [ref=e1197]
+                    - gridcell "Public Reports" [ref=e1198]:
+                      - link "Public Reports" [ref=e1203] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/o/Report/home?queryScope=organizationOwned
+                    - gridcell "Peter Gutmann" [ref=e1204]:
+                      - link "Peter Gutmann" [ref=e1209] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/005820000016cFwAAI/view?queryScope=userFolders
+                    - gridcell "3/6/2026, 6:26 PM" [ref=e1210]:
+                      - generic [ref=e1213]: 3/6/2026, 6:26 PM
+                    - gridcell "False" [ref=e1214]:
+                      - generic [ref=e1215]: "False"
+                    - gridcell "Show actions" [ref=e1216]:
+                      - button "Show actions" [ref=e1222] [cursor=pointer]:
+                        - img [ref=e1224]
+                        - generic [ref=e1227]: Show actions
+                  - row "Open TA WFTCL CMCS Inquiries TA User Reports Packiaraj Devaraj 10/16/2025, 3:02 PM False Show actions" [ref=e1228]:
+                    - rowheader "Open TA WFTCL CMCS Inquiries" [ref=e1229]:
+                      - link "Open TA WFTCL CMCS Inquiries" [ref=e1234] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00OSL000002g0dZ2AQ/view?queryScope=userFolders
+                    - gridcell [ref=e1235]
+                    - gridcell "TA User Reports" [ref=e1236]:
+                      - link "TA User Reports" [ref=e1241] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00lSJ000000VUkzYAG/view?queryScope=userFolders
+                    - gridcell "Packiaraj Devaraj" [ref=e1242]:
+                      - link "Packiaraj Devaraj" [ref=e1247] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/005SJ00000TYAsHYAX/view?queryScope=userFolders
+                    - gridcell "10/16/2025, 3:02 PM" [ref=e1248]:
+                      - generic [ref=e1251]: 10/16/2025, 3:02 PM
+                    - gridcell "False" [ref=e1252]:
+                      - generic [ref=e1253]: "False"
+                    - gridcell "Show actions" [ref=e1254]:
+                      - button "Show actions" [ref=e1260] [cursor=pointer]:
+                        - img [ref=e1262]
+                        - generic [ref=e1265]: Show actions
+                  - row "All Potential Returning Work TA Manager Reports Madhuri Jampani 12/19/2024, 1:13 PM False Show actions" [ref=e1266]:
+                    - rowheader "All Potential Returning Work" [ref=e1267]:
+                      - link "All Potential Returning Work" [ref=e1272] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00OSJ000002rfVX2AY/view?queryScope=userFolders
+                    - gridcell [ref=e1273]
+                    - gridcell "TA Manager Reports" [ref=e1274]:
+                      - link "TA Manager Reports" [ref=e1279] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00lSJ000000VZmJYAW/view?queryScope=userFolders
+                    - gridcell "Madhuri Jampani" [ref=e1280]:
+                      - link "Madhuri Jampani" [ref=e1285] [cursor=pointer]:
+                        - /url: https://cmsapps5--cmcsmcuat.sandbox.lightning.force.com/lightning/r/sObject/00582000001QKUuAAO/view?queryScope=userFolders
+                    - gridcell "12/19/2024, 1:13 PM" [ref=e1286]:
+                      - generic [ref=e1289]: 12/19/2024, 1:13 PM
+                    - gridcell "False" [ref=e1290]:
+                      - generic [ref=e1291]: "False"
+                    - gridcell "Show actions" [ref=e1292]:
+                      - button "Show actions" [ref=e1298] [cursor=pointer]:
+                        - img [ref=e1300]
+                        - generic [ref=e1303]: Show actions
+  - generic:
+    - status

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="MACSuite Parallel Lane Suite" parallel="tests" thread-count="4" data-provider-thread-count="1">
+    <test name="Reports and Dashboard Lane">
+        <classes>
+            <class name="com.macsuite.runners.ReportsDashboardLaneRunner" />
+        </classes>
+    </test>
+
+    <test name="CMCS TA E2E Lane">
+        <classes>
+            <class name="com.macsuite.runners.CmcsTaE2ELaneRunner" />
+        </classes>
+    </test>
+
+    <test name="Regression Lane 1">
+        <classes>
+            <class name="com.macsuite.runners.RestLaneOneRunner" />
+        </classes>
+    </test>
+
+    <test name="Regression Lane 2">
+        <classes>
+            <class name="com.macsuite.runners.RestLaneTwoRunner" />
+        </classes>
+    </test>
+</suite>

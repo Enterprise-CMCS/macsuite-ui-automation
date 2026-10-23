@@ -1,0 +1,8 @@
+{
+  "name": "macsuite_ui_automation",
+  "version": "1.0.0",
+  "description": "MACSuite UI Automation - Playwright CLI skill for Claude Code",
+  "devDependencies": {
+    "@playwright/cli": "^0.1.13"
+  }
+}
