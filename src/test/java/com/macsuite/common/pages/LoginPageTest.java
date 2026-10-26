@@ -79,6 +79,38 @@ public class LoginPageTest {
     }
 
     @Test
+    public void completesDelayedTotpChallenge() {
+        page.setContent(loginForm()
+            + "<script>document.querySelector('button').onclick = () => {"
+            + "document.body.innerHTML = 'Signing in'; setTimeout(() => {"
+            + "document.body.innerHTML = '<label>Verification Code<input name=\"verificationCode\"></label>"
+            + "<button>Verify</button>'; document.querySelector('button').onclick = () => {"
+            + "const input = document.querySelector('input'); window.submittedCode = input.value;"
+            + "window.codeWasMasked = input.type === 'password';"
+            + "if (/^[0-9]{6}$/.test(input.value)) {"
+            + "document.body.innerHTML = '<button title=\"App Launcher\">Apps</button>';}};}, 300);};</script>");
+
+        new LoginPage(page).login("test-user", "test-password", "GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ");
+
+        Assert.assertTrue(page.getByTitle("App Launcher").isVisible());
+        Assert.assertEquals(page.evaluate("window.codeWasMasked"), true);
+        Assert.assertTrue(((String) page.evaluate("window.submittedCode")).matches("[0-9]{6}"));
+    }
+
+    @Test
+    public void reportsMissingTotpSecretOnlyWhenChallenged() {
+        page.setContent(loginForm()
+            + "<script>document.querySelector('button').onclick = () => {"
+            + "document.body.innerHTML = '<label>Verification Code<input></label><button>Verify</button>';};</script>");
+
+        IllegalStateException failure = Assert.expectThrows(IllegalStateException.class,
+            () -> new LoginPage(page).login("test-user", "test-password", null));
+
+        Assert.assertTrue(failure.getMessage().contains("no TOTP secret"));
+        Assert.assertEquals(page.getByLabel("Verification Code").inputValue(), "");
+    }
+
+    @Test
     public void rejectsLoginThatNeverReachesAppLauncher() {
         page.setContent(loginForm()
             + "<script>document.querySelector('button').onclick = () => "

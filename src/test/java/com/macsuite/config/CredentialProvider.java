@@ -16,10 +16,16 @@ public class CredentialProvider {
     public static class Credentials {
         private final String username;
         private final String password;
+        private final String totpSecret;
 
         public Credentials(String username, String password) {
+            this(username, password, null);
+        }
+
+        public Credentials(String username, String password, String totpSecret) {
             this.username = username;
             this.password = password;
+            this.totpSecret = totpSecret;
         }
 
         public String getUsername() {
@@ -28,6 +34,10 @@ public class CredentialProvider {
 
         public String getPassword() {
             return password;
+        }
+
+        public String getTotpSecret() {
+            return totpSecret;
         }
 
         @Override
@@ -54,7 +64,12 @@ public class CredentialProvider {
 
         if (username != null && password != null) {
             logger.info("Using credentials for role: {} in environment: {}", role, environment);
-            return new Credentials(username, password);
+            String totpSecret = EnvLoader.get(role.toUpperCase() + "_" + environment.toUpperCase()
+                + "_TOTP_SECRET", null);
+            if (totpSecret == null || totpSecret.isBlank()) {
+                totpSecret = EnvLoader.get("SALESFORCE_TOTP_SECRET", null);
+            }
+            return new Credentials(username, password, totpSecret);
         }
 
         // Fallback to default credentials
@@ -64,7 +79,7 @@ public class CredentialProvider {
 
         if (username != null && password != null) {
             logger.info("Using fallback APP_USERNAME and APP_PASSWORD");
-            return new Credentials(username, password);
+            return new Credentials(username, password, EnvLoader.get("SALESFORCE_TOTP_SECRET", null));
         }
 
         throw new IllegalStateException(

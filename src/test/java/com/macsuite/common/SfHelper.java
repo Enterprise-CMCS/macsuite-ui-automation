@@ -30,6 +30,16 @@ public class SfHelper {
         field.fill(resolved);
     }
 
+    public void fillSensitiveText(Locator field, String label, String value) {
+        try {
+            highlightElement(field, label);
+            field.evaluate("input => { input.type = 'password'; }");
+            field.fill(value);
+        } catch (RuntimeException exception) {
+            throw new IllegalStateException("Unable to fill the sensitive authentication field.");
+        }
+    }
+
     public void selectDropdown(Locator context, String label, String value) {
         logger.debug("selectDropdown '{}' = '{}'", label, value);
         Locator combobox = context.getByLabel(label, new Locator.GetByLabelOptions().setExact(false)).first();

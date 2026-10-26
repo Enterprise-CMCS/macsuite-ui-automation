@@ -29,6 +29,8 @@ jobs:
       TAGS: ${{ github.event.inputs.tags || 'not @ignore' }}
       MFP_UAT_USERNAME: ${{ secrets.MFP_UAT_USERNAME }}
       MFP_UAT_PASSWORD: ${{ secrets.MFP_UAT_PASSWORD }}
+      MFP_UAT_TOTP_SECRET: ${{ secrets.MFP_UAT_TOTP_SECRET }}
+      SALESFORCE_TOTP_SECRET: ${{ secrets.SALESFORCE_TOTP_SECRET }}
       APP_URL_UAT: ${{ secrets.APP_URL_UAT }}
       MAILOSAUR_USERNAME: ${{ secrets.MAILOSAUR_USERNAME }}
       MAILOSAUR_PASSWORD: ${{ secrets.MAILOSAUR_PASSWORD }}
@@ -60,6 +62,12 @@ jobs:
             echo "::error::APP_URL_UAT must be an HTTPS Salesforce login URL."
             exit 1
           fi
+          for variable in MFP_UAT_TOTP_SECRET SALESFORCE_TOTP_SECRET; do
+            if [[ -n "${!variable}" && ! "${!variable}" =~ ^[A-Za-z2-7]{16,}={0,6}$ ]]; then
+              echo "::error::Optional secret $variable must contain only the Base32 authenticator setup key."
+              exit 1
+            fi
+          done
           echo "Required Salesforce secrets are available and passed format checks; values are not logged."
 
       - name: Set up JDK 21

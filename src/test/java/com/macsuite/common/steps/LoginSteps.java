@@ -95,7 +95,11 @@ public class LoginSteps extends StepBase {
         if (!authStateUsed) {
             CredentialProvider.Credentials credentials = CredentialProvider.getCredentials(userRole, environment);
             LoginPage loginPage = new LoginPage(page());
-            loginPage.login(credentials.getUsername(), credentials.getPassword());
+            try {
+                loginPage.login(credentials.getUsername(), credentials.getPassword(), credentials.getTotpSecret());
+            } finally {
+                PlaywrightManager.rotateTraceForScenario(false, null);
+            }
 
             if (useAuthState) {
                 String authStatePath = String.format("target/auth-state/%s/%s.json",
