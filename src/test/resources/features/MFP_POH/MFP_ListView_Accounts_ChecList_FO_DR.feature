@@ -1,7 +1,7 @@
 @ListView_Acc_CHL_FO_DR
 Feature: MFP POH Tracker
 
-  @MFP_POH_Accounts_ListView
+  @MFP_POH_Accounts_ListView_Test
   Scenario: Verify Accounts list view validation
     Given I navigate to MAC Suite Application in "UAT" environment
     When I login as "MFP" user
