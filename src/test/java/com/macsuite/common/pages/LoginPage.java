@@ -60,8 +60,11 @@ public class LoginPage {
             page.click("input#Login[type='submit'], input[name='Login'][type='submit'], [type='submit']");
         }
         
+        Locator appLauncher = page.getByTitle("App Launcher");
+        Locator credentialError = page.locator("[id='error']")
+            .filter(new Locator.FilterOptions().setHasText("Please check your username and password."));
         try {
-            page.getByTitle("App Launcher").waitFor(new Locator.WaitForOptions()
+            appLauncher.or(credentialError).first().waitFor(new Locator.WaitForOptions()
                 .setState(WaitForSelectorState.VISIBLE)
                 .setTimeout(60000));
         } catch (com.microsoft.playwright.TimeoutError e) {
@@ -70,6 +73,13 @@ public class LoginPage {
                     + "Check the failed-step screenshot and trace for a login error, identity verification/MFA, "
                     + "or an IP/session restriction on the CI runner. Verify the credentials and application URL "
                     + "configured in GitHub Actions secrets.", e);
+        }
+        if (credentialError.isVisible()) {
+            throw new IllegalStateException(
+                "Salesforce rejected the submitted username/password. Check Salesforce Setup > Login History "
+                    + "for this CI attempt to identify the rejection reason. Verify that the GitHub Actions "
+                    + "credentials belong to the sandbox configured by APP_URL_UAT; also check account lockout "
+                    + "and login restrictions. Increasing the App Launcher timeout will not resolve this rejection.");
         }
         logger.info("Login successful");
     }

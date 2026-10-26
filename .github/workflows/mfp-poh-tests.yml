@@ -45,7 +45,22 @@ jobs:
               echo "::error::Required GitHub Actions secret $variable is empty or unavailable."
               exit 1
             fi
+            if [[ "${!variable}" == *$'\r'* || "${!variable}" == *$'\n'* ]]; then
+              echo "::error::GitHub Actions secret $variable contains a line break. Update it without copied line endings."
+              exit 1
+            fi
           done
+          for variable in APP_URL_UAT MFP_UAT_USERNAME; do
+            if [[ "${!variable}" == *[[:space:]]* ]]; then
+              echo "::error::GitHub Actions secret $variable contains whitespace. Update it with the exact UAT value."
+              exit 1
+            fi
+          done
+          if [[ "$APP_URL_UAT" != https://* ]]; then
+            echo "::error::APP_URL_UAT must be an HTTPS Salesforce login URL."
+            exit 1
+          fi
+          echo "Required Salesforce secrets are available and passed format checks; values are not logged."
 
       - name: Set up JDK 21
         uses: actions/setup-java@v4
@@ -67,6 +82,8 @@ jobs:
           -Dexec.args="install --with-deps chromium"
 
       - name: Run MFP_POH feature files
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
         run: >
           mvn -B -ntp test
           -Dcucumber.features=src/test/resources/features/MFP_POH

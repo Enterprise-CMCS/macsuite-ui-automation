@@ -49,6 +49,36 @@ public class LoginPageTest {
     }
 
     @Test
+    public void supportsUsernameFirstLogin() {
+        page.setContent("<label>Username<input name='username'></label><button>Log In to Sandbox</button>"
+            + "<script>document.querySelector('button').onclick = () => {"
+            + "if (!document.querySelector('[name=pw]')) {"
+            + "document.querySelector('button').insertAdjacentHTML('beforebegin',"
+            + "'<label>Password<input name=\"pw\" type=\"password\"></label>'); return;}"
+            + "if (document.querySelector('[name=username]').value === 'test-user'"
+            + " && document.querySelector('[name=pw]').value === 'test-password') {"
+            + "document.body.innerHTML = '<button title=\"App Launcher\">Apps</button>';}};</script>");
+
+        new LoginPage(page).login("test-user", "test-password");
+
+        Assert.assertTrue(page.getByTitle("App Launcher").isVisible());
+    }
+
+    @Test
+    public void reportsSalesforceCredentialRejection() {
+        page.setContent(loginForm()
+            + "<script>document.querySelector('button').onclick = () => {"
+            + "document.body.innerHTML = '<div id=\"error\">Error: Please check your username and password. "
+            + "If you still cannot log in, contact your Salesforce administrator.</div>';};</script>");
+
+        IllegalStateException failure = Assert.expectThrows(IllegalStateException.class,
+            () -> new LoginPage(page).login("test-user", "test-password"));
+
+        Assert.assertTrue(failure.getMessage().contains("Salesforce rejected the submitted username/password"));
+        Assert.assertNull(failure.getCause());
+    }
+
+    @Test
     public void rejectsLoginThatNeverReachesAppLauncher() {
         page.setContent(loginForm()
             + "<script>document.querySelector('button').onclick = () => "
