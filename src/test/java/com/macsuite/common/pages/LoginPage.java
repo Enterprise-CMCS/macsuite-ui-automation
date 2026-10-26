@@ -60,8 +60,17 @@ public class LoginPage {
             page.click("input#Login[type='submit'], input[name='Login'][type='submit'], [type='submit']");
         }
         
-        // Wait for redirect after login
-        page.waitForLoadState();
+        try {
+            page.getByTitle("App Launcher").waitFor(new Locator.WaitForOptions()
+                .setState(WaitForSelectorState.VISIBLE)
+                .setTimeout(60000));
+        } catch (com.microsoft.playwright.TimeoutError e) {
+            throw new IllegalStateException(
+                "Salesforce login did not reach the App Launcher within 60 seconds. "
+                    + "Check the failed-step screenshot and trace for a login error, identity verification/MFA, "
+                    + "or an IP/session restriction on the CI runner. Verify the credentials and application URL "
+                    + "configured in GitHub Actions secrets.", e);
+        }
         logger.info("Login successful");
     }
 

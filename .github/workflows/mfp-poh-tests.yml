@@ -37,6 +37,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Validate required Salesforce secrets
+        shell: bash
+        run: |
+          for variable in APP_URL_UAT MFP_UAT_USERNAME MFP_UAT_PASSWORD; do
+            if [[ -z "${!variable}" ]]; then
+              echo "::error::Required GitHub Actions secret $variable is empty or unavailable."
+              exit 1
+            fi
+          done
+
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
@@ -63,6 +73,7 @@ jobs:
           -Dcucumber.filter.tags="$TAGS"
           -Dtags="$TAGS"
           -DHEADLESS=true
+          -DTRACE_SNAPSHOTS=true
 
       - name: Upload Allure HTML report
         if: always()
