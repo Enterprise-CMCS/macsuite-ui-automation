@@ -7,7 +7,7 @@ Feature: WFTCL Implementation Provisions Lifecycle
 
   @wftcl_impl_listview
   Scenario: Manage WFTCL Provisions list views
-   Given I navigate to MAC Suite Application in "UAT" environment
+    Given I navigate to MAC Suite Application in "UAT" environment
     When I login as "WFTCL" user
     And I open "WFTCL Implementation" app
     When I navigate to WFTCL Provisions
@@ -19,7 +19,7 @@ Feature: WFTCL Implementation Provisions Lifecycle
     Then I should see the list view "Clone-${timestamp-short}" is active
     When I delete the current list view
     Then I should see "List view deleted." message
-    
+
   # ============================================================
   # TC_004: Reports navigation
   # ============================================================
@@ -42,4 +42,32 @@ Feature: WFTCL Implementation Provisions Lifecycle
     And I select a random dashboard
     Then I verify refresh time and admin details are displayed on the dashboard
 
+  @WFTCL_Provisions_All  @WFTCL_Provisions
+  Scenario: Verify WFTCL Provisions All view validation
+    Given I kill the previous browser session and launch new browser instance
+    Given I navigate to MAC Suite Application in "UAT" environment
+    When I login as "WFTCL" user
+    And I open "WFTCL Implementation" app
+    When I click on "Provisions" menu
+    Then I should see the "All" list view
+    Then I can validate the "All" table columns
+      | Column Name            |
+      | Provision              |
+      | DSG Division           |
+      | MACPro System Impacted |
+      | OneMAC System Impacted |
+      | WMS System Impacted    |
+    When I select a random record from the list view
+    Then I can navigate to the random record
 
+  @wftcl_Provision_DBES_All  @WFTCL_Provisions
+  Scenario: Verify WFTCL Provision - DBES All view validation
+    When I click on "Provisions - DBES" menu
+    Then I should see the "All" list view
+    Then I can validate the "All" table columns
+      | Column Name            |
+      | Provision - DBES       |
+      | MACFin System Impacted |
+      | T-MSIS System Impacted |
+    When I select a random record from the list view
+    Then I can navigate to the random record

@@ -38,7 +38,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
+      - name: Display GitHub Runner IP
+        run: |
+          echo "GitHub Runner Public IP:"
+          curl -fsS https://api.ipify.org
+          echo ""
       - name: Validate required Salesforce secrets
         shell: bash
         run: |

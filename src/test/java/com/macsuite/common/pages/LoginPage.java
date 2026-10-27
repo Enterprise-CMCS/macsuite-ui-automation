@@ -70,10 +70,10 @@ public class LoginPage {
         Locator appLauncher = page.getByTitle("App Launcher");
         Locator credentialError = page.locator("[id='error']")
             .filter(new Locator.FilterOptions().setHasText("Please check your username and password."));
-        // Locator verificationCode = page.getByLabel("Verification Code",
-        //     new Page.GetByLabelOptions().setExact(true)).first();
+        Locator verificationCode = page.getByLabel("Verification Code",
+            new Page.GetByLabelOptions().setExact(true)).first();
         try {
-            appLauncher.or(credentialError).first().waitFor(new Locator.WaitForOptions()
+            appLauncher.or(credentialError).or(verificationCode).first().waitFor(new Locator.WaitForOptions()
                 .setState(WaitForSelectorState.VISIBLE)
                 .setTimeout(60000));
         } catch (com.microsoft.playwright.TimeoutError e) {
@@ -90,9 +90,9 @@ public class LoginPage {
                     + "credentials belong to the sandbox configured by APP_URL_UAT; also check account lockout "
                     + "and login restrictions. Increasing the App Launcher timeout will not resolve this rejection.");
         }
-        // if (verificationCode.isVisible()) {
-        //     completeTotpChallenge(verificationCode, appLauncher, totpSecret);
-        // }
+        if (verificationCode.isVisible()) {
+            completeTotpChallenge(verificationCode, appLauncher, totpSecret);
+        }
         logger.info("Login successful");
     }
 

@@ -498,6 +498,7 @@ public abstract class SfPage extends BasePage {
         } else {
             logger.warn("No records found in list view");
         }
+        page.waitForTimeout(5000);
         screenshot("Random Record : "+ recordName);
     }
 
