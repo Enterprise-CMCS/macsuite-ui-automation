@@ -36,17 +36,13 @@ jobs:
       MAILOSAUR_PASSWORD: ${{ secrets.MAILOSAUR_PASSWORD }}
 
     steps:
-      - name: Check runner public IP
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Display GitHub Runner IP
         run: |
-          echo "Runner: $RUNNER_NAME"
-          echo "OS: $RUNNER_OS"
-          echo -n "Public IP: "
-          curl -s https://api.ipify.org
-          echo
- 
-      - name: Run tests
-        run: npx playwright test
-
+          echo "GitHub Runner Public IP:"
+          curl -fsS https://api.ipify.org
+          echo ""
       - name: Validate required Salesforce secrets
         shell: bash
         run: |
