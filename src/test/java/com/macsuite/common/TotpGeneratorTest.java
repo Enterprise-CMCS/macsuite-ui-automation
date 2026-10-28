@@ -36,6 +36,35 @@ public class TotpGeneratorTest {
     }
 
     @Test
+    public void acceptsPaddedAndUnpaddedBase32() {
+        String setupKey = "GEZDGNBVGY3TQOJQGEZDGNBVGY";
+
+        Assert.assertEquals(TotpGenerator.generateCode(setupKey + "======", Instant.ofEpochSecond(59)),
+            TotpGenerator.generateCode(setupKey, Instant.ofEpochSecond(59)));
+    }
+
+    @DataProvider
+    public Object[][] malformedBase32Keys() {
+        return new Object[][] {
+            {RFC_SECRET + "A"},
+            {RFC_SECRET + "AAA"},
+            {RFC_SECRET + "AAAAAA"},
+            {RFC_SECRET + "="},
+            {"GEZDGNBVGY3TQOJQGZ"}
+        };
+    }
+
+    @Test(dataProvider = "malformedBase32Keys")
+    public void rejectsMalformedBase32WithoutDisclosingIt(String secret) {
+        IllegalArgumentException failure = Assert.expectThrows(IllegalArgumentException.class,
+            () -> TotpGenerator.generateCode(secret, Instant.ofEpochSecond(59)));
+
+        Assert.assertTrue(failure.getMessage().contains("Base32"));
+        Assert.assertFalse(failure.getMessage().contains(secret));
+        Assert.assertNull(failure.getCause());
+    }
+
+    @Test
     public void generatesCodeForConfiguredCiKeyWithoutDisclosingIt() {
         String secret = System.getenv("MFP_UAT_TOTP_SECRET");
         if (secret == null || secret.isBlank()) {
