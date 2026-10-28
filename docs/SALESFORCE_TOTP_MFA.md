@@ -121,6 +121,26 @@ changing selectors. Do not retry repeatedly against a rejected account.
 
 ## Behavior and Diagnostics
 
+Before a Salesforce login, CI runs `TotpGeneratorTest` with public RFC 6238
+reference vectors and the selected CI authenticator key. It checks generated
+codes without printing them or submitting them to Salesforce. Local tests do not
+require a key in the process environment; GitHub Actions does.
+
+If generation fails, the exception reports only the underlying failure type,
+not the key or the provider's exception message. The earlier generic message
+`Unable to generate the Salesforce verification code.` did not identify the
+cause, so it cannot establish that the registered secret is wrong.
+
+- If RFC reference vectors fail, inspect the runner JDK's HmacSHA1 provider and
+   cryptographic policy. Do not disable organization security policies to make a
+   test pass; involve the runner administrator.
+- If only the configured-key test fails, inspect the reported failure type and
+   confirm the secret's Base32 setup-key format and its compatibility with the
+   runner's cryptographic key requirements. Never paste the key into logs/chat.
+- If both generation checks pass but Salesforce rejects verification, confirm
+   user enrollment, runner clock synchronization, and the actual challenge type.
+   Successful offline generation does not prove Salesforce accepts that key.
+
 The login waits for App Launcher, Salesforce credential rejection, or the labeled
 Verification Code input. If challenged, it generates a six-digit HMAC-SHA1 TOTP
 using a 30-second period, submits Verify, and waits for App Launcher. No automatic

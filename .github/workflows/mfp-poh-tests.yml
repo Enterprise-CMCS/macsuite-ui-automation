@@ -90,6 +90,9 @@ jobs:
       - name: Compile and unpack Allure CLI
         run: mvn -B -ntp -DskipTests test-compile
 
+      - name: Validate TOTP generation before Salesforce login
+        run: mvn -B -ntp test -Dtest=com.macsuite.common.TotpGeneratorTest
+
       - name: Make Allure CLI executable
         run: chmod +x target/allure-cli/allure-*/bin/allure
 
