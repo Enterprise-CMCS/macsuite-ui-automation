@@ -21,7 +21,7 @@ concurrency:
 
 jobs:
   mfp-poh:
-    runs-on: ubuntu-latest
+    runs-on: mdp-arm-runner
     timeout-minutes: 240
 
     env:
