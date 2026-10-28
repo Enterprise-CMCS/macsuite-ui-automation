@@ -66,13 +66,19 @@ jobs:
             echo "::error::APP_URL_UAT must be an HTTPS Salesforce login URL."
             exit 1
           fi
-          for variable in MFP_UAT_TOTP_SECRET SALESFORCE_TOTP_SECRET; do
-            if [[ -n "${!variable}" && ! "${!variable}" =~ ^[A-Za-z2-7]{16,}={0,6}$ ]]; then
-              echo "::error::Optional secret $variable must contain only the Base32 authenticator setup key."
-              exit 1
-            fi
-          done
-          echo "Required Salesforce secrets are available and passed format checks; values are not logged."
+          variable=MFP_UAT_TOTP_SECRET
+          if [[ -z "${!variable}" ]]; then
+            variable=SALESFORCE_TOTP_SECRET
+          fi
+          if [[ -z "${!variable}" ]]; then
+            echo "::error::Configure MFP_UAT_TOTP_SECRET or SALESFORCE_TOTP_SECRET with the Base32 setup key enrolled for the MFP UAT user. CI must be ready for a Salesforce authenticator challenge."
+            exit 1
+          fi
+          if [[ ! "${!variable}" =~ ^[A-Za-z2-7]{16,}={0,6}$ ]]; then
+            echo "::error::Secret $variable must contain only the Base32 authenticator setup key, not a six-digit code."
+            exit 1
+          fi
+          echo "Required Salesforce secrets, including the authenticator setup key, passed format checks; values are not logged."
 
       - name: Set up JDK 21
         uses: actions/setup-java@v4

@@ -36,16 +36,18 @@ when different personas have different Salesforce accounts.
 
 ### Static Egress for MFP UAT
 
-The MFP POH workflow targets the `mfp-uat-linux` runner label. Provision this
-runner before dispatching the workflow; changing the label alone does not create
-a runner or reserve an IP range.
+The MFP POH workflow currently targets the organization-shared `mdp-arm-runner`.
+Its GitHub runner settings showed `Public IP: Disabled`; this is not evidence of
+static public egress. The following is an alternative administrator-managed
+static-IP setup, not a prerequisite for the TOTP code path:
 
 1. In your GitHub organization, create a Linux x64 larger runner with a
    GitHub-owned Ubuntu image and the smallest suitable size. Larger runner and
    static IP availability depend on your organization's plan and permissions.
 2. Name it `mfp-uat-linux` and confirm that its assigned runner label matches
-   `runs-on` in the workflow. Enable unique, static public IP address ranges and
-   set maximum concurrency to 1 initially.
+   the intended runner label. Enable unique, static public IP address ranges and
+   set maximum concurrency to 1 initially. Change the workflow's `runs-on` to
+   `mfp-uat-linux` only after that runner is provisioned and accessible.
 3. Assign it to a dedicated MFP UAT runner group and grant this repository access
    (and authorize this workflow if the group restricts workflow access).
 4. Retrieve every assigned static IP range from the runner's settings. Ask the
@@ -82,14 +84,40 @@ Salesforce Login History distinguishes two separate failures:
 1. Open Settings > Secrets and variables > Actions in the repository.
 2. Add `MFP_UAT_TOTP_SECRET` with the enrolled user's Base32 setup key, not a
    six-digit verification code. Alternatively add `SALESFORCE_TOTP_SECRET` for
-   the single-account fallback.
+   the single-account fallback. The role-specific key takes precedence. Add the
+   value directly in GitHub's secret editor; never share it in chat.
 3. Keep the existing UAT username, password and URL secrets.
 4. Run the workflow with `@MFP_POH_Accounts_ListView_Test` for the initial login
    scenario. Dependent scenarios must still include their prerequisite scenario.
 
-Both TOTP secrets are optional. A login without an MFA challenge works without
-either. If a verification-code challenge appears without a configured key, the
-test fails with a configuration message instead of silently skipping MFA.
+The MFP POH workflow requires one of these keys before browser startup so CI is
+ready for an authenticator challenge from an unfamiliar runner IP. Its preflight
+validates the selected key's format without logging it; only a live login can
+confirm that the key belongs to the enrolled Salesforce user.
+
+Local login remains unchanged: without a challenge it works without either key.
+If challenged without a configured key, the login fails with a configuration
+message instead of silently skipping MFA. A configured key is not used unless
+the verification-code input appears.
+
+The external guide's `SALESFORCE_USERNAME`, `SALESFORCE_PASSWORD`,
+`SALESFORCE_USER_TYPE`, and `SALESFORCE_AUTH_STATE_ENABLED` names do not replace
+this repository's existing configuration. Continue using `MFP_UAT_USERNAME`,
+`MFP_UAT_PASSWORD`, and `APP_URL_UAT`; the normal login step passes the resolved
+role/environment TOTP key to `LoginPage`.
+
+### Email Activation Versus Authenticator MFA
+
+Salesforce Login History showing `Failed: Computer activation required` does
+not by itself prove that Salesforce is asking for an authenticator code. If the
+screen says a code was emailed or sent by SMS, a generated TOTP cannot answer
+that challenge. Have the Salesforce administrator configure an approved
+authenticator verification method for that user/policy or trusted static egress.
+This implementation does not read email/SMS or automate push/passkey approval.
+
+If CI still fails after enrollment, inspect the challenge directly and provide
+sanitized evidence with no codes, setup keys, cookies, or personal details before
+changing selectors. Do not retry repeatedly against a rejected account.
 
 ## Behavior and Diagnostics
 
