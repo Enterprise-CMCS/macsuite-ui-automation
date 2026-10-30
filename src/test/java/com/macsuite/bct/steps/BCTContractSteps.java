@@ -148,8 +148,16 @@ public class BCTContractSteps extends StepBase {
         actualListViewName = listViewName; // Store for later verification
         listPage().createNewListView(listViewName);
     }
-
+    
+    @Then("I can verify that New button is NOT visible")
+    public void verifyNewButtonNotVisible1() {
+        listPage().verifyNewButtonNotVisible();
+    }
    
+    @Then("I validate the printable view screen")
+    public void validatePrintableViewScreen() {
+        listPage().validatePrintableViewScreen();
+    }
 
     @When("I create a {string} list with name {string}")
     public void createOrCloneListView(String action, String listViewName) {

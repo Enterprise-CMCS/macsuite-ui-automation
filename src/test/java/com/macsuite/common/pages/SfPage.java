@@ -26,7 +26,7 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 
 public abstract class SfPage extends BasePage {
     protected static final Logger logger = LoggerFactory.getLogger(SfPage.class);
-    protected final Page page;
+    protected Page page;
     protected final SfHelper helper;
     protected final FormUtils formUtils;
     private final Map<String, String> filledData = new HashMap<>();

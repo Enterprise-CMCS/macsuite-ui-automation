@@ -1,12 +1,12 @@
-@pra @smoke
+@pra_ListView_All @smoke
 Feature: PRA ICR Packages List View, Dashboard, and Reports Navigation
- 
+
   # ============================================================
   # TC_001: Home page header + list view add/clone
   # ============================================================
   @pra_listview @smoke
   Scenario: Verify PRA home page header, add a new ICR Packages list view and clone an event
-   Given I navigate to MAC Suite Application in "UAT" environment
+    Given I navigate to MAC Suite Application in "UAT" environment
     When I login as "PRA" user
     And I open "CMCS PRA Tracker" app
     Then the "CMCS Active PRA Dashboard" should be fully loaded
@@ -42,3 +42,68 @@ Feature: PRA ICR Packages List View, Dashboard, and Reports Navigation
     And I select a random dashboard
     Then I verify refresh time and admin details are displayed on the dashboard
 
+  @CMCS_ICR_Packages_ListView
+
+  Scenario: Verify CMCS ICR Packages view validation
+    Given I kill the previous browser session and launch new browser instance
+    Given I navigate to MAC Suite Application in "UAT" environment
+    When I login as "PRA" user
+    And I open "CMCS PRA Tracker" app
+    When I click on "CMCS ICR Packages" menu
+    Then I should see the "All Records" list view
+    Then I can validate the "All Records" table columns
+      | Column Name                 |
+      | Unique ID #                 |
+      | Title                       |
+      | CMS ID #                    |
+      | OMB Number                  |
+      | Generic IC #                |
+      | OMB Approval Completed Date |
+      | Last Modified Date          |
+      | Group Owner                 |
+    When I select a random record from the list view
+    Then I can navigate to the random record
+
+  @Knowledge_ListView
+  Scenario: Verify Knowledge Published Articles view validation
+    When I click on "Knowledge" menu
+    Then I should see the "Published Articles" list view
+    Then I can validate the "Published Articles" table columns
+      | Column Name    |
+      | Article Title  |
+      | Summary        |
+      | Article Number |
+      | Language       |
+      | Published Date |
+    When I select a random record from the list view
+    Then I can navigate to the random record
+
+  @Knowledge_ListView_PRA
+  Scenario: Verify Knowledge Published PRA Articles view validation
+    When I click on "Knowledge" menu
+    Then I should see the "Published PRA Articles" list view
+    Then I can validate the "Published PRA Articles" table columns
+      | Column Name    |
+      | Article Title  |
+      | Summary        |
+      | Article Number |
+      | Language       |
+    When I select a random record from the list view
+    Then I can navigate to the random record
+
+  @Contacts_ListView
+  Scenario: Verify Contacts view validation
+    When I click on "Contacts" menu
+    Then I should see the "All Contacts" list view
+    Then I can validate the "All Contacts" table columns
+      | Column Name      |
+      | Account Name     |
+      | Name             |
+      | Email            |
+      | Title            |
+      | Phone            |
+      | Created By Alias |
+      | Owner First Name |
+      | Owner Last Name  |
+    When I select a random record from the list view
+    Then I can navigate to the random record

@@ -3,9 +3,11 @@ package com.macsuite.bct.pages;
 import java.util.regex.Pattern;
 
 import com.macsuite.common.pages.SfPage;
+import com.macsuite.core.PlaywrightManager;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class ContractListPage extends SfPage {
@@ -178,5 +180,35 @@ public class ContractListPage extends SfPage {
             };
             page.getByLabel(label).first().check();
         }
+    }
+
+    public void verifyNewButtonNotVisible() {
+        Locator newButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions()
+                .setName(Pattern.compile("New", Pattern.CASE_INSENSITIVE))).first();
+        try {
+            newButton.waitFor(new Locator.WaitForOptions().setTimeout(5000));
+            throw new AssertionError("New button is visible");
+        } catch (Exception e) {
+            logger.info("New button is not visible as expected");
+        }
+        screenshot("NEW button not displayed");
+    }
+
+    public void validatePrintableViewScreen() {
+        Locator printableViewButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions()
+            .setName("Printable View").setExact(true)).first();
+        printableViewButton.waitFor(new Locator.WaitForOptions()
+            .setState(WaitForSelectorState.VISIBLE).setTimeout(10000));
+
+        page = page.waitForPopup(printableViewButton::click);
+        page.waitForLoadState(LoadState.DOMCONTENTLOADED,
+            new Page.WaitForLoadStateOptions().setTimeout(20000));
+        PlaywrightManager.setActivePage(page);
+
+        Locator printableView = page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions()
+                .setName(Pattern.compile("All Records - Printable View", Pattern.CASE_INSENSITIVE))).first();
+        printableView.waitFor(new Locator.WaitForOptions().setTimeout(10000));
+        logger.info("Printable view screen validated");
+        screenshot("Printable View Screen");
     }
 }
