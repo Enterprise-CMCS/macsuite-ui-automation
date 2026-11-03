@@ -65,6 +65,11 @@ public class CommonSteps extends StepBase {
         nav().clickHeaderMenuItem(menuItem);
     }
 
+    @When("I navigate to the {string} page")
+    public void navigateToPage(String pageName) {
+        nav().clickHeaderMenuItem(pageName);
+    }
+
     @Then("I should see the {string} list view")
     public void verifyListView(String listViewName) {
         nav().selectListView(listViewName);
@@ -78,8 +83,8 @@ public class CommonSteps extends StepBase {
     @Then("I can validate the {string} table columns")
     public void validateTableColumns(String tableName, io.cucumber.datatable.DataTable dataTable) {
         nav().validateTableColumns(dataTable.asMaps(String.class, String.class).stream()
-            .map(row -> row.get("Column Name"))
-            .toList());
+                .map(row -> row.get("Column Name"))
+                .toList());
         screenshot("Validated " + tableName + " Table Columns");
     }
 
@@ -101,6 +106,7 @@ public class CommonSteps extends StepBase {
         // Wait for either a dialog or an inline form to appear
         Locator dialog = page().getByRole(AriaRole.DIALOG);
         Locator inlineForm = page().getByText("Fields marked with an asterisk are required.");
+        screenshot("New Button Clicked");
         try {
             dialog.first().waitFor(new Locator.WaitForOptions().setTimeout(15000));
         } catch (Exception ignored) {
@@ -111,7 +117,7 @@ public class CommonSteps extends StepBase {
     @When("I click on {string} button")
     public void clickButton(String buttonName) {
         Locator button = page().getByRole(AriaRole.BUTTON)
-            .filter(new Locator.FilterOptions().setHasText(buttonName)).first();
+                .filter(new Locator.FilterOptions().setHasText(buttonName)).first();
         int timeout = "Create Contract Action".equals(buttonName) ? 30000 : 10000;
         if (button.count() == 0 || !button.isVisible()) {
             Locator dashboardIframe = page().locator("iframe[title='dashboard']:visible").last();
@@ -144,6 +150,7 @@ public class CommonSteps extends StepBase {
     @When("I click the Save button")
     public void clickSaveButton() {
         nav().clickSaveButton();
+        screenshot("Save Button Clicked");
     }
 
     @Then("I should see the success message")
@@ -244,7 +251,6 @@ public class CommonSteps extends StepBase {
         screenshot(tabName + " Tab");
     }
 
-
     @When("I select a random dashboard")
     public void selectRandomDashboard() {
         stepLogger.info("Opening a random dashboard");
@@ -288,6 +294,7 @@ public class CommonSteps extends StepBase {
     @Then("I verify the {string} section is displayed")
     public void verifySectionDisplayed(String sectionName) {
         getSalesforceBasePage().verifySectionDisplayed(sectionName);
+        screenshot("Section Displayed: " + sectionName);
     }
 
     @Then("I should see a list view deleted confirmation")

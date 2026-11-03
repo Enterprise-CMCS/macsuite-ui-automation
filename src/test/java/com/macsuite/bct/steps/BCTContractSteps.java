@@ -52,11 +52,6 @@ public class BCTContractSteps extends StepBase {
         screenshot("Contract Form Filled");
     }
 
-    @When("I fill the {string} section with:")
-    public void fillContractSection(String sectionName, Map<String, String> data) {
-        formPage().fillForm(data);
-    }
-
     @Then("I should see the contract details are correct")
     public void verifyContractDetails() {
         formPage().verifyContractCreated();
@@ -72,7 +67,7 @@ public class BCTContractSteps extends StepBase {
     public void editContractDetails() {
         detailPage().navigateToTab("Details");
     }
-    
+
     @When("I edit the details page")
     public void editDetailsPage() {
         detailPage().navigateToTab("Details");
@@ -82,11 +77,6 @@ public class BCTContractSteps extends StepBase {
     @When("I update the following fields:")
     public void updateContractFields(Map<String, String> updates) {
         detailPage().editContractFields(updates);
-    }
-
-    @And("I update the {string} section with:")
-    public void updateContractSection(String sectionName, Map<String, String> data) {
-        detailPage().updateSection(sectionName, data);
     }
 
     @Then("I should see the success message for updates")
@@ -148,8 +138,6 @@ public class BCTContractSteps extends StepBase {
         actualListViewName = listViewName; // Store for later verification
         listPage().createNewListView(listViewName);
     }
-
-   
 
     @When("I create a {string} list with name {string}")
     public void createOrCloneListView(String action, String listViewName) {
@@ -329,10 +317,137 @@ public class BCTContractSteps extends StepBase {
     public void I_search_for_new_list_view() {
         listPage().searchNewListView();
     }
- @Then("I search for cloned list view")
+
+    @Then("I search for cloned list view")
     public void I_search_for_cloned_list_view() {
         listPage().searchClonedListView();
     }
 
+    // @When("I click on {string} menu")
+    // public void clickOnMenu(String menuName) {
+    // dashboardPage().clickOnMenu(menuName);
+    // screenshot("Menu: " + menuName);
+    // }
+
+    // @When("I click New button")
+    // public void clickNewButton() {
+    // listPage().clickNewButton();
+    // screenshot("New Button Clicked");
+    // }
+
+    // @When("I click the Save button")
+    // public void clickSaveButton() {
+    // formPage().clickSave();
+    // screenshot("Save Button Clicked");
+    // }
+
+    // @Then("I should see the success message")
+    // public void verifySuccessMessage() {
+    // formPage().verifySuccessMsg();
+    // screenshot("Success Message Displayed");
+    // }
+
+    // @When("I click on {string} button")
+    // public void clickOnButton(String buttonName) {
+    // detailPage().clickButton(buttonName);
+    // screenshot("Button Clicked: " + buttonName);
+    // }
+
+    @Then("I should see the {string} modal is displayed")
+    public void verifyModalIsDisplayed(String modalName) {
+        detailPage().verifyModalDisplayed(modalName);
+        screenshot("Modal Displayed: " + modalName);
+    }
+
+    @Then("I should see the following tasks in the {string} modal:")
+    public void verifyTasksInModal(String modalName, List<String> tasks) {
+        detailPage().verifyTasksInModal(modalName, tasks);
+        screenshot("Tasks Verified in Modal: " + modalName);
+    }
+
+    @When("I select the following tasks in the {string} modal:")
+    public void selectTasksInModal(String modalName, List<String> tasks) {
+        detailPage().selectTasksInModal(modalName, tasks);
+        screenshot("Tasks Selected in Modal: " + modalName);
+    }
+
+    @Then("I should see the following tasks are displayed in the {string} tab:")
+    public void verifyTasksDisplayedInTab(String tabName, List<String> tasks) {
+        detailPage().verifyTasksDisplayedInTab(tabName, tasks);
+        screenshot("Tasks Verified in Tab: " + tabName);
+    }
+
+    // @When("I fill the {string} modal with:")
+    // public void fillModalWithData(String modalName, Map<String, String> data) {
+    // // Resolve placeholders in all values
+    // data.replaceAll((key, value) ->
+    // com.macsuite.common.TemplateValueResolver.resolve(value));
+    // formPage().fillForm(data);
+    // screenshot("Modal Filled: " + modalName);
+    // }
+    @When("I fill the {string} section with:")
+    public void fillContractSection(String sectionName, Map<String, String> data) {
+        formPage().fillForm(data);
+    }
+    // @When("I fill the {string} section with:")
+    // public void fillSectionWithData(String sectionName, DataTable dataTable) {
+    // Map<String, String> data = dataTable.asMap(String.class, String.class);
+    // // Resolve placeholders in all values
+    // data.replaceAll((key, value) ->
+    // com.macsuite.common.TemplateValueResolver.resolve(value));
+    // formPage().fillForm(data);
+    // screenshot("Section Filled: " + sectionName);
+    // }
+
+    // @When("I update the {string} section with:")
+    // public void updateSectionWithData(String sectionName, DataTable dataTable) {
+    // Map<String, String> data = dataTable.asMap(String.class, String.class);
+    // // Resolve placeholders in all values
+    // data.replaceAll((key, value) ->
+    // com.macsuite.common.TemplateValueResolver.resolve(value));
+    // detailPage().updateSection(sectionName, data);
+    // screenshot("Section Updated: " + sectionName);
+    // }
+
+    @And("I update the {string} section with:")
+    public void updateContractSection(String sectionName, Map<String, String> data) {
+        detailPage().updateSection(sectionName, data);
+        screenshot("Section Updated: " + sectionName);
+    }
+
+    @When("I update the task with:")
+    public void updateTaskWithData(DataTable dataTable) {
+        Map<String, String> data = dataTable.asMap(String.class, String.class);
+        // Resolve placeholders in all values
+        data.replaceAll((key, value) -> com.macsuite.common.TemplateValueResolver.resolve(value));
+        detailPage().updateTask(data);
+        screenshot("Task Updated");
+    }
+
+    @When("I click on the task {string}")
+    public void clickOnTask(String taskName) {
+        taskName = com.macsuite.common.TemplateValueResolver.resolve(taskName);
+        detailPage().clickOnTask(taskName);
+        screenshot("Task Clicked: " + taskName);
+    }
+
+    @Then("I should see the task {string} is displayed in the {string} tab")
+    public void verifyTaskDisplayedInTab(String taskName, String tabName) {
+        taskName = com.macsuite.common.TemplateValueResolver.resolve(taskName);
+        detailPage().verifyTaskDisplayedInTab(taskName, tabName);
+        screenshot("Task Verified: " + taskName);
+    }
+
+    @Then("I verify the {string} field is pre-populated with the {string} user")
+    public void verifyFieldPrePopulatedWithUser(String fieldName, String userName) {
+        detailPage().verifyFieldPrePopulatedWithUser(fieldName, userName);
+        screenshot("Field Pre-populated: " + fieldName);
+    }
+
+    // @Then("I verify the {string} section is displayed")
+    // public void verifySectionDisplayed(String sectionName) {
+    // detailPage().verifySectionDisplayed(sectionName);
+    // screenshot("Section Displayed: " + sectionName);
+    // }
 
 }

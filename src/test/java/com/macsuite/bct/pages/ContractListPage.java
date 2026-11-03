@@ -179,4 +179,14 @@ public class ContractListPage extends SfPage {
             page.getByLabel(label).first().check();
         }
     }
+
+    public void clickNewButton() {
+        Locator newButton = page.getByRole(AriaRole.BUTTON,
+                new Page.GetByRoleOptions().setName("New").setExact(true)).first();
+        newButton.waitFor(new Locator.WaitForOptions()
+                .setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE)
+                .setTimeout(10000));
+        newButton.click();
+        logger.info("Clicked New button");
+    }
 }

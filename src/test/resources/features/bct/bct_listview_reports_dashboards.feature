@@ -40,15 +40,4 @@ Feature: BCT Dashboard, Reports and List View Navigation
     And I select a random dashboard
     Then I verify refresh time and admin details are displayed on the dashboard
 
-    # ============================================================
-  # TC_004: Contract Dashboard
-  # ============================================================
-
-  # @bct_Contract_dashboard
-  # Scenario: Verify Contract Dashboard navigation
-  #   When I click on "Contracts" menu
-  #   And I click on "Contract Dashboard" button
-  #   Then I should see the Contract Dashboard is displayed
-  #   And I click on "Export to PDF" button
-  #   And I click on "View Contract Records" button
-
+ 

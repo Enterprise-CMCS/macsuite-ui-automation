@@ -223,4 +223,30 @@ public class BCTDashboardPage extends SfPage {
             return false;
         }
     }
+
+    public void clickOnMenu(String menuName) {
+        Locator menuItem = page.getByRole(AriaRole.MENUITEM,
+                new Page.GetByRoleOptions().setName(menuName).setExact(true)).first();
+        if (menuItem.count() == 0) {
+            // Try clicking on a navigation link if menu item is not found
+            menuItem = page.getByRole(AriaRole.LINK,
+                    new Page.GetByRoleOptions().setName(menuName).setExact(true)).first();
+        }
+        menuItem.waitFor(new Locator.WaitForOptions()
+                .setState(WaitForSelectorState.VISIBLE).setTimeout(10000));
+        highlightElement(menuItem);
+        menuItem.click();
+        logger.info("Clicked menu: {}", menuName);
+    }
+
+    public void verifyDashboardFullyLoaded(String dashboardName) {
+        Locator dashboard = page.getByRole(AriaRole.MAIN).first();
+        dashboard.waitFor(new Locator.WaitForOptions()
+                .setState(WaitForSelectorState.VISIBLE).setTimeout(15000));
+        
+        // Wait for content to be fully loaded
+        page.waitForLoadState(LoadState.NETWORKIDLE);
+        
+        logger.info("Dashboard fully loaded: {}", dashboardName);
+    }
 }
