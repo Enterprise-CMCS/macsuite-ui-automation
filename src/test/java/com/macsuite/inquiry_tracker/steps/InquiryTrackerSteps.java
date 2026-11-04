@@ -537,8 +537,8 @@ public class InquiryTrackerSteps extends ModuleSteps<InquiryTrackerPage> {
     }
 
     @When("I edit the last note to {string}")
-    public void editLastNote(String newText) {
-        getModulePage().editLastNote(newText);
+    public void editLastNote(String newNoteText) {
+        getModulePage().editLastNote(newNoteText);
     }
 
     @When("I delete the last note")

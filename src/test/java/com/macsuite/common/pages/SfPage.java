@@ -100,7 +100,7 @@ public abstract class SfPage extends BasePage {
         Locator ctx = context();
 
         Locator field = preferredLabeledField(
-                ctx.getByLabel(resolvedLabel, new Locator.GetByLabelOptions().setExact(false)));
+                ctx.getByLabel(resolvedLabel, new Locator.GetByLabelOptions().setExact(true)));
         try {
             field.waitFor(new Locator.WaitForOptions().setTimeout(5000));
             // Skip if it's a table header
@@ -112,7 +112,7 @@ public abstract class SfPage extends BasePage {
             ctx = page.locator("body");
             // Exclude related-list column headers (<th aria-label=...>) that share the field label
             field = preferredLabeledField(
-                    ctx.getByLabel(resolvedLabel, new Locator.GetByLabelOptions().setExact(false))
+                    ctx.getByLabel(resolvedLabel, new Locator.GetByLabelOptions().setExact(true))
                             .and(page.locator("*:not(th):visible")));
             field.waitFor(new Locator.WaitForOptions().setTimeout(10000));
         }
