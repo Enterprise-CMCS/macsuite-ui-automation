@@ -36,6 +36,18 @@ jobs:
       MAILOSAUR_PASSWORD: ${{ secrets.MAILOSAUR_PASSWORD }}
 
     steps:
+      - name: Fetch and print IP address for Runner
+        run: |
+          echo "=== Runner IP ==="
+          curl -s https://ifconfig.me
+          echo -e "\n========================"
+
+      - name: Print configured Timezone
+        run: |
+          echo "=== Runner Timezone ==="
+          timedatectl || date
+          echo "======================="
+          
       - name: Checkout
         uses: actions/checkout@v4
 
