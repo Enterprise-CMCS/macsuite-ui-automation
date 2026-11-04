@@ -32,18 +32,18 @@ public class LoginPageTest {
 
     @DataProvider
     public Object[][] launcherDelays() {
-        return new Object[][] {{0}, {500}};
+        return new Object[][] {{0, null}, {500, null}, {0, ""}, {500, "not-a-base32-key"}};
     }
 
     @Test(dataProvider = "launcherDelays")
-    public void waitsForAppLauncherAfterLogin(int delayMs) {
+    public void waitsForAppLauncherAfterLogin(int delayMs, String totpSecret) {
         page.setContent(loginForm()
             + "<script>document.querySelector('button').onclick = () => {"
             + "document.body.innerHTML = 'Signing in';"
             + "setTimeout(() => document.body.innerHTML = '<button title=\"App Launcher\">Apps</button>', "
             + delayMs + ");};</script>");
 
-        new LoginPage(page).login("test-user", "test-password");
+        new LoginPage(page).login("test-user", "test-password", totpSecret);
 
         Assert.assertTrue(page.getByTitle("App Launcher").isVisible());
     }
