@@ -283,7 +283,7 @@ Feature: BCT Contracts, CMCS Contracts and Contract Action permissions for dsg+o
     When I click on "View Contract Actions" button
     Then I verify "View CMCS Contracts" button is displayed
     And I click on "View CMCS Contracts" button
-    And I click on "View Contract Actions" button
+     And I click on "View Contract Actions" button
     And Verify "All Contract Action" list view is displayed
     And I click the first Contract Order Number link
     And I should not see Edit button
@@ -320,10 +320,10 @@ Feature: BCT Contracts, CMCS Contracts and Contract Action permissions for dsg+o
     When I navigate to the "Notes" tab
     And I add a note with text "Add note test"
     Then I should see the note "Add note test" displayed
-    # When I edit the last note to "Edit note test"
-    # Then I should see the note "Edit note test" displayed
-    # Then I delete the last note
-    # Then I should see note deleted confirmation
+    When I edit the last note to "Edit note test"
+    Then I should see the note "Edit note test" displayed
+    Then I delete the last note
+    Then I should see note deleted confirmation
 
     #====================================================
     #TC_12: Verify CMCS Contract Field History Tracking
