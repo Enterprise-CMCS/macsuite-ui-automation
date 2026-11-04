@@ -21,7 +21,7 @@ concurrency:
 
 jobs:
   mfp-poh:
-    runs-on: mdp-arm-runner
+    runs-on: 'codebuild-macsuite-ui-automation-dev-runner-${{github.run_id}}-${{github.run_attempt}}'
     timeout-minutes: 240
 
     env:
