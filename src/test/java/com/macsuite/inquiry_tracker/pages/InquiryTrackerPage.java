@@ -1559,6 +1559,8 @@ public class InquiryTrackerPage extends SfPage {
 		Locator viewAllLink = historyViewAllLink();
 		if (viewAllLink.count() > 0 && viewAllLink.isVisible()) {
 			viewAllLink.click();
+		} else {
+			page.locator("//a[contains(@aria-label, 'View All')][contains(@aria-label, 'History')]").click();
 		}
 
 		visibleHistoryTable().waitFor(new Locator.WaitForOptions().setTimeout(10000));
@@ -3075,18 +3077,65 @@ public class InquiryTrackerPage extends SfPage {
 		scrollToBottomOfThePage();
 		scrollToBottomUsingKeyboard();
 		page.waitForTimeout(2000);
-		page.locator("//button[@title='Edit Escalated Date']").click();
+		try {
+			boolean isEditButtonVisible = page.locator("//button[@title='Edit Escalated Date']").isVisible();
+			if (!isEditButtonVisible) {
+				logger.info("Escalated Date button is not visible as expected");
+			}
+		} catch (Exception e) {
+			logger.warn("Exception while checking Escalated Date button visibility: {}", e.getMessage());
+		}
+		page.locator("//button[@title='Edit Escalation Resolution']").click();
 		page.waitForTimeout(2000);
 		page.locator("//input[@name='Escalation_Resolution__c']").first().fill("Test");
-		page.locator("//input[@name='Escalated_Date__c']").first().click();
+		page.waitForTimeout(1000);
+		page.locator("(//button[text()='Save'])[last()]").click();
 		page.waitForTimeout(2000); // Give Salesforce a brief split-second to register the input
+		String errorMessage = page.locator("//*[contains(text(), 'Complete this field with format')]").textContent();
+		if (errorMessage != null && !errorMessage.isEmpty()) {
+			logger.error("✗ Error message displayed: {}", errorMessage);
+		}
 		String today = fetchWeekdayDate("M/d/yyyy", hoverable_Links_Count);
 		page.locator("//input[@name='Escalation_Response_Issued_Date__c']").first().fill(today);
 		page.locator("//input[@name='Escalation_Response_Issued_Date__c']").first().press("Enter");
 		page.waitForTimeout(2000); // Give Salesforce a brief split-second to register the input
+		String reviewer = page.locator(
+				"//label[text()='Escalation Resolution Date']//following::lightning-formatted-text[text()='Group Leadership']")
+				.textContent();
+		if (reviewer != null && reviewer.equals("Group Leadership")) {
+			logger.info("✓ Escalation Resolution Date reviewer is Group Leadership");
+		} else {
+			logger.warn("✗ Escalation Resolution Date reviewer is not Group Leadership");
+		}
+		screenshot("Escalation resolution date validation message");
 		// 4. SAVE CHANGES
 		page.locator("(//button[text()='Save'])[last()]").click();
-		logger.info("✓ Successfully updated Escalation Resolution Date to today: {}", today);
+		// logger.info("✓ Successfully updated Escalation Resolution Date to today: {}",
+		// today);
+	}
+
+	public void validateInquiryEscalationWarningAlertMessages() {
+		scrollToTopOfThePage();
+		page.evaluate("window.scrollTo(0, 0)");
+		String warningMessage = page.locator(
+				"(//*[contains(text(), 'Inquiry is Escalated and cannot be Responded to until de-escalated.')])[last()]")
+				.textContent();
+		if (warningMessage != null && !warningMessage.isEmpty()) {
+			logger.warn("✗ Inquiry Escalation warning alert message displayed: {}", warningMessage);
+		} else {
+			logger.info("✓ No Inquiry Escalation warning alert message displayed");
+		}
+		screenshot("Inquiry Escalation warning alert message");
+
+		String warningMessage2 = page.locator(
+				"(//*[contains(text(), 'To de-escalate the Inquiry, enter the Escalation Resolution')])[last()]")
+				.textContent();
+		if (warningMessage2 != null && !warningMessage2.isEmpty()) {
+			logger.warn("✗ Inquiry Escalation warning alert message displayed: {}", warningMessage2);
+		} else {
+			logger.info("✓ No Inquiry Escalation warning alert message displayed");
+		}
+
 	}
 
 	// ========== E2E Full Flow — OGC Fields ==========

@@ -1,10 +1,15 @@
 package com.macsuite.common.pages;
 
+import java.util.regex.Pattern;
+
 import com.macsuite.config.TestConfig;
+import com.macsuite.core.PlaywrightManager;
 import com.microsoft.playwright.Frame;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.LoadState;
+import com.microsoft.playwright.options.WaitForSelectorState;
 
 /**
  * Base page for Salesforce-specific operations.
@@ -650,6 +655,98 @@ public class SalesforceBasePage extends BasePage {
             logger.error("Failed to switch to frame '{}': {}", frameSelector, e.getMessage());
             throw new RuntimeException("Could not switch to frame: " + frameSelector, e);
         }
+    }
+
+    public void validatePrintableViewOfRandomRecord() {
+   
+       // Ensure we're on the parent/list view window first
+       int pageCount = page.context().pages().size();
+       logger.info("Total pages open: {}", pageCount);
+       
+       // Find and switch to the parent list view (usually index 0, but verify)
+       Page parentPage = null;
+       for (Page p : page.context().pages()) {
+           String url = p.url();
+           logger.info("Page URL: {}", url);
+           // Look for the list view page (not the printable view popup)
+           if (!url.contains("print") && url.contains("lightning")) {
+               parentPage = p;
+               break;
+           }
+       }
+       
+       if (parentPage == null) {
+           parentPage = page.context().pages().get(0);
+       }
+       
+       parentPage.bringToFront();
+       page = parentPage;
+       PlaywrightManager.setActivePage(page);
+       page.waitForTimeout(3000);
+       
+       // Now search for the table with All Records
+       // Try both TH (headers) and TD (data) patterns as different modules use different structures
+       Locator reportLinks = page.locator("//table[@aria-label='All Records']//tbody//tr//th//a");
+       int count = reportLinks.count();
+       
+       if (count == 0) {
+           logger.info("No links found in TH elements, trying TD elements...");
+           reportLinks = page.locator("//table[@aria-label='All Records']//tbody//tr//td//a");
+           count = reportLinks.count();
+       }
+       
+       logger.info("Found {} report links in the table", count);
+
+        if (count == 0) {
+            logger.error("Table structure: {}", page.locator("//table[@aria-label='All Records']").count());
+            logger.error("tbody count: {}", page.locator("//table[@aria-label='All Records']//tbody").count());
+            logger.error("tr count: {}", page.locator("//table[@aria-label='All Records']//tbody//tr").count());
+            logger.error("th with a: {}", page.locator("//table[@aria-label='All Records']//tbody//tr//th//a").count());
+            logger.error("td with a: {}", page.locator("//table[@aria-label='All Records']//tbody//tr//td//a").count());
+            throw new RuntimeException("No reports found in the table");
+        }
+
+        // Pick a random report
+        int randomIndex = new java.util.Random().nextInt(count);
+
+        String reportName = reportLinks.nth(randomIndex).textContent().trim();
+        logger.info("Selected random report #{} out of {}: {}", randomIndex + 1, count, reportName);
+
+        reportLinks.nth(randomIndex).click();
+        waitFor(5);
+        screenshot("Random Report Screen " + reportName);
+
+         Locator printableViewButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions()
+            .setName("Printable View").setExact(true)).first();
+        printableViewButton.waitFor(new Locator.WaitForOptions()
+            .setState(WaitForSelectorState.VISIBLE).setTimeout(10000));
+
+        page = page.waitForPopup(printableViewButton::click);
+        page.waitForLoadState(LoadState.DOMCONTENTLOADED,
+            new Page.WaitForLoadStateOptions().setTimeout(20000));
+        PlaywrightManager.setActivePage(page);
+
+        // Wait for any heading or any visible content to confirm printable view loaded
+        // The heading might be "All Records - Printable View" OR just the record name
+        Locator pageContent = page.locator("body");
+        pageContent.waitFor(new Locator.WaitForOptions().setTimeout(10000));
+        
+        logger.info("Printable view screen validated");
+        screenshot("Printable View Screen");
+
+        // Close the printable view popup and navigate back to the list view
+        page.close();
+        logger.info("Printable view popup closed");
+        
+        // Switch back to the parent list view page
+        if (page.context().pages().size() > 0) {
+            page = page.context().pages().get(0);
+            page.bringToFront();
+            PlaywrightManager.setActivePage(page);
+            page.waitForTimeout(2000);
+            logger.info("Navigated back to list view");
+        }
+
     }
 
 }

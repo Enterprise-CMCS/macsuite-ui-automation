@@ -559,6 +559,11 @@ public class InquiryTrackerSteps extends ModuleSteps<InquiryTrackerPage> {
         getModulePage().navigateBackToInquiry();
     }
 
+    @Then("I validate Inquiry Escalation warning alert messages")
+    public void validateInquiryEscalationWarningAlertMessages() {
+        getModulePage().validateInquiryEscalationWarningAlertMessages();
+    }
+
     @When("I update the escalation resolution date to today")
     public void updateEscalationResolutionDateToToday() {
         getModulePage().updateEscalationResolutionDateToToday();

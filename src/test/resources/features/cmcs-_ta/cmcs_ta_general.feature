@@ -50,11 +50,11 @@ Feature: CMCS TA Complete E2E Lifecycle
       | --None--                                  |
       | Program Integrity/PERM/MEQC               |
     And I should see CMCS category options for group "MCOG":
-      |       1135 Blanket Waivers |
+      | 1135 Blanket Waivers       |
       | Eligibility and Enrollment |
       | MCOG - Program Operations  |
       | Benefits and Coverage      |
-      |         1115 Demonstration |
+      | 1115 Demonstration         |
       | Managed Care               |
       | CMS - Medicare             |
       | HCBS                       |
@@ -66,7 +66,7 @@ Feature: CMCS TA Complete E2E Lifecycle
       | Comment | What is the Progress |
       | Mention | @shital              |
     Then I should return to the inquiry details view
-     #---- TC_002: Stage navigation + title verification ----
+    #---- TC_002: Stage navigation + title verification ----
     # Then I should see "Submitted" stage is selected by default
     And the inquiry title should start with "CMCS TA e2e"
     When I change the submitted date to last year
@@ -86,7 +86,7 @@ Feature: CMCS TA Complete E2E Lifecycle
     When I clear CMCS senior reviewer and verify stage "In Group Review"
     And I update CMCS inquiry fields and verify stage "Senior Review":
       | Technical Director | Peter Gutmann |
-     #---- TC_003: Escalation, notes, and response readiness ----
+    #---- TC_003: Escalation, notes, and response readiness ----
     When I escalate CMCS inquiry with:
       | Escalation Level            | Division Leadership, Group Leadership                           |
       | Comments                    | Formal escalation — high priority, requesting timely resolution |
@@ -94,6 +94,7 @@ Feature: CMCS TA Complete E2E Lifecycle
       | Group Leadership            | true                                                            |
       | Validate Max Comment Length | true                                                            |
     Then I should see CMCS inquiry stage "Escalated"
+    Then I validate Inquiry Escalation warning alert messages
     When I add a note "Add note test" to the inquiry
     Then I should see the note "Add note test" is displayed
     # When I edit the last note to "Edit note test"
@@ -105,9 +106,9 @@ Feature: CMCS TA Complete E2E Lifecycle
     When I navigate back to the inquiry
     And I update the escalation resolution date to today
     When I create CMCS inquiry response with:
-      | Response Type    | Response                                             |
-      | Response Details | CMCS TA response with resolution & ready to send out |
-     #---- TC_004: OGC field validations ----
+      | Response Type    | Response                                         |
+      | Response Details | CMCS TA response without resolution ${timestamp} |
+    #---- TC_004: OGC field validations ----
     When I navigate back to the inquiry
     And I enable OGC Consultation on the inquiry
     And I click the Save button
@@ -187,7 +188,7 @@ Feature: CMCS TA Complete E2E Lifecycle
     Then I should see response status is "Sent"
     And I should see the response sent date is today
     And I should see CMCS inquiry stage "Response Issued"
-        # ============================================================
+    # ============================================================
     # TC_007: Put on hold and release (standalone)
     # ============================================================
     When I navigate back to the inquiry
@@ -195,10 +196,10 @@ Feature: CMCS TA Complete E2E Lifecycle
     Then I should see "Inquiry Is On Hold" on hold message
     When I release the inquiry from hold with reason "Released from on hold"
     # Then I should see the inquiry stage returned to "Submitted"
-     #============================================================
-     #TC_008: Withdrawn + close/reopen transitions (standalone)
-     #============================================================
-     #Required field validation — None selection
+    #============================================================
+    #TC_008: Withdrawn + close/reopen transitions (standalone)
+    #============================================================
+    #Required field validation — None selection
     When I edit inquiry status
     And I select inquiry status "None"
     And I click the Save button
@@ -257,14 +258,15 @@ Feature: CMCS TA Complete E2E Lifecycle
     #TC_009: Field history tracking (standalone)
     #============================================================
     When I update CMCS inquiry for field history with:
-      | Triager      | Binu      |
+      | Triager      | Binu                  |
       | Priority     | Expedited             |
       | Category     | Benefits and Coverage |
       | Sub Category | Pharmacy              |
     And I should see CMCS inquiry field history entries:
-      | Stage          |
+      | Triager        |
       | Inquiry Status |
-      | Closed Date    |
+      | Sub Category   |
+      | Priority       |
     When I open the last sent response from the responses tab
     And I update the sent response fields with:
       | Type                         | Follow-up                      |
@@ -286,8 +288,8 @@ Feature: CMCS TA Complete E2E Lifecycle
 
   @cmcs_ta_response_details_
   Scenario: Verify response details field functionality and its field history entry
-   Given I kill the previous browser session and launch new browser instance
-   Given I navigate to MAC Suite Application in "UAT" environment
+    Given I kill the previous browser session and launch new browser instance
+    Given I navigate to MAC Suite Application in "UAT" environment
     When I login as "TA" user
     And I open "CMCS Inquiry Tracker" app
     Then the "TA CMCS Inquiries" should be fully loaded
