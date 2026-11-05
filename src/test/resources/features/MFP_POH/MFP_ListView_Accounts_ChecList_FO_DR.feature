@@ -110,9 +110,9 @@ Feature: MFP POH Tracker
 
   @MFP_POH_KnowledgeReview_ListView
   Scenario: Verify Knowledge view validation
-   Given I navigate to MAC Suite Application in "UAT" environment
-    When I login as "MFP" user
-    And I open "MFP POH" app
+  #  Given I navigate to MAC Suite Application in "UAT" environment
+  #   When I login as "MFP" user
+  #   And I open "MFP POH" app
     Then the "MFP POH Document Review Dashboard" should be fully loaded
     When I click on "Knowledge" menu
     Then I should see the "Published MFP POH Articles" list view
