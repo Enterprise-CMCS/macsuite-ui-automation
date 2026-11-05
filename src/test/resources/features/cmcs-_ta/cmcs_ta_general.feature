@@ -97,8 +97,8 @@ Feature: CMCS TA Complete E2E Lifecycle
     Then I validate Inquiry Escalation warning alert messages
     When I add a note "Add note test" to the inquiry
     Then I should see the note "Add note test" is displayed
-    # When I edit the last note to "Edit note test"
-    # Then I should see the note "Edit note test" is displayed
+    When I edit the last note to "Edit note test"
+    Then I should see the note "Edit note test" is displayed
     When I create CMCS inquiry response with:
       | Response Type    | Response                                         |
       | Response Details | CMCS TA response without resolution ${timestamp} |

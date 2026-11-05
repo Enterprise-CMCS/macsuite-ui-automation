@@ -25,10 +25,7 @@ dist/
 auth-states/**/*.json
 !auth-states/README.md
 !auth-states/*.
-
 report/
-
-
 ./claude/*/*
 # Logs
 logs/
@@ -63,8 +60,23 @@ node_modules/
 *.backup
 *~
 
-
 .playwright-cli
 
 # Local framework knowledge and requirement intake
 framework-memory/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+!gha-infrastructure/terraform-backend/terraform.tfstate
+*.tfvars
+!gha-infrastructure/github-runner/terraform.tfvars
+.terraform.lock.hcl
+.terraform.lock.hcl
+**/.terraform/
+**/terraform.tfstate
+**/terraform.tfstate.backup
+**/.terraform.tfstate.lock.info
+**/crash.log
+**/crash.*.log

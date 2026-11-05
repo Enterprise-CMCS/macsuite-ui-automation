@@ -182,33 +182,13 @@ public class ContractListPage extends SfPage {
         }
     }
 
-    public void verifyNewButtonNotVisible() {
-        Locator newButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions()
-                .setName(Pattern.compile("New", Pattern.CASE_INSENSITIVE))).first();
-        try {
-            newButton.waitFor(new Locator.WaitForOptions().setTimeout(5000));
-            throw new AssertionError("New button is visible");
-        } catch (Exception e) {
-            logger.info("New button is not visible as expected");
-        }
-        screenshot("NEW button not displayed");
-    }
-
-    public void validatePrintableViewScreen() {
-        Locator printableViewButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions()
-            .setName("Printable View").setExact(true)).first();
-        printableViewButton.waitFor(new Locator.WaitForOptions()
-            .setState(WaitForSelectorState.VISIBLE).setTimeout(10000));
-
-        page = page.waitForPopup(printableViewButton::click);
-        page.waitForLoadState(LoadState.DOMCONTENTLOADED,
-            new Page.WaitForLoadStateOptions().setTimeout(20000));
-        PlaywrightManager.setActivePage(page);
-
-        Locator printableView = page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions()
-                .setName(Pattern.compile("All Records - Printable View", Pattern.CASE_INSENSITIVE))).first();
-        printableView.waitFor(new Locator.WaitForOptions().setTimeout(10000));
-        logger.info("Printable view screen validated");
-        screenshot("Printable View Screen");
+    public void clickNewButton() {
+        Locator newButton = page.getByRole(AriaRole.BUTTON,
+                new Page.GetByRoleOptions().setName("New").setExact(true)).first();
+        newButton.waitFor(new Locator.WaitForOptions()
+                .setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE)
+                .setTimeout(10000));
+        newButton.click();
+        logger.info("Clicked New button");
     }
 }

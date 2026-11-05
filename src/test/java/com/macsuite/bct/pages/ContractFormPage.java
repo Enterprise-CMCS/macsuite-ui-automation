@@ -29,4 +29,19 @@ public class ContractFormPage extends SfPage {
         alert.waitFor(new Locator.WaitForOptions().setTimeout(5000));
         return alert.textContent().trim();
     }
+
+    public void clickSave() {
+        Locator saveButton = page.getByRole(AriaRole.BUTTON,
+                new Page.GetByRoleOptions().setName("Save").setExact(true)).first();
+        saveButton.waitFor(new Locator.WaitForOptions()
+                .setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE)
+                .setTimeout(10000));
+        saveButton.click();
+        logger.info("Clicked Save button");
+    }
+
+    public void verifySuccessMsg() {
+        helper.waitForToast("success");
+        logger.info("Success message verified");
+    }
 }

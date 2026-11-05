@@ -141,7 +141,7 @@ Feature: BCT CMCS Contracts Create, Read, Update permissions for OSG users
     Then I should see note deleted confirmation
 
     #===============================================
-    #TC_07: Verify Contract Action Modal and fields
+    #TC_07: Verify Create Contract Action Modal and fields
     #===============================================
 
     When I click on "Create Contract Action" button

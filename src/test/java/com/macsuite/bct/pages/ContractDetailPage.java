@@ -40,7 +40,12 @@ public class ContractDetailPage extends SfPage {
 
     public void editContractFields(Map<String, String> updates) {
         Locator saveButton = page.locator("button[name='SaveEdit']:visible").first();
-        if (!saveButton.isVisible()) {
+        Locator dialog = page.getByRole(AriaRole.DIALOG).last();
+        Locator dialogSaveButton = dialog.getByRole(AriaRole.BUTTON,
+                new Locator.GetByRoleOptions().setName("Save").setExact(true)).first();
+        boolean dialogEditOpen = dialog.count() > 0 && dialog.isVisible()
+                && dialogSaveButton.count() > 0 && dialogSaveButton.isVisible();
+        if (!saveButton.isVisible() && !dialogEditOpen) {
             clickRecordEditButton();
         }
         for (Map.Entry<String, String> entry : updates.entrySet()) {
@@ -578,5 +583,165 @@ public class ContractDetailPage extends SfPage {
     public void updateSection(String sectionName, Map<String, String> data) {
         editContractFields(data);
         logger.info("Updated '{}' section with data: {}", sectionName, data);
+    }
+
+    public void clickButton(String buttonName) {
+        Pattern buttonNamePattern = Pattern.compile(Pattern.quote(buttonName), Pattern.CASE_INSENSITIVE);
+        Locator button = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions()
+                .setName(buttonNamePattern)).first();
+        if (button.count() == 0) {
+            button = page.getByText(buttonName).first();
+        }
+        button.waitFor(new Locator.WaitForOptions()
+                .setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE)
+                .setTimeout(10000));
+        highlightElement(button);
+        button.click();
+        logger.info("Clicked button: {}", buttonName);
+    }
+
+    public void editLastNote(String newNoteText) {
+        java.util.List<Locator> notes = page.locator("[data-name='Notes'] button:has-text('Edit')").all();
+        if (notes.isEmpty()) {
+            throw new AssertionError("No notes found to edit");
+        }
+        Locator lastEditButton = notes.get(notes.size() - 1);
+        lastEditButton.click();
+        
+        Locator textarea = page.locator("textarea").last();
+        textarea.waitFor(new Locator.WaitForOptions()
+                .setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE)
+                .setTimeout(10000));
+        textarea.clear();
+        textarea.fill(newNoteText);
+        
+        Locator saveButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions()
+                .setName("Save").setExact(true)).last();
+        saveButton.click();
+        logger.info("Edited last note to: {}", newNoteText);
+    }
+
+    public void deleteLastNote() {
+        java.util.List<Locator> deleteButtons = page.locator("[data-name='Notes'] button:has-text('Delete')").all();
+        if (deleteButtons.isEmpty()) {
+            throw new AssertionError("No notes found to delete");
+        }
+        deleteButtons.get(deleteButtons.size() - 1).click();
+        
+        // Confirm deletion if dialog appears
+        Locator confirmButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions()
+                .setName("Delete").setExact(true)).last();
+        confirmButton.click();
+        logger.info("Deleted last note");
+    }
+
+    public void verifyNoteDeletedConfirmation() {
+        helper.waitForToast("success");
+        logger.info("Note deletion confirmed");
+    }
+
+    public void verifyModalDisplayed(String modalName) {
+        Locator modal = page.getByRole(AriaRole.DIALOG)
+                .filter(new Locator.FilterOptions().setHasText(modalName)).last();
+        modal.waitFor(new Locator.WaitForOptions()
+                .setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE)
+                .setTimeout(10000));
+        highlightElement(modal);
+        logger.info("Modal displayed: {}", modalName);
+    }
+
+    public void verifyTasksInModal(String modalName, List<String> tasks) {
+        Locator modal = page.getByRole(AriaRole.DIALOG)
+                .filter(new Locator.FilterOptions().setHasText(modalName)).last();
+        modal.waitFor(new Locator.WaitForOptions()
+                .setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE)
+                .setTimeout(10000));
+        
+        for (String task : tasks) {
+            Locator taskElement = modal.getByText(task);
+            taskElement.first().waitFor(new Locator.WaitForOptions().setTimeout(10000));
+        }
+        logger.info("Verified {} tasks in {} modal", tasks.size(), modalName);
+    }
+
+    public void selectTasksInModal(String modalName, List<String> tasks) {
+        Locator modal = page.getByRole(AriaRole.DIALOG)
+                .filter(new Locator.FilterOptions().setHasText(modalName)).last();
+        modal.waitFor(new Locator.WaitForOptions()
+                .setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE)
+                .setTimeout(10000));
+        
+        for (String task : tasks) {
+            Locator checkbox = modal.locator("input[type='checkbox']")
+                    .filter(new Locator.FilterOptions()
+                            .setHas(page.getByText(task)))
+                    .first();
+            checkbox.waitFor(new Locator.WaitForOptions().setTimeout(10000));
+            checkbox.check();
+        }
+        logger.info("Selected {} tasks in {} modal", tasks.size(), modalName);
+    }
+
+    public void verifyTasksDisplayedInTab(String tabName, List<String> tasks) {
+        navigateToTab(tabName);
+        
+        for (String task : tasks) {
+            Locator taskElement = page.getByText(task);
+            taskElement.first().waitFor(new Locator.WaitForOptions().setTimeout(10000));
+        }
+        logger.info("Verified {} tasks displayed in {} tab", tasks.size(), tabName);
+    }
+
+    public void clickOnTask(String taskName) {
+        Locator taskLink = page.getByRole(AriaRole.LINK)
+                .filter(new Locator.FilterOptions()
+                        .setHasText(taskName))
+                .first();
+        taskLink.waitFor(new Locator.WaitForOptions()
+                .setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE)
+                .setTimeout(10000));
+        highlightElement(taskLink);
+        taskLink.click();
+        logger.info("Clicked task: {}", taskName);
+    }
+
+    public void verifyTaskDisplayedInTab(String taskName, String tabName) {
+        navigateToTab(tabName);
+        Locator taskElement = page.getByText(taskName);
+        taskElement.first().waitFor(new Locator.WaitForOptions().setTimeout(10000));
+        logger.info("Task {} verified in {} tab", taskName, tabName);
+    }
+
+    public void verifyFieldPrePopulatedWithUser(String fieldName, String userName) {
+        Locator field = page.getByLabel(fieldName, new Page.GetByLabelOptions().setExact(false)).first();
+        field.waitFor(new Locator.WaitForOptions()
+                .setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE)
+                .setTimeout(10000));
+        
+        String fieldValue = field.inputValue();
+        if (!fieldValue.contains(userName)) {
+            throw new AssertionError(String.format("Field '%s' is not pre-populated with user '%s', but contains '%s'", 
+                fieldName, userName, fieldValue));
+        }
+        logger.info("Field {} is pre-populated with user {}", fieldName, userName);
+    }
+
+    public void updateTask(Map<String, String> data) {
+        for (Map.Entry<String, String> entry : data.entrySet()) {
+            String label = entry.getKey();
+            String value = entry.getValue();
+            fillField(label, value);
+        }
+        logger.info("Updated task with data: {}", data);
+    }
+
+    public void verifySectionDisplayed(String sectionName) {
+        Locator section = page.locator("h3:has-text('" + sectionName + "'), .slds-section__title:has-text('" + sectionName + "')")
+                .first();
+        section.waitFor(new Locator.WaitForOptions()
+                .setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE)
+                .setTimeout(10000));
+        highlightElement(section);
+        logger.info("Section displayed: {}", sectionName);
     }
 }
