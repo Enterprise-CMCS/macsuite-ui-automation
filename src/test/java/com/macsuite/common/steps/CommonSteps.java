@@ -189,6 +189,12 @@ public class CommonSteps extends StepBase {
         screenshot("Dashboard Loaded: " + appName);
     }
 
+    @Then("I can validate printable view of random record")
+    public void validatePrintableViewOfRandomRecord() {
+        getSalesforceBasePage().validatePrintableViewOfRandomRecord();
+        screenshot("Printable View of Random Record");
+    }
+
     @Then("I verify refresh time and admin details are displayed on the dashboard")
     public void I_verify_refresh_time_and_admin_details_are_displayed_on_the_dashboard() {
         stepLogger.info("Verifying refresh time and admin details are displayed on the dashboard");

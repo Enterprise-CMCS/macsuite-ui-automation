@@ -34,19 +34,112 @@ when different personas have different Salesforce accounts.
 
 ## GitHub Actions
 
+### Static Egress for MFP UAT
+
+The MFP POH workflow currently targets the organization-shared `mdp-arm-runner`.
+Its GitHub runner settings showed `Public IP: Disabled`; this is not evidence of
+static public egress. The following is an alternative administrator-managed
+static-IP setup, not a prerequisite for the TOTP code path:
+
+1. In your GitHub organization, create a Linux x64 larger runner with a
+   GitHub-owned Ubuntu image and the smallest suitable size. Larger runner and
+   static IP availability depend on your organization's plan and permissions.
+2. Name it `mfp-uat-linux` and confirm that its assigned runner label matches
+   the intended runner label. Enable unique, static public IP address ranges and
+   set maximum concurrency to 1 initially. Change the workflow's `runs-on` to
+   `mfp-uat-linux` only after that runner is provisioned and accessible.
+3. Assign it to a dedicated MFP UAT runner group and grant this repository access
+   (and authorize this workflow if the group restricts workflow access).
+4. Retrieve every assigned static IP range from the runner's settings. Ask the
+   Salesforce administrator to approve and add those ranges under Setup > Network
+   Access in the UAT sandbox. Convert CIDRs to start/end IPs if required by that UI.
+   Do not allowlist all GitHub-hosted runner ranges.
+5. If the automation user's profile has Login IP Ranges, have the administrator
+   check those restrictions separately. Network Access trust does not override
+   profile restrictions or mandatory MFA/session policies.
+6. Dispatch the initial login scenario below. Compare the workflow's existing
+   `Display GitHub Runner IP` output with the assigned ranges and Salesforce
+   Login History's Source IP and Status. Confirm successful login before running
+   the full feature chain.
+
+Expected behavior: trusted static egress addresses prevent new-IP computer
+activation challenges where the sandbox's policy permits. This does not disable
+mandatory MFA; keep the approved TOTP configuration below when required. An email
+computer-activation code is not an authenticator TOTP code.
+
+If the job remains queued, check runner provisioning, label, group access, and
+available capacity. There is intentionally no `ubuntu-latest` fallback, because
+that would reintroduce changing outbound IPs.
+
+Salesforce Login History distinguishes two separate failures:
+
+- `Failed: Computer activation required`: investigate trusted IP ranges and the
+  organization's identity-verification policy.
+- `Invalid Password`: verify the UAT account's exact username and password in
+  GitHub secrets and check account status with the administrator. Static IPs
+  cannot fix rejected credentials; avoid repeated retries that could lock it out.
+
+### Authenticator Secrets
+
 1. Open Settings > Secrets and variables > Actions in the repository.
 2. Add `MFP_UAT_TOTP_SECRET` with the enrolled user's Base32 setup key, not a
    six-digit verification code. Alternatively add `SALESFORCE_TOTP_SECRET` for
-   the single-account fallback.
+   the single-account fallback. The role-specific key takes precedence. Add the
+   value directly in GitHub's secret editor; never share it in chat.
 3. Keep the existing UAT username, password and URL secrets.
 4. Run the workflow with `@MFP_POH_Accounts_ListView_Test` for the initial login
    scenario. Dependent scenarios must still include their prerequisite scenario.
 
-Both TOTP secrets are optional. A login without an MFA challenge works without
-either. If a verification-code challenge appears without a configured key, the
-test fails with a configuration message instead of silently skipping MFA.
+The MFP POH workflow requires one of these keys before browser startup so CI is
+ready for an authenticator challenge from an unfamiliar runner IP. Its preflight
+validates the selected key's format without logging it; only a live login can
+confirm that the key belongs to the enrolled Salesforce user.
+
+Local login remains unchanged: without a challenge it works without either key.
+If challenged without a configured key, the login fails with a configuration
+message instead of silently skipping MFA. A configured key is not used unless
+the verification-code input appears.
+
+The external guide's `SALESFORCE_USERNAME`, `SALESFORCE_PASSWORD`,
+`SALESFORCE_USER_TYPE`, and `SALESFORCE_AUTH_STATE_ENABLED` names do not replace
+this repository's existing configuration. Continue using `MFP_UAT_USERNAME`,
+`MFP_UAT_PASSWORD`, and `APP_URL_UAT`; the normal login step passes the resolved
+role/environment TOTP key to `LoginPage`.
+
+### Email Activation Versus Authenticator MFA
+
+Salesforce Login History showing `Failed: Computer activation required` does
+not by itself prove that Salesforce is asking for an authenticator code. If the
+screen says a code was emailed or sent by SMS, a generated TOTP cannot answer
+that challenge. Have the Salesforce administrator configure an approved
+authenticator verification method for that user/policy or trusted static egress.
+This implementation does not read email/SMS or automate push/passkey approval.
+
+If CI still fails after enrollment, inspect the challenge directly and provide
+sanitized evidence with no codes, setup keys, cookies, or personal details before
+changing selectors. Do not retry repeatedly against a rejected account.
 
 ## Behavior and Diagnostics
+
+Before a Salesforce login, CI runs `TotpGeneratorTest` with public RFC 6238
+reference vectors and the selected CI authenticator key. It checks generated
+codes without printing them or submitting them to Salesforce. Local tests do not
+require a key in the process environment; GitHub Actions does.
+
+If generation fails, the exception reports only the underlying failure type,
+not the key or the provider's exception message. The earlier generic message
+`Unable to generate the Salesforce verification code.` did not identify the
+cause, so it cannot establish that the registered secret is wrong.
+
+- If RFC reference vectors fail, inspect the runner JDK's HmacSHA1 provider and
+   cryptographic policy. Do not disable organization security policies to make a
+   test pass; involve the runner administrator.
+- If only the configured-key test fails, inspect the reported failure type and
+   confirm the secret's Base32 setup-key format and its compatibility with the
+   runner's cryptographic key requirements. Never paste the key into logs/chat.
+- If both generation checks pass but Salesforce rejects verification, confirm
+   user enrollment, runner clock synchronization, and the actual challenge type.
+   Successful offline generation does not prove Salesforce accepts that key.
 
 The login waits for App Launcher, Salesforce credential rejection, or the labeled
 Verification Code input. If challenged, it generates a six-digit HMAC-SHA1 TOTP

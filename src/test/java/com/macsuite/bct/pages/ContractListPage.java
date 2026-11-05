@@ -3,9 +3,11 @@ package com.macsuite.bct.pages;
 import java.util.regex.Pattern;
 
 import com.macsuite.common.pages.SfPage;
+import com.macsuite.core.PlaywrightManager;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class ContractListPage extends SfPage {

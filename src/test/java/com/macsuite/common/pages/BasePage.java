@@ -660,6 +660,8 @@ public abstract class BasePage extends StepBase {
     public void scrollToTopOfThePage() {
         try {
             page.evaluate("window.scrollTo(0, 0)");
+            page.evaluate("window.scrollTo({ top: 0, behavior: 'smooth' })");
+            
             logger.info("Scrolled to the top of the page");
 
         } catch (Exception e) {
