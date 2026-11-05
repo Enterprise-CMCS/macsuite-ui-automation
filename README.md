@@ -162,6 +162,12 @@ Run with browser visible:
 mvn clean test -DHEADLESS=false
 ```
 
+Browser rendering uses a fixed 1920x1080 viewport and screen size in both headed
+and headless runs, including restored authentication contexts and popups. This
+desktop layout is independent of the self-hosted runner's display resolution;
+videos use the same dimensions. Headed Chromium also requests a maximized window,
+but a service or small remote desktop cannot guarantee physical window sizing.
+
 Run with slow mode:
 
 ```bash
