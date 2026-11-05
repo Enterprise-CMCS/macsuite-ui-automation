@@ -42,6 +42,30 @@ public class EnvironmentResolver {
         );
     }
 
+    public static String getRHTPEnvironmentUrl(String environment) {
+        String envKey = "RHTP_APP_URL_" + environment.toUpperCase();
+        String url = EnvLoader.get(envKey);
+
+        if (url != null && !url.isEmpty()) {
+            logger.info("Using URL for environment '{}': {}", environment, url);
+            return url;
+        }
+
+        // Fallback to default APP_URL from TestConfig
+        logger.warn("No URL found for environment '{}' (key: {}). Using default URL from TestConfig.", environment, envKey);
+        url = TestConfig.getDefaultAppUrl();
+
+        if (url != null && !url.isEmpty()) {
+            logger.info("Using default URL: {}", url);
+            return url;
+        }
+
+        throw new IllegalStateException(
+                String.format("No URL configured for environment '%s'. Expected key: %s or default APP_URL", 
+                        environment, envKey)
+        );
+    }
+
     /**
      * Get the default application URL.
      *

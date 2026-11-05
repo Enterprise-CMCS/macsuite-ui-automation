@@ -45,6 +45,14 @@ public class CommonSteps extends StepBase {
         stepLogger.info("Navigated to {} environment: {}", environment, appUrl);
     }
 
+     @Given("I navigate to MAC Suite RHTP Application in {string} environment")
+    public void navigateToRHTPEnvironment(String environment) {
+        LoginSteps.setCurrentEnvironment(environment);
+        String appUrl = EnvironmentResolver.getRHTPEnvironmentUrl(environment);
+        navigate(appUrl);
+        stepLogger.info("Navigated to {} environment: {}", environment, appUrl);
+    }
+
     @When("I open {string} app")
     public void openApp(String appName) {
         nav().selectSalesforceApp(appName);
