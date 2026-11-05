@@ -1,0 +1,173 @@
+name: CMCS TA Tests
+
+on:
+  schedule:
+    # Sunday/Thursday 9:00 PM EST (UTC-5) = Monday/Friday 02:00 UTC.
+    # Fixed EST schedule runs at 10:00 PM EDT during daylight saving time.
+    - cron: '0 2 * * 1,5'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment (overrides feature-file values in GitHub Actions)'
+        required: true
+        default: 'UAT'
+        type: choice
+        options:
+          - QA
+          - UAT
+          - SEI
+      tags:
+        description: 'Cucumber tag expression within features/cmcs-_ta (include prerequisite scenarios for chained flows)'
+        required: false
+        default: 'not @ignore'
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cmcs-ta-tests
+  cancel-in-progress: false
+
+jobs:
+  cmcs-ta:
+    runs-on: 'codebuild-macsuite-ui-automation-dev-runner-${{github.run_id}}-${{github.run_attempt}}'
+    timeout-minutes: 240
+
+    env:
+      HEADLESS: 'true'
+      TAGS: ${{ github.event.inputs.tags || 'not @ignore' }}
+      PIPELINE_ENVIRONMENT: ${{ github.event.inputs.environment || 'UAT' }}
+      PIPELINE_APP_URL: ${{ secrets[format('APP_URL_{0}', github.event.inputs.environment || 'UAT')] }}
+      PIPELINE_USERNAME: ${{ secrets[format('TA_{0}_USERNAME', github.event.inputs.environment || 'UAT')] }}
+      PIPELINE_PASSWORD: ${{ secrets[format('TA_{0}_PASSWORD', github.event.inputs.environment || 'UAT')] }}
+      MAILOSAUR_USERNAME: ${{ secrets.MAILOSAUR_USERNAME }}
+      MAILOSAUR_PASSWORD: ${{ secrets.MAILOSAUR_PASSWORD }}
+
+    steps:
+      - name: Fetch and print IP address for Runner
+        run: |
+          echo "=== Runner IP ==="
+          curl -s https://ifconfig.me
+          echo -e "\n========================"
+
+      - name: Print configured Timezone
+        run: |
+          echo "=== Runner Timezone ==="
+          timedatectl || date
+          echo "======================="
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate required Salesforce secrets
+        shell: bash
+        run: |
+          case "$PIPELINE_ENVIRONMENT" in
+            QA|UAT|SEI) ;;
+            *) echo "::error::Environment must be QA, UAT or SEI."; exit 1 ;;
+          esac
+          echo "Selected environment: $PIPELINE_ENVIRONMENT (overrides feature-file environment)."
+          for variable in PIPELINE_APP_URL PIPELINE_USERNAME PIPELINE_PASSWORD; do
+            if [[ -z "${!variable}" ]]; then
+              echo "::error::$variable is unavailable. Configure APP_URL_${PIPELINE_ENVIRONMENT}, TA_${PIPELINE_ENVIRONMENT}_USERNAME and TA_${PIPELINE_ENVIRONMENT}_PASSWORD."
+              exit 1
+            fi
+            if [[ "${!variable}" == *$'\r'* || "${!variable}" == *$'\n'* ]]; then
+              echo "::error::GitHub Actions secret $variable contains a line break. Update it without copied line endings."
+              exit 1
+            fi
+          done
+          for variable in PIPELINE_APP_URL PIPELINE_USERNAME; do
+            if [[ "${!variable}" == *[[:space:]]* ]]; then
+              echo "::error::$variable contains whitespace. Update the selected environment's secret with the exact value."
+              exit 1
+            fi
+          done
+          if [[ "$PIPELINE_APP_URL" != https://* ]]; then
+            echo "::error::APP_URL_${PIPELINE_ENVIRONMENT} must be an HTTPS Salesforce login URL."
+            exit 1
+          fi
+          printf '%s=%s\n' \
+            "APP_URL_${PIPELINE_ENVIRONMENT}" "$PIPELINE_APP_URL" \
+            "TA_${PIPELINE_ENVIRONMENT}_USERNAME" "$PIPELINE_USERNAME" \
+            "TA_${PIPELINE_ENVIRONMENT}_PASSWORD" "$PIPELINE_PASSWORD" >> "$GITHUB_ENV"
+          echo "Required Salesforce URL and credentials passed format checks; values are not logged."
+
+      - name: Ping Salesforce Login Endpoint
+        shell: bash
+        run: |
+          echo "Checking connection to $PIPELINE_APP_URL..."
+          HTTP_STATUS=$(curl -s -o /dev/null -I -w "%{http_code}" --max-time 15 -L "$PIPELINE_APP_URL")
+
+          echo "Received HTTP status code: $HTTP_STATUS"
+
+          if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 400 ]; then
+            echo "Salesforce instance is accessible."
+          else
+            echo "::error::Cannot connect to Salesforce. HTTP Status: $HTTP_STATUS"
+            exit 1
+          fi
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Compile and unpack Allure CLI
+        run: mvn -B -ntp -DskipTests test-compile
+
+      - name: Make Allure CLI executable
+        run: chmod +x target/allure-cli/allure-*/bin/allure
+
+      - name: Install Playwright Chromium and OS dependencies
+        run: >
+          mvn -B -ntp exec:java -e
+          -Dexec.mainClass=com.microsoft.playwright.CLI
+          -Dexec.args="install --with-deps chromium"
+
+      - name: Run cmcs-_ta feature files
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+        run: >
+          mvn -B -ntp test
+          -Dcucumber.features=src/test/resources/features/cmcs-_ta
+          -Dcucumber.filter.tags="$TAGS"
+          -Dtags="$TAGS"
+          -DHEADLESS=true
+          -DTRACE_SNAPSHOTS=true
+
+      - name: Upload Allure HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cmcs-ta-allure-report-${{ github.run_number }}
+          path: report/
+          if-no-files-found: ignore
+          retention-days: 30
+
+      - name: Upload Cucumber and Surefire reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cmcs-ta-test-results-${{ github.run_number }}
+          path: |
+            target/cucumber-reports/
+            target/surefire-reports/
+            target/allure-results/
+          if-no-files-found: ignore
+          retention-days: 30
+
+      - name: Upload videos and traces
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cmcs-ta-videos-traces-${{ github.run_number }}
+          path: |
+            target/videos/
+            target/traces/
+            target/screenshots/
+          if-no-files-found: ignore
+          retention-days: 14
