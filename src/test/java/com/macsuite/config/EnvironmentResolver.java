@@ -1,5 +1,7 @@
 package com.macsuite.config;
 
+import java.util.Locale;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,6 +11,23 @@ import org.slf4j.LoggerFactory;
  */
 public class EnvironmentResolver {
     private static final Logger logger = LoggerFactory.getLogger(EnvironmentResolver.class);
+
+    public static String resolveEnvironment(String featureEnvironment) {
+        return resolveEnvironment(featureEnvironment, System.getenv("GITHUB_ACTIONS"),
+                EnvLoader.get("PIPELINE_ENVIRONMENT", null));
+    }
+
+    static String resolveEnvironment(String featureEnvironment, String githubActions, String pipelineEnvironment) {
+        if (!Boolean.parseBoolean(githubActions) || pipelineEnvironment == null || pipelineEnvironment.isBlank()) {
+            return featureEnvironment;
+        }
+        String environment = pipelineEnvironment.trim().toUpperCase(Locale.ROOT);
+        if (!environment.equals("QA") && !environment.equals("UAT") && !environment.equals("SEI")) {
+            throw new IllegalArgumentException("PIPELINE_ENVIRONMENT must be QA, UAT or SEI.");
+        }
+        logger.info("GitHub Actions environment override: {} -> {}", featureEnvironment, environment);
+        return environment;
+    }
 
     /**
      * Get the application URL for a specific environment.

@@ -132,6 +132,18 @@ Run by tag with parallel execution:
 mvn clean test -Dcucumber.filter.tags="@demo" -Dthreads=4
 ```
 
+### GitHub Actions Environment Selection
+
+The MFP POH and Hiring Metrics workflows provide an `environment` dropdown with
+`QA`, `UAT`, and `SEI`. Manual and scheduled runs default to `UAT`. In GitHub
+Actions, `PIPELINE_ENVIRONMENT` overrides the environment in the feature file
+for both navigation and login. Local runs continue to use feature-file values.
+
+Configure secrets for each environment you want to run: `APP_URL_<ENV>`,
+`MFP_<ENV>_USERNAME` / `MFP_<ENV>_PASSWORD` for MFP POH, and
+`HMH_<ENV>_USERNAME` / `HMH_<ENV>_PASSWORD` for Hiring Metrics. Only the selected
+environment's secrets are loaded; missing values fail before browser tests.
+
 ### Parallel Lane Execution
 
 Use `testng-parallel-lanes.xml` when the full suite needs to finish faster than a single-browser sequential run. This suite runs four TestNG lanes at the same time:
@@ -161,6 +173,12 @@ Run with browser visible:
 ```bash
 mvn clean test -DHEADLESS=false
 ```
+
+Browser rendering uses a fixed 1920x1080 viewport and screen size in both headed
+and headless runs, including restored authentication contexts and popups. This
+desktop layout is independent of the self-hosted runner's display resolution;
+videos use the same dimensions. Headed Chromium also requests a maximized window,
+but a service or small remote desktop cannot guarantee physical window sizing.
 
 Run with slow mode:
 

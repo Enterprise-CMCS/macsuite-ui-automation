@@ -22,6 +22,8 @@ import com.microsoft.playwright.Video;
  */
 public class PlaywrightManager {
     private static final Logger logger = LoggerFactory.getLogger(PlaywrightManager.class);
+    private static final int VIEWPORT_WIDTH = 1920;
+    private static final int VIEWPORT_HEIGHT = 1080;
     private static final ThreadLocal<Playwright> playwrightThreadLocal = new ThreadLocal<>();
     private static final ThreadLocal<Browser> browserThreadLocal = new ThreadLocal<>();
     private static final ThreadLocal<BrowserContext> contextThreadLocal = new ThreadLocal<>();
@@ -40,6 +42,14 @@ public class PlaywrightManager {
         return new Tracing.StartOptions()
                 .setScreenshots(true)
                 .setSnapshots(enableSnapshots);
+    }
+
+    private static Browser.NewContextOptions newContextOptions() {
+        return new Browser.NewContextOptions()
+                .setViewportSize(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                .setScreenSize(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                .setRecordVideoDir(Paths.get("target/videos"))
+                .setRecordVideoSize(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
     }
 
     /**
@@ -85,7 +95,8 @@ public class PlaywrightManager {
                             .setSlowMo(slowMo)
                             .setArgs(Arrays.asList(
                                     "--disable-blink-features=AutomationControlled",
-                                    "--start-maximized" // Maximize window on start
+                                    "--start-maximized",
+                                    "--window-size=" + VIEWPORT_WIDTH + "," + VIEWPORT_HEIGHT
                             )));
             browserThreadLocal.set(browser);
 
@@ -94,17 +105,14 @@ public class PlaywrightManager {
             videoNameThreadLocal.set(videoFileName);
 
             // Configure browser context with optional authentication state
-            Browser.NewContextOptions contextOptions = new Browser.NewContextOptions()
-                    .setViewportSize(null) // Use full window size (maximized)
-                    .setRecordVideoDir(Paths.get("target/videos"))
-                    .setRecordVideoSize(1920, 1080);
+            Browser.NewContextOptions contextOptions = newContextOptions();
 
             // Load authentication state if provided and file exists
             boolean authStateLoaded = false;
             if (authStateFile != null && !authStateFile.isEmpty()) {
                 java.nio.file.Path authPath = Paths.get(authStateFile);
                 if (java.nio.file.Files.exists(authPath)) {
-                    contextOptions.setStorageState(authPath.toString());
+                    contextOptions.setStorageStatePath(authPath);
                     authStateLoaded = true;
                     logger.info("Loading authentication state from: {}", authStateFile);
                 } else {
@@ -125,8 +133,9 @@ public class PlaywrightManager {
             pageThreadLocal.set(page);
 
             logger.info(
-                    "PlaywrightManager initialized for thread: {} (headless: {}, video: {}, authState: {}, maximized: true)",
-                    Thread.currentThread().getId(), headless, videoFileName, authStateLoaded ? authStateFile : "none");
+                    "PlaywrightManager initialized for thread: {} (headless: {}, video: {}, authState: {}, viewport: {}x{})",
+                    Thread.currentThread().getId(), headless, videoFileName, authStateLoaded ? authStateFile : "none",
+                    VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
         } catch (Exception e) {
             logger.error("Failed to initialize Playwright", e);
             throw new RuntimeException("Playwright initialization failed", e);
@@ -301,14 +310,11 @@ public class PlaywrightManager {
 
         try {
             Browser browser = browserThreadLocal.get();
-            Browser.NewContextOptions opts = new Browser.NewContextOptions()
-                    .setViewportSize(null)
-                    .setRecordVideoDir(Paths.get("target/videos"))
-                    .setRecordVideoSize(1920, 1080);
+            Browser.NewContextOptions opts = newContextOptions();
 
             java.nio.file.Path authPath = Paths.get(authStateFile);
             if (java.nio.file.Files.exists(authPath)) {
-                opts.setStorageState(authPath.toString());
+                opts.setStorageStatePath(authPath);
                 logger.info("reinitContext: loading auth state from {}", authStateFile);
             } else {
                 logger.warn("reinitContext: auth state file not found: {}", authStateFile);
