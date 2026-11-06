@@ -959,10 +959,12 @@ class InquiryTrackerResponseHelper {
 		} catch (Exception e) {
 			logger.warn("Edit Response Details button not found - may already be in edit mode");
 		}
-		this.page.waitForTimeout(2000);
-		page.locator("//button[@aria-label='Response Details']").click();
-		this.page.waitForTimeout(2000);
-		try{
+		this.page.waitForTimeout(3000);
+		// scrollIntoView("//button[@aria-label='Response Details']");
+		// this.page.waitForTimeout(2000);
+		// page.locator("//button[@aria-label='Response Details']").click();
+		// this.page.waitForTimeout(2000);
+	
 		Locator responseDetailsDropdown = page.getByRole(AriaRole.COMBOBOX,
 				new Page.GetByRoleOptions().setName("Response Details").setExact(true)).first();
 		responseDetailsDropdown.waitFor(new Locator.WaitForOptions().setTimeout(8000));
@@ -971,7 +973,7 @@ class InquiryTrackerResponseHelper {
 				"lightning-base-combobox-item[data-value='" + picklistValue + "']").first();
 		responseDetailsOption.waitFor(new Locator.WaitForOptions().setTimeout(10000));
 		responseDetailsOption.click();
-		} catch (Exception e) {}
+		
 		this.page.waitForTimeout(2000);
 
 		if (notes != null && !notes.isBlank()) {
@@ -980,6 +982,10 @@ class InquiryTrackerResponseHelper {
 			notesInput.fill(notes);
 		}
 		logger.info("✓ Set Response Details = '{}' (notes: '{}')", picklistValue, notes == null ? "" : notes);
+	}
+
+	private void scrollIntoView(String string) {
+		page.locator(string).scrollIntoViewIfNeeded();
 	}
 
 	/**
