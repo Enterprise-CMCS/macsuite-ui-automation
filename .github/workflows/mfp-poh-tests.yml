@@ -2,10 +2,20 @@ name: MFP POH Tests
 
 on:
   schedule:
-    # GitHub cron is UTC only: 03:00 UTC = 10:00 PM EST (11:00 PM during EDT)
-    - cron: '0 3 * * *'
+    # Sunday/Thursday 9:00 PM EST (UTC-5) = Monday/Friday 02:00 UTC.
+    # Fixed EST schedule runs at 10:00 PM EDT during daylight saving time.
+    - cron: '0 2 * * 1,5'
   workflow_dispatch:
     inputs:
+      environment:
+        description: 'Environment (overrides feature-file values in GitHub Actions)'
+        required: true
+        default: 'UAT'
+        type: choice
+        options:
+          - QA
+          - UAT
+          - SEI
       tags:
         description: 'Cucumber tag expression applied within features/MFP_POH'
         required: false
@@ -27,11 +37,10 @@ jobs:
     env:
       HEADLESS: 'true'
       TAGS: ${{ github.event.inputs.tags || 'not @ignore' }}
-      MFP_UAT_USERNAME: ${{ secrets.MFP_UAT_USERNAME }}
-      MFP_UAT_PASSWORD: ${{ secrets.MFP_UAT_PASSWORD }}
-      MFP_UAT_TOTP_SECRET: ${{ secrets.MFP_UAT_TOTP_SECRET }}
-      SALESFORCE_TOTP_SECRET: ${{ secrets.SALESFORCE_TOTP_SECRET }}
-      APP_URL_UAT: ${{ secrets.APP_URL_UAT }}
+      PIPELINE_ENVIRONMENT: ${{ github.event.inputs.environment || 'UAT' }}
+      PIPELINE_APP_URL: ${{ secrets[format('APP_URL_{0}', github.event.inputs.environment || 'UAT')] }}
+      PIPELINE_USERNAME: ${{ secrets[format('MFP_{0}_USERNAME', github.event.inputs.environment || 'UAT')] }}
+      PIPELINE_PASSWORD: ${{ secrets[format('MFP_{0}_PASSWORD', github.event.inputs.environment || 'UAT')] }}
       MAILOSAUR_USERNAME: ${{ secrets.MAILOSAUR_USERNAME }}
       MAILOSAUR_PASSWORD: ${{ secrets.MAILOSAUR_PASSWORD }}
 
@@ -54,9 +63,14 @@ jobs:
       - name: Validate required Salesforce secrets
         shell: bash
         run: |
-          for variable in APP_URL_UAT MFP_UAT_USERNAME MFP_UAT_PASSWORD; do
+          case "$PIPELINE_ENVIRONMENT" in
+            QA|UAT|SEI) ;;
+            *) echo "::error::Environment must be QA, UAT or SEI."; exit 1 ;;
+          esac
+          echo "Selected environment: $PIPELINE_ENVIRONMENT (overrides feature-file environment)."
+          for variable in PIPELINE_APP_URL PIPELINE_USERNAME PIPELINE_PASSWORD; do
             if [[ -z "${!variable}" ]]; then
-              echo "::error::Required GitHub Actions secret $variable is empty or unavailable."
+              echo "::error::$variable is unavailable. Configure APP_URL_${PIPELINE_ENVIRONMENT}, MFP_${PIPELINE_ENVIRONMENT}_USERNAME and MFP_${PIPELINE_ENVIRONMENT}_PASSWORD."
               exit 1
             fi
             if [[ "${!variable}" == *$'\r'* || "${!variable}" == *$'\n'* ]]; then
@@ -64,36 +78,28 @@ jobs:
               exit 1
             fi
           done
-          for variable in APP_URL_UAT MFP_UAT_USERNAME; do
+          for variable in PIPELINE_APP_URL PIPELINE_USERNAME; do
             if [[ "${!variable}" == *[[:space:]]* ]]; then
-              echo "::error::GitHub Actions secret $variable contains whitespace. Update it with the exact UAT value."
+              echo "::error::$variable contains whitespace. Update the selected environment's secret with the exact value."
               exit 1
             fi
           done
-          if [[ "$APP_URL_UAT" != https://* ]]; then
-            echo "::error::APP_URL_UAT must be an HTTPS Salesforce login URL."
+          if [[ "$PIPELINE_APP_URL" != https://* ]]; then
+            echo "::error::APP_URL_${PIPELINE_ENVIRONMENT} must be an HTTPS Salesforce login URL."
             exit 1
           fi
-          variable=MFP_UAT_TOTP_SECRET
-          if [[ -z "${!variable}" ]]; then
-            variable=SALESFORCE_TOTP_SECRET
-          fi
-          if [[ -z "${!variable}" ]]; then
-            echo "::error::Configure MFP_UAT_TOTP_SECRET or SALESFORCE_TOTP_SECRET with the Base32 setup key enrolled for the MFP UAT user. CI must be ready for a Salesforce authenticator challenge."
-            exit 1
-          fi
-          if [[ ! "${!variable}" =~ ^[A-Za-z2-7]{16,}={0,6}$ ]]; then
-            echo "::error::Secret $variable must contain only the Base32 authenticator setup key, not a six-digit code."
-            exit 1
-          fi
-          echo "Required Salesforce secrets, including the authenticator setup key, passed format checks; values are not logged."
+          printf '%s=%s\n' \
+            "APP_URL_${PIPELINE_ENVIRONMENT}" "$PIPELINE_APP_URL" \
+            "MFP_${PIPELINE_ENVIRONMENT}_USERNAME" "$PIPELINE_USERNAME" \
+            "MFP_${PIPELINE_ENVIRONMENT}_PASSWORD" "$PIPELINE_PASSWORD" >> "$GITHUB_ENV"
+          echo "Required Salesforce URL and credentials passed format checks; values are not logged."
 
       - name: Ping Salesforce Login Endpoint
         shell: bash
         run: | 
-          echo "Checking connection to $APP_URL_UAT..."
+          echo "Checking connection to $PIPELINE_APP_URL..."
           # Performs a fast HEAD request, follows redirects up to 3 times, max timeout 15 seconds
-          HTTP_STATUS=$(curl -s -o /dev/null -I -w "%{http_code}" --max-time 15 -L "$APP_URL_UAT")
+          HTTP_STATUS=$(curl -s -o /dev/null -I -w "%{http_code}" --max-time 15 -L "$PIPELINE_APP_URL")
           
           echo "Received HTTP status code: $HTTP_STATUS"
           
@@ -113,9 +119,6 @@ jobs:
 
       - name: Compile and unpack Allure CLI
         run: mvn -B -ntp -DskipTests test-compile
-
-      - name: Validate TOTP generation before Salesforce login
-        run: mvn -B -ntp test -Dtest=com.macsuite.common.TotpGeneratorTest
 
       - name: Make Allure CLI executable
         run: chmod +x target/allure-cli/allure-*/bin/allure

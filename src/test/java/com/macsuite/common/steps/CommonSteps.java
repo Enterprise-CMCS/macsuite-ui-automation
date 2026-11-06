@@ -39,8 +39,17 @@ public class CommonSteps extends StepBase {
 
     @Given("I navigate to MAC Suite Application in {string} environment")
     public void navigateToEnvironment(String environment) {
+        String effectiveEnvironment = EnvironmentResolver.resolveEnvironment(environment);
+        LoginSteps.setCurrentEnvironment(effectiveEnvironment);
+        String appUrl = EnvironmentResolver.getEnvironmentUrl(effectiveEnvironment);
+        navigate(appUrl);
+        stepLogger.info("Navigated to {} environment: {}", effectiveEnvironment, appUrl);
+    }
+
+     @Given("I navigate to MAC Suite RHTP Application in {string} environment")
+    public void navigateToRHTPEnvironment(String environment) {
         LoginSteps.setCurrentEnvironment(environment);
-        String appUrl = EnvironmentResolver.getEnvironmentUrl(environment);
+        String appUrl = EnvironmentResolver.getRHTPEnvironmentUrl(environment);
         navigate(appUrl);
         stepLogger.info("Navigated to {} environment: {}", environment, appUrl);
     }

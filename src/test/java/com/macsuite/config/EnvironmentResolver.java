@@ -1,5 +1,7 @@
 package com.macsuite.config;
 
+import java.util.Locale;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,6 +11,23 @@ import org.slf4j.LoggerFactory;
  */
 public class EnvironmentResolver {
     private static final Logger logger = LoggerFactory.getLogger(EnvironmentResolver.class);
+
+    public static String resolveEnvironment(String featureEnvironment) {
+        return resolveEnvironment(featureEnvironment, System.getenv("GITHUB_ACTIONS"),
+                EnvLoader.get("PIPELINE_ENVIRONMENT", null));
+    }
+
+    static String resolveEnvironment(String featureEnvironment, String githubActions, String pipelineEnvironment) {
+        if (!Boolean.parseBoolean(githubActions) || pipelineEnvironment == null || pipelineEnvironment.isBlank()) {
+            return featureEnvironment;
+        }
+        String environment = pipelineEnvironment.trim().toUpperCase(Locale.ROOT);
+        if (!environment.equals("QA") && !environment.equals("UAT") && !environment.equals("SEI")) {
+            throw new IllegalArgumentException("PIPELINE_ENVIRONMENT must be QA, UAT or SEI.");
+        }
+        logger.info("GitHub Actions environment override: {} -> {}", featureEnvironment, environment);
+        return environment;
+    }
 
     /**
      * Get the application URL for a specific environment.
@@ -20,6 +39,30 @@ public class EnvironmentResolver {
      */
     public static String getEnvironmentUrl(String environment) {
         String envKey = "APP_URL_" + environment.toUpperCase();
+        String url = EnvLoader.get(envKey);
+
+        if (url != null && !url.isEmpty()) {
+            logger.info("Using URL for environment '{}': {}", environment, url);
+            return url;
+        }
+
+        // Fallback to default APP_URL from TestConfig
+        logger.warn("No URL found for environment '{}' (key: {}). Using default URL from TestConfig.", environment, envKey);
+        url = TestConfig.getDefaultAppUrl();
+
+        if (url != null && !url.isEmpty()) {
+            logger.info("Using default URL: {}", url);
+            return url;
+        }
+
+        throw new IllegalStateException(
+                String.format("No URL configured for environment '%s'. Expected key: %s or default APP_URL", 
+                        environment, envKey)
+        );
+    }
+
+    public static String getRHTPEnvironmentUrl(String environment) {
+        String envKey = "RHTP_APP_URL_" + environment.toUpperCase();
         String url = EnvLoader.get(envKey);
 
         if (url != null && !url.isEmpty()) {

@@ -1,0 +1,199 @@
+name: BCT Tests
+
+on:
+  schedule:
+    # Sunday/Thursday 9:00 PM EST (UTC-5) = Monday/Friday 02:00 UTC.
+    # Fixed EST schedule runs at 10:00 PM EDT during daylight saving time.
+    - cron: '0 2 * * 1,5'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment (overrides feature-file values in GitHub Actions)'
+        required: true
+        default: 'UAT'
+        type: choice
+        options:
+          - QA
+          - UAT
+          - SEI
+      tags:
+        description: 'Cucumber tag expression within features/bct (include prerequisite scenarios for chained flows)'
+        required: false
+        default: 'not @ignore'
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: bct-tests
+  cancel-in-progress: false
+
+jobs:
+  bct:
+    runs-on: 'codebuild-macsuite-ui-automation-dev-runner-${{github.run_id}}-${{github.run_attempt}}'
+    timeout-minutes: 240
+
+    env:
+      HEADLESS: 'true'
+      TAGS: ${{ github.event.inputs.tags || 'not @ignore' }}
+      PIPELINE_ENVIRONMENT: ${{ github.event.inputs.environment || 'UAT' }}
+      PIPELINE_APP_URL: ${{ secrets[format('APP_URL_{0}', github.event.inputs.environment || 'UAT')] }}
+      PIPELINE_BCT_USERNAME: ${{ secrets[format('BCT_{0}_USERNAME', github.event.inputs.environment || 'UAT')] }}
+      PIPELINE_BCT_PASSWORD: ${{ secrets[format('BCT_{0}_PASSWORD', github.event.inputs.environment || 'UAT')] }}
+      PIPELINE_BCT_DSG_CRU_USERNAME: ${{ secrets[format('BCT_DSG_CRU_{0}_USERNAME', github.event.inputs.environment || 'UAT')] }}
+      PIPELINE_BCT_DSG_CRU_PASSWORD: ${{ secrets[format('BCT_DSG_CRU_{0}_PASSWORD', github.event.inputs.environment || 'UAT')] }}
+      PIPELINE_BCT_DSG_OSG_CRU_USERNAME: ${{ secrets[format('BCT_DSG_OSG_CRU_{0}_USERNAME', github.event.inputs.environment || 'UAT')] }}
+      PIPELINE_BCT_DSG_OSG_CRU_PASSWORD: ${{ secrets[format('BCT_DSG_OSG_CRU_{0}_PASSWORD', github.event.inputs.environment || 'UAT')] }}
+      PIPELINE_BCT_DSG_OSG_READ_USERNAME: ${{ secrets[format('BCT_DSG_OSG_READ_{0}_USERNAME', github.event.inputs.environment || 'UAT')] }}
+      PIPELINE_BCT_DSG_OSG_READ_PASSWORD: ${{ secrets[format('BCT_DSG_OSG_READ_{0}_PASSWORD', github.event.inputs.environment || 'UAT')] }}
+      PIPELINE_BCT_OSG_CRU_USERNAME: ${{ secrets[format('BCT_OSG_CRU_{0}_USERNAME', github.event.inputs.environment || 'UAT')] }}
+      PIPELINE_BCT_OSG_CRU_PASSWORD: ${{ secrets[format('BCT_OSG_CRU_{0}_PASSWORD', github.event.inputs.environment || 'UAT')] }}
+      PIPELINE_BCT_OSG_READ_USERNAME: ${{ secrets[format('BCT_OSG_READ_{0}_USERNAME', github.event.inputs.environment || 'UAT')] }}
+      PIPELINE_BCT_OSG_READ_PASSWORD: ${{ secrets[format('BCT_OSG_READ_{0}_PASSWORD', github.event.inputs.environment || 'UAT')] }}
+      MAILOSAUR_USERNAME: ${{ secrets.MAILOSAUR_USERNAME }}
+      MAILOSAUR_PASSWORD: ${{ secrets.MAILOSAUR_PASSWORD }}
+
+    steps:
+      - name: Fetch and print IP address for Runner
+        run: |
+          echo "=== Runner IP ==="
+          curl -s https://ifconfig.me
+          echo -e "\n========================"
+
+      - name: Print configured Timezone
+        run: |
+          echo "=== Runner Timezone ==="
+          timedatectl || date
+          echo "======================="
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate required Salesforce secrets
+        shell: bash
+        run: |
+          case "$PIPELINE_ENVIRONMENT" in
+            QA|UAT|SEI) ;;
+            *) echo "::error::Environment must be QA, UAT or SEI."; exit 1 ;;
+          esac
+          echo "Selected environment: $PIPELINE_ENVIRONMENT (overrides feature-file environment)."
+          roles=(BCT BCT_DSG_CRU BCT_DSG_OSG_CRU BCT_DSG_OSG_READ BCT_OSG_CRU BCT_OSG_READ)
+          credential_variables=(PIPELINE_APP_URL)
+          for role in "${roles[@]}"; do
+            credential_variables+=("PIPELINE_${role}_USERNAME" "PIPELINE_${role}_PASSWORD")
+          done
+          for variable in "${credential_variables[@]}"; do
+            if [[ -z "${!variable}" ]]; then
+              secret_key="${variable#PIPELINE_}"
+              if [[ "$variable" == PIPELINE_APP_URL ]]; then
+                secret_key="APP_URL_${PIPELINE_ENVIRONMENT}"
+              else
+                secret_key="${secret_key%_*}_${PIPELINE_ENVIRONMENT}_${secret_key##*_}"
+              fi
+              echo "::error::Required GitHub Actions secret $secret_key is empty or unavailable."
+              exit 1
+            fi
+            if [[ "${!variable}" == *$'\r'* || "${!variable}" == *$'\n'* ]]; then
+              echo "::error::$variable contains a line break. Update the selected secret without copied line endings."
+              exit 1
+            fi
+            if [[ "$variable" == PIPELINE_APP_URL || "$variable" == *_USERNAME ]]; then
+              if [[ "${!variable}" == *[[:space:]]* ]]; then
+                echo "::error::$variable contains whitespace. Update the selected secret with the exact value."
+                exit 1
+              fi
+            fi
+          done
+          if [[ "$PIPELINE_APP_URL" != https://* ]]; then
+            echo "::error::APP_URL_${PIPELINE_ENVIRONMENT} must be an HTTPS Salesforce login URL."
+            exit 1
+          fi
+          printf '%s=%s\n' "APP_URL_${PIPELINE_ENVIRONMENT}" "$PIPELINE_APP_URL" >> "$GITHUB_ENV"
+          for role in "${roles[@]}"; do
+            credential_role="${role//_/-}"
+            username_variable="PIPELINE_${role}_USERNAME"
+            password_variable="PIPELINE_${role}_PASSWORD"
+            printf '%s=%s\n' \
+              "${credential_role}_${PIPELINE_ENVIRONMENT}_USERNAME" "${!username_variable}" \
+              "${credential_role}_${PIPELINE_ENVIRONMENT}_PASSWORD" "${!password_variable}" >> "$GITHUB_ENV"
+          done
+          echo "Required Salesforce URL and all six BCT role credentials passed format checks; values are not logged."
+
+      - name: Ping Salesforce Login Endpoint
+        shell: bash
+        run: |
+          echo "Checking connection to $PIPELINE_APP_URL..."
+          HTTP_STATUS=$(curl -s -o /dev/null -I -w "%{http_code}" --max-time 15 -L "$PIPELINE_APP_URL")
+
+          echo "Received HTTP status code: $HTTP_STATUS"
+
+          if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 400 ]; then
+            echo "Salesforce instance is accessible."
+          else
+            echo "::error::Cannot connect to Salesforce. HTTP Status: $HTTP_STATUS"
+            exit 1
+          fi
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Compile and unpack Allure CLI
+        run: mvn -B -ntp -DskipTests test-compile
+
+      - name: Make Allure CLI executable
+        run: chmod +x target/allure-cli/allure-*/bin/allure
+
+      - name: Install Playwright Chromium and OS dependencies
+        run: >
+          mvn -B -ntp exec:java -e
+          -Dexec.mainClass=com.microsoft.playwright.CLI
+          -Dexec.args="install --with-deps chromium"
+
+      - name: Run bct feature files
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+        run: >
+          mvn -B -ntp test
+          -Dcucumber.features=src/test/resources/features/bct
+          -Dcucumber.filter.tags="$TAGS"
+          -Dtags="$TAGS"
+          -DHEADLESS=true
+          -DTRACE_SNAPSHOTS=true
+
+      - name: Upload Allure HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bct-allure-report-${{ github.run_number }}
+          path: report/
+          if-no-files-found: ignore
+          retention-days: 30
+
+      - name: Upload Cucumber and Surefire reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bct-test-results-${{ github.run_number }}
+          path: |
+            target/cucumber-reports/
+            target/surefire-reports/
+            target/allure-results/
+          if-no-files-found: ignore
+          retention-days: 30
+
+      - name: Upload videos and traces
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bct-videos-traces-${{ github.run_number }}
+          path: |
+            target/videos/
+            target/traces/
+            target/screenshots/
+          if-no-files-found: ignore
+          retention-days: 14
