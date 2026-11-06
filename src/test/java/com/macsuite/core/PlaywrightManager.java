@@ -1,5 +1,8 @@
 package com.macsuite.core;
 
+import java.awt.GraphicsEnvironment;
+import java.awt.HeadlessException;
+import java.awt.Rectangle;
 import java.nio.file.Paths;
 import java.util.Arrays;
 
@@ -24,6 +27,8 @@ public class PlaywrightManager {
     private static final Logger logger = LoggerFactory.getLogger(PlaywrightManager.class);
     private static final int VIEWPORT_WIDTH = 1920;
     private static final int VIEWPORT_HEIGHT = 1080;
+    private static final int WINDOW_CHROME_WIDTH = 32;
+    private static final int WINDOW_CHROME_HEIGHT = 120;
     private static final ThreadLocal<Playwright> playwrightThreadLocal = new ThreadLocal<>();
     private static final ThreadLocal<Browser> browserThreadLocal = new ThreadLocal<>();
     private static final ThreadLocal<BrowserContext> contextThreadLocal = new ThreadLocal<>();
@@ -44,12 +49,42 @@ public class PlaywrightManager {
                 .setSnapshots(enableSnapshots);
     }
 
-    private static Browser.NewContextOptions newContextOptions() {
-        return new Browser.NewContextOptions()
-                .setViewportSize(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
-                .setScreenSize(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
-                .setRecordVideoDir(Paths.get("target/videos"))
-                .setRecordVideoSize(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+    private static Browser.NewContextOptions newContextOptions(boolean headless) {
+        Browser.NewContextOptions options = new Browser.NewContextOptions()
+                .setRecordVideoDir(Paths.get("target/videos"));
+        if (headless) {
+            options.setViewportSize(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                    .setScreenSize(VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+                    .setRecordVideoSize(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+        } else {
+            Rectangle bounds = availableWindowBounds();
+            int width = Math.max(1, Math.min(VIEWPORT_WIDTH, bounds.width - WINDOW_CHROME_WIDTH));
+            int height = Math.max(1, Math.min(VIEWPORT_HEIGHT, bounds.height - WINDOW_CHROME_HEIGHT));
+            options.setViewportSize(width, height)
+                    .setRecordVideoSize(width, height);
+        }
+        return options;
+    }
+
+    private static Rectangle availableWindowBounds() {
+        try {
+            return GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
+        } catch (HeadlessException e) {
+            return new Rectangle(0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+        }
+    }
+
+    private static java.util.List<String> browserArgs(boolean headless) {
+        if (headless) {
+            return Arrays.asList(
+                    "--disable-blink-features=AutomationControlled",
+                    "--start-maximized",
+                    "--window-size=" + VIEWPORT_WIDTH + "," + VIEWPORT_HEIGHT);
+        }
+        Rectangle bounds = availableWindowBounds();
+        return Arrays.asList(
+                "--disable-blink-features=AutomationControlled",
+                "--window-size=" + bounds.width + "," + bounds.height);
     }
 
     /**
@@ -93,11 +128,7 @@ public class PlaywrightManager {
                     new BrowserType.LaunchOptions()
                             .setHeadless(headless)
                             .setSlowMo(slowMo)
-                            .setArgs(Arrays.asList(
-                                    "--disable-blink-features=AutomationControlled",
-                                    "--start-maximized",
-                                    "--window-size=" + VIEWPORT_WIDTH + "," + VIEWPORT_HEIGHT
-                            )));
+                            .setArgs(browserArgs(headless)));
             browserThreadLocal.set(browser);
 
             // Generate video file name with feature-scenario-timestamp
@@ -105,7 +136,7 @@ public class PlaywrightManager {
             videoNameThreadLocal.set(videoFileName);
 
             // Configure browser context with optional authentication state
-            Browser.NewContextOptions contextOptions = newContextOptions();
+            Browser.NewContextOptions contextOptions = newContextOptions(headless);
 
             // Load authentication state if provided and file exists
             boolean authStateLoaded = false;
@@ -132,10 +163,12 @@ public class PlaywrightManager {
             page.setDefaultNavigationTimeout(30000);
             pageThreadLocal.set(page);
 
-            logger.info(
-                    "PlaywrightManager initialized for thread: {} (headless: {}, video: {}, authState: {}, viewport: {}x{})",
+                String viewport = page.viewportSize() == null ? "native"
+                    : page.viewportSize().width + "x" + page.viewportSize().height;
+                logger.info(
+                    "PlaywrightManager initialized for thread: {} (headless: {}, video: {}, authState: {}, viewport: {})",
                     Thread.currentThread().getId(), headless, videoFileName, authStateLoaded ? authStateFile : "none",
-                    VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+                    viewport);
         } catch (Exception e) {
             logger.error("Failed to initialize Playwright", e);
             throw new RuntimeException("Playwright initialization failed", e);
@@ -310,7 +343,7 @@ public class PlaywrightManager {
 
         try {
             Browser browser = browserThreadLocal.get();
-            Browser.NewContextOptions opts = newContextOptions();
+            Browser.NewContextOptions opts = newContextOptions(TestConfig.isHeadless());
 
             java.nio.file.Path authPath = Paths.get(authStateFile);
             if (java.nio.file.Files.exists(authPath)) {

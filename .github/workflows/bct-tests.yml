@@ -2,9 +2,8 @@ name: BCT Tests
 
 on:
   schedule:
-    # Sunday/Thursday 9:00 PM EST (UTC-5) = Monday/Friday 02:00 UTC.
-    # Fixed EST schedule runs at 10:00 PM EDT during daylight saving time.
-    - cron: '0 2 * * 1,5'
+    # Sunday/Thursday at 9:00 PM UTC.
+    - cron: '0 21 * * 0,4'
   workflow_dispatch:
     inputs:
       environment:
