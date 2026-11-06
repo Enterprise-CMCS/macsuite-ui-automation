@@ -385,11 +385,13 @@ public class BCTContractSteps extends StepBase {
     // formPage().fillForm(data);
     // screenshot("Modal Filled: " + modalName);
     // }
-    @When("I fill the {string} section with:")
+
+    @And("I fill the {string} section with:")
     public void fillContractSection(String sectionName, Map<String, String> data) {
         formPage().fillForm(data);
     }
-    // @When("I fill the {string} section with:")
+
+    // @And("I fill the {string} section with:")
     // public void fillSectionWithData(String sectionName, DataTable dataTable) {
     // Map<String, String> data = dataTable.asMap(String.class, String.class);
     // // Resolve placeholders in all values
@@ -402,7 +404,7 @@ public class BCTContractSteps extends StepBase {
     // @When("I update the {string} section with:")
     // public void updateSectionWithData(String sectionName, DataTable dataTable) {
     // Map<String, String> data = dataTable.asMap(String.class, String.class);
-    // // Resolve placeholders in all values
+    // Resolve placeholders in all values
     // data.replaceAll((key, value) ->
     // com.macsuite.common.TemplateValueResolver.resolve(value));
     // detailPage().updateSection(sectionName, data);
