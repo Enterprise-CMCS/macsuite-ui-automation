@@ -34,6 +34,10 @@ Feature: Hiring Metrics Hub List View, Dashboard, and Reports Navigation
 
   @hmh_dashboard
   Scenario: Verify dashboard navigation
+    Given I kill the previous browser session and launch new browser instance
+    Given I navigate to MAC Suite Application in "SEI" environment
+    When I login as "HMH" user
+    And I open "CMCS Hiring Metrics Hub" app
     When I click on "Dashboards" menu
     And I click on "All Folders" tab
     And I select a random dashboard

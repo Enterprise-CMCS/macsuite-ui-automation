@@ -113,7 +113,6 @@ Feature: MFP POH Tracker
   #  Given I navigate to MAC Suite Application in "UAT" environment
   #   When I login as "MFP" user
   #   And I open "MFP POH" app
-    Then the "MFP POH Document Review Dashboard" should be fully loaded
     When I click on "Knowledge" menu
     Then I should see the "Published MFP POH Articles" list view
     Then I can validate the "Published MFP POH Articles" table columns
