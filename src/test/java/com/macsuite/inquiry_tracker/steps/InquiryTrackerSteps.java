@@ -153,7 +153,7 @@ public class InquiryTrackerSteps extends ModuleSteps<InquiryTrackerPage> {
                     "Reviewer value is missing for field '" + reviewerField + "' at stage '" + expectedStage + "'.");
         }
 
-        getModulePage().updateInquiryReviewersAndVerifyStage_WFTCL(reviewerField, reviewer);
+        getModulePage().updateInquiryReviewersAndVerifyStage_Modified(reviewerField, reviewer);
     }
 
     @When("I update CMCS inquiry reviewers and verify stage {string}:")
