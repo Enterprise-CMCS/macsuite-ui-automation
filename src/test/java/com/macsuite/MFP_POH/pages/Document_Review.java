@@ -81,11 +81,11 @@ public class Document_Review extends BasePage {
     public static final String TASK_TITLE = "xpath=(//h1/div//span)[last()]";
     public static final String MARK_COMPLETE_BUTTON = "xpath=//*[text()='Mark Complete']";
     public static final String STATUS_COMPLETED = "xpath=//*[text()='Status']/following::*[text()='Completed']";
-    public static final String STATUS_CANCELLED = "xpath=//*[text()='Status']/following::*[text()='Cancelation']";
+    public static final String STATUS_CANCELLED = "xpath=//*[text()='Status']/following::*[text()='Canceled']";
     public static final String EDIT_STATUS_BUTTON = "xpath=(//button[@title='Edit Status'])[last()]";
     public static final String STATUS_DR = "xpath=//button[@name='Status']";
     public static final String STATUS_COMPLETED_OPTION = "xpath=//*[@title='Completed']";
-    public static final String STATUS_CANCELLED_OPTION = "xpath=//*[@title='Cancelation']";
+    public static final String STATUS_CANCELLED_OPTION = "xpath=//*[@title='Canceled']";
     // public static final String SAVE_BUTTON = "xpath=//button[text()='Save']";
     public static final String TASK_UPDATE_SUCCESS_MSG = "xpath=//*[text()='The Task was updated successfully.']";
     public static final String CANNOT_CHANGE_STATUS_MSG = "xpath=//*[text()='Task status cannot be changed once it is Complete or Canceled.']";

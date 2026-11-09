@@ -3,7 +3,7 @@ name: CMCS TA Tests
 on:
   schedule:
     # Sunday/Thursday at 9:00 PM UTC.
-    - cron: '0 21 * * 0,4'
+    - cron: '0 21 * * *'
   workflow_dispatch:
     inputs:
       environment:

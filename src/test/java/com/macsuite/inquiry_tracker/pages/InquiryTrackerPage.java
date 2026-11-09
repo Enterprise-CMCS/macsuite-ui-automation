@@ -91,6 +91,55 @@ public class InquiryTrackerPage extends SfPage {
 		}
 	}
 
+	public void updateInquiryReviewersAndVerifyStage_Modified(String key, String value) {
+
+		if (key.equals("Triager")) {
+			page.locator(editTriager).first().click();
+			waitFor(1);
+			try {
+				if(page.locator("[title='Clear Triager Selection']").isVisible()) {
+					clickOn("[title='Clear Triager Selection']");
+				}
+			} catch (Exception e) {}
+			type(TriagerInput, value);
+			waitFor(1);
+			clickOn(TriagerOption);
+			clickOn(saveButton);
+		} else if (key.equals("Triager (Additional)")) {
+			page.locator(editTriager).first().click();
+			waitFor(1);
+			try {
+				if(page.locator("Clear Triager (Additional) Selection").isVisible()) {
+					clickOn("Clear Triager (Additional) Selection");
+				}
+			} catch (Exception e) {}
+			type(triagerAddtional, value);
+			waitFor(1);
+			clickOn(triagerAdditionalOption);
+			clickOn(saveButton);
+			verifyStageNavigation(Triager);
+		} else if (key.equals("SME")) {
+			page.locator(edit_SME).first().click();
+			type(sme_Input, value);
+			waitFor(1);
+			clickOn(sme_Option);
+			clickOn(saveButton);
+			waitFor(3);
+			verifyStageNavigation(inGroupReview);
+		} else if (key.contains("Senior Reviewer")) {
+			page.locator(edit_SME).first().click();
+			type(seniorReviewer_Input, value);
+			waitFor(1);
+			clickOn(seniorReviewer_Option);
+			clickOn(saveButton);
+			waitFor(3);
+			verifyStageNavigation(seniorReviewer);
+		} else {
+			throw new IllegalArgumentException("Unsupported reviewer field: " + key);
+		}
+	}
+
+
 	public void updateInquiryReviewersAndVerifyStage(String key, String value) {
 		if (key.equals("Triager") || key.equals("Triager (Additional)")) {
 			page.locator(editTriager).first().click();
@@ -3083,8 +3132,9 @@ public class InquiryTrackerPage extends SfPage {
 				logger.info("Escalated Date button is not visible as expected");
 			}
 		} catch (Exception e) {
-			logger.warn("Exception while checking Escalated Date button visibility: {}", e.getMessage());
+			logger.error("Exception while checking Escalated Date button visibility: {}", e.getMessage());
 		}
+		page.waitForTimeout(2000);
 		page.locator("//button[@title='Edit Escalation Resolution']").click();
 		page.waitForTimeout(2000);
 		page.locator("//input[@name='Escalation_Resolution__c']").first().fill("Test");
