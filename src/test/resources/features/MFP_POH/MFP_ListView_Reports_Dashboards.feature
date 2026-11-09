@@ -6,7 +6,7 @@ Feature: MFP POH Tracker
     Given I navigate to MAC Suite Application in "UAT" environment
     When I login as "MFP" user
     And I open "MFP POH" app
-    Then the "MFP POH Budget Review Dashboard" should be fully loaded
+    Then the "MFP POH Document Review Dashboard" should be fully loaded
     Then I verify refresh time and admin details are displayed on the dashboard
     When I click on "Checklists" menu
     And I create a "New" list with name "MFP POH Checklist ${timestamp-short}"

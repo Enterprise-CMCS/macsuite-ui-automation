@@ -569,11 +569,11 @@ public class SalesforceBasePage extends BasePage {
 
     public boolean verifyRefreshTimeAndAdminDetails() {
         logger.info("Verifying refresh date and admin details...");
-        waitFor(5);
+        waitFor(10);
 
         String expectedDate = java.time.LocalDate.now()
                 .format(java.time.format.DateTimeFormatter.ofPattern("MMM d, yyyy"));
-        Frame dashboardFrame = resolveFrame(DASHBOARD_FRAME);
+        Frame dashboardFrame = resolveFrame("(//iframe[@title='dashboard'])[last()]");
         boolean refreshValid = validateTextInLocator(LAST_REFRESH_DATE, expectedDate, "Refresh date", dashboardFrame);
         boolean adminValid = validateTextInLocator(VIEWING_AS_SEI_ADMIN, "Viewing as SEI Admin", "SEI Admin text",
                 dashboardFrame);
