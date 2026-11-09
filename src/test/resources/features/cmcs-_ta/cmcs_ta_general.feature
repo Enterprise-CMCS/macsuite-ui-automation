@@ -85,7 +85,7 @@ Feature: CMCS TA Complete E2E Lifecycle
     Then I should see field "Highest Level of Review" with value "Senior Reviewer"
     When I clear CMCS senior reviewer and verify stage "In Group Review"
     And I update CMCS inquiry fields and verify stage "Senior Review":
-      | Technical Director | Peter Gutmann |
+      | Senior Reviewer | Peter Gutmann |
     #---- TC_003: Escalation, notes, and response readiness ----
     When I escalate CMCS inquiry with:
       | Escalation Level            | Division Leadership, Group Leadership                           |

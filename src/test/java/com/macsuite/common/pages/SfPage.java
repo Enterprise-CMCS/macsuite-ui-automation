@@ -108,7 +108,13 @@ public abstract class SfPage extends BasePage {
                 throw new Exception("Found table header, not input field");
             }
         } catch (Exception e) {
-            logger.debug("Field '{}' not found in context, trying page level", label);
+            logger.debug("Field '{}' not found by label in context, trying form utility", label);
+            try {
+                formUtils.fillField(resolvedLabel, resolved);
+                return;
+            } catch (Exception formUtilsException) {
+                logger.debug("Form utility could not locate field '{}', trying page level", label);
+            }
             ctx = page.locator("body");
             // Exclude related-list column headers (<th aria-label=...>) that share the field label
             field = preferredLabeledField(

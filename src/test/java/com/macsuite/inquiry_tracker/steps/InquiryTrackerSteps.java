@@ -137,8 +137,23 @@ public class InquiryTrackerSteps extends ModuleSteps<InquiryTrackerPage> {
 
     @When("I update CMCS inquiry fields and verify stage {string}:")
     public void updateCmcsInquiryFieldsAndVerifyStage(String expectedStage, Map<String, String> fields) {
-        getModulePage().updateFieldsAndVerifyStage(fields, expectedStage);
-        screenshot("Stage: " + expectedStage);
+        // getModulePage().updateFieldsAndVerifyStage(fields, expectedStage);
+        // screenshot("Stage: " + expectedStage);
+        if (fields == null || fields.isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Field/value is missing for stage '" + expectedStage + "'.");
+        }
+
+        Map.Entry<String, String> reviewerEntry = fields.entrySet().iterator().next();
+        String reviewerField = reviewerEntry.getKey();
+        String reviewer = reviewerEntry.getValue();
+
+        if (reviewer == null || reviewer.isBlank()) {
+            throw new IllegalArgumentException(
+                    "Reviewer value is missing for field '" + reviewerField + "' at stage '" + expectedStage + "'.");
+        }
+
+        getModulePage().updateInquiryReviewersAndVerifyStage_WFTCL(reviewerField, reviewer);
     }
 
     @When("I update CMCS inquiry reviewers and verify stage {string}:")
