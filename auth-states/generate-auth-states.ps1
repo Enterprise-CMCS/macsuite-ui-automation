@@ -79,12 +79,14 @@ foreach ($env in $environments) {
 }
 
 # Playwright CLI path
-$playwrightCli = "C:\Users\FerkatJawdat\AppData\Roaming\npm\playwright-cli.cmd"
-if (-not (Test-Path $playwrightCli)) {
-    Write-Failure "playwright-cli not found at: $playwrightCli"
+$playwrightCommand = Get-Command -Name playwright-cli.cmd, playwright-cli -CommandType Application -ErrorAction SilentlyContinue |
+    Select-Object -First 1
+if (-not $playwrightCommand) {
+    Write-Failure "playwright-cli not found on PATH"
     Write-Info "Install with: npm install -g @playwright/cli@latest"
     exit 1
 }
+$playwrightCli = $playwrightCommand.Source
 
 # Statistics
 $totalCount = 0
@@ -103,7 +105,7 @@ foreach ($role in $roles) {
         
         $roleName = $role.Name
         $envName = $env.Name
-        $outputFile = Join-Path $PSScriptRoot "$($envName.ToLower())\$($roleName.ToLower())-$($envName.ToLower()).json"
+        $outputFile = Join-Path (Join-Path $PSScriptRoot $envName.ToLower()) "$($roleName.ToLower())-$($envName.ToLower()).json"
         
         Write-Step "[$totalCount/$($roles.Count * $environments.Count)] $($role.Label) - $envName"
         

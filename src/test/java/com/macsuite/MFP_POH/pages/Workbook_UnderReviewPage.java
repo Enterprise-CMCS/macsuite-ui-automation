@@ -138,8 +138,8 @@ public class Workbook_UnderReviewPage extends BasePage {
         clickOn(SUBMITTED_BY_OPTION);
         waitFor(5);
         readAndVerifyText(CREATED_BY_TEXT, "Pankaj MFP App Ghosh");
-        String filePath = System.getProperty("user.dir") +
-                "\\src\\test\\resources\\data\\Approval Letter.pdf";
+        String filePath = Paths.get(System.getProperty("user.dir"), "src", "test", "resources", "data",
+            "Approval Letter.pdf").toAbsolutePath().normalize().toString();
         page.setInputFiles("(//input[@type='file'])[last()]", Paths.get(filePath));
         waitFor(2);
         clickOn(DONE_BUTTON);

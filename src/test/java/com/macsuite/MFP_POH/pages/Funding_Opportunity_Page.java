@@ -208,8 +208,8 @@ public class Funding_Opportunity_Page extends BasePage {
         LOGGER.info("Verifying file upload functionality for Funding Opportunity");
         waitFor(2);
 
-        String filePath = System.getProperty("user.dir") +
-                "\\src\\test\\resources\\data\\2-Proposed Process JIRA SOP.pdf";
+        String filePath = Paths.get(System.getProperty("user.dir"), "src", "test", "resources", "data",
+            "2-Proposed Process JIRA SOP.pdf").toAbsolutePath().normalize().toString();
         page.setInputFiles("(//input[@type='file'])[last()]", Paths.get(filePath));
         waitFor(10);
         clickOn(DONE_BUTTON);

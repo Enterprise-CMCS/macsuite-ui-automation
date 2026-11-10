@@ -36,17 +36,14 @@ Feature: PIER List View, Dashboard, and Reports Navigation
   @pier_Accounts_listview
   Scenario: Add a new PIER list view and clone an event
     When I click on "Accounts" menu
-    Then I should see the "All Accounts" list view
-    Then I can validate the "All Accounts" table columns
-      | Column Name                        |
-      | Last Modified Date                 |
-      | Last Modified By Alias             |
-      | Account Name                       |
-      | Billing State/Province (text only) |
-      | Phone                              |
-      | Type                               |
-      | Owner First Name                   |
-      | Owner Last Name                    |
+    Then I should see the "PIER All Accounts" list view
+    Then I can validate the "PIER All Accounts" table columns
+      | Column Name                 |
+      | Account Name                |
+      | State Abbreviation          |
+      | PIER State Lead             |
+      | Primary State Contact Name  |
+      | Primary State Contact Email |
     When I select a random Account record from the list view
     Then I can navigate to the random record
 
@@ -57,7 +54,7 @@ Feature: PIER List View, Dashboard, and Reports Navigation
     Then I can validate the "All Issues" table columns
       | Column Name            |
       | PIER ID                |
-      | Issue ID             |
+      | Issue ID               |
       | Account                |
       | Start Month            |
       | Start Year             |
