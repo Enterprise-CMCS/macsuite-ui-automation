@@ -36,8 +36,8 @@ Feature: PIER List View, Dashboard, and Reports Navigation
   @pier_Accounts_listview
   Scenario: Add a new PIER list view and clone an event
     When I click on "Accounts" menu
-    Then I should see the "All Accounts" list view
-    Then I can validate the "All Accounts" table columns
+    Then I should see the "PIER All Accounts" list view
+    Then I can validate the "PIER All Accounts" table columns
       | Column Name                        |
       | Last Modified Date                 |
       | Last Modified By Alias             |
