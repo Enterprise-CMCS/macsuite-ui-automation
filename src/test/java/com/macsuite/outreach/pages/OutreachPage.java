@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 import org.testng.asserts.SoftAssert;
 
 import com.macsuite.common.DropdownUtils;
+import com.macsuite.common.TemplateValueResolver;
 import com.macsuite.common.pages.SfPage;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -21,6 +22,7 @@ import com.microsoft.playwright.options.LoadState;
 public class OutreachPage extends SfPage {
 	private static final String TEST_DATA_BASE_PATH = "src/test/resources/test-data";
 	private String clonedListViewName;
+	private String generalOutreachTopicName;
 
 	public OutreachPage(Page page) {
 		super(page);
@@ -256,6 +258,7 @@ public class OutreachPage extends SfPage {
 
 	public void fillGeneralOutreachDetails(Map<String, String> fieldValues) {
 		Map<String, String> data = new java.util.HashMap<>(fieldValues);
+		data.computeIfPresent("Topic Name", (label, value) -> TemplateValueResolver.resolve(value));
 
 		// Handle Category dropdown separately
 		if (data.containsKey("Category")) {
@@ -266,6 +269,7 @@ public class OutreachPage extends SfPage {
 		for (Map.Entry<String, String> entry : data.entrySet()) {
 			fillField(entry.getKey(), entry.getValue());
 		}
+		generalOutreachTopicName = data.get("Topic Name");
 		logger.info("General OutReach details filled");
 	}
 
@@ -688,22 +692,16 @@ public class OutreachPage extends SfPage {
 	}
 
 	public void verifyGeneralOutreachEventDetails() {
-		// PREDICTED (not runtime-verified): legacy verificationOfOutreachCeation
-		// asserted the event
-		// heading AND that the "Submitted" stage is selected by default after creation.
-		// The General
-		// event itself is created by a real data-table fill, so this is not coupled to
-		// the no-op
-		// State-Outreach create. Assert both the heading and the Submitted-default path
-		// stage.
+		if (generalOutreachTopicName == null || generalOutreachTopicName.isBlank()) {
+			throw new IllegalStateException("Fill General Outreach details with a Topic Name before verifying the event");
+		}
 		page.getByRole(AriaRole.HEADING,
-				new Page.GetByRoleOptions()
-						.setName(Pattern.compile("CMCS Outreach|Outreach Event", Pattern.CASE_INSENSITIVE)))
+				new Page.GetByRoleOptions().setName(generalOutreachTopicName).setExact(true))
 				.first().waitFor(new Locator.WaitForOptions().setTimeout(10000));
 		page.locator("li.slds-path__item.slds-is-current")
 				.filter(new Locator.FilterOptions().setHasText(Pattern.compile("Submitted", Pattern.CASE_INSENSITIVE)))
 				.first().waitFor(new Locator.WaitForOptions().setTimeout(10000));
-		logger.info("General Outreach event details verified (heading + Submitted default)");
+		logger.info("General Outreach event details verified (Topic Name '{}' + Submitted default)", generalOutreachTopicName);
 	}
 
 	// ─── Records navigation ───────────────────────────────────────────────────
@@ -915,12 +913,13 @@ public class OutreachPage extends SfPage {
 		openCreateStateRecordModal();
 		Locator modalContext = page.locator(".slds-modal__content").last();
 		selectDropdownInModal(modalContext, "State/Territory/Other", "Alabama");
-		setModalCheckbox(modalContext, "Presidential Disaster Declaration", true);
+		page.locator("//*[text()='Presidential Disaster Declaration?']").click();
+		// setModalCheckbox(modalContext, "Presidential Disaster Declaration", true);
 		waitForPresidentialDeclarationFields(modalContext);
 		verifyContactFieldIsAvailable(modalContext);
-		setModalCheckbox(modalContext, "HHS Secretary PHE Declaration", true);
+		// setModalCheckbox(modalContext, "HHS Secretary PHE Declaration", true);
+		page.locator("//*[text()='HHS Secretary PHE Declaration?']").click();
 		waitForHhsDeclarationFields(modalContext);
-
 		helper.clickButton("Save");
 		logger.info("Attempted State Outreach creation without required fields");
 	}
@@ -2623,7 +2622,7 @@ public class OutreachPage extends SfPage {
 
 	public void validateMandatoryFieldsOnGeneralOutreachEventDetailsScreen() {
 		logger.info("Validating mandatory fields on the General Outreach event details screen");
-		clickOn(getText_Xpath("Save"));
+		clickOn("(//*[text()='Save'])[last()]");
 		waitFor(1);
 		readAndVerifyText(getText_Xpath("Topic Name is Required. Please enter a name."),
 				"Topic Name is Required. Please enter a name.");
@@ -2633,7 +2632,7 @@ public class OutreachPage extends SfPage {
 		readAndVerifyText(getText_Xpath("Category is required. Please enter Category."),
 				"Category is required. Please enter Category.");
 		selectCategoryDropdownOption("Other");
-		clickOn(getText_Xpath("Save"));
+		clickOn("(//*[text()='Save'])[last()]");
 		waitFor(1);
 		readAndVerifyText(getText_Xpath("Other Category is required. Please enter a Other Category"),
 				"Other Category is required. Please enter a Other Category");
