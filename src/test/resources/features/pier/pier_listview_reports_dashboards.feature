@@ -35,9 +35,6 @@ Feature: PIER List View, Dashboard, and Reports Navigation
 
   @pier_Accounts_listview
   Scenario: Add a new PIER list view and clone an event
-   Given I navigate to MAC Suite Application in "UAT" environment
-    When I login as "PIER" user
-    And I open "PIER Tracker" app
     When I click on "Accounts" menu
     Then I should see the "PIER All Accounts" list view
     Then I can validate the "PIER All Accounts" table columns

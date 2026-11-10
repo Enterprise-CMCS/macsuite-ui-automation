@@ -2985,8 +2985,8 @@ public class OutreachPage extends SfPage {
 	public void verifyFileUploadFunctionality() {
 		logger.info("Verifying file upload functionality for Funding Opportunity");
 
-		String filePath = System.getProperty("user.dir") +
-				"\\src\\test\\resources\\data\\Approval Letter.pdf";
+		String filePath = Paths.get(System.getProperty("user.dir"), "src", "test", "resources", "data",
+				"Approval Letter.pdf").toAbsolutePath().normalize().toString();
 
 		// Wait for file input to be available (use same pattern as uploadAttachment)
 		Locator fileInput = page.locator("(//input[@type='file'])[last()]").first();
