@@ -1,4 +1,4 @@
-@outreach_report @smoke @regression
+@outreach_report @smoke @regression @outreach
 Feature: CMCS Outreach List View, Dashboard, and Reports
 
   # ============================================================
