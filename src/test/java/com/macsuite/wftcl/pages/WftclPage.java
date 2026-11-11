@@ -6,7 +6,6 @@ import com.microsoft.playwright.FrameLocator;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
-import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 import java.nio.file.Paths;
@@ -125,8 +124,11 @@ public class WftclPage extends SfPage {
     // ─── TC_002: Provisions lifecycle ─────────────────────────────────────────
 
     public void navigateToProvisions() {
-        page.getByTitle("Provisions").first().click();
-        page.waitForLoadState(LoadState.DOMCONTENTLOADED);
+        clickHeaderMenuItem("Provisions");
+        page.getByRole(AriaRole.BUTTON,
+            new Page.GetByRoleOptions().setName("Select a List View").setExact(false))
+            .first().waitFor(new Locator.WaitForOptions()
+                .setState(WaitForSelectorState.VISIBLE).setTimeout(15000));
         logger.info("Navigated to Provisions tab");
     }
 

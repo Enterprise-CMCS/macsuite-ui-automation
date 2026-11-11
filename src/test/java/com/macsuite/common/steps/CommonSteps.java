@@ -12,6 +12,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.FrameLocator;
 import com.microsoft.playwright.options.AriaRole;
 
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -261,6 +262,7 @@ public class CommonSteps extends StepBase {
 
     @When("I click on {string} tab")
     public void clickOnTab(String tabName) {
+        page().waitForTimeout(3000); // Wait for 1 second before clicking the tab
         page().getByRole(AriaRole.TAB, new com.microsoft.playwright.Page.GetByRoleOptions()
                 .setName(tabName)).first().click();
         screenshot(tabName + " Tab");
@@ -271,6 +273,12 @@ public class CommonSteps extends StepBase {
         stepLogger.info("Opening a random dashboard");
         nav().openRandomDashboard();
         nav().openChildDashboard();
+    }
+
+    @When("I click on All Folders tab of New Provisions Tracker")
+    public void clickOnAllFoldersTabOfNewProvisionsTracker() {
+        stepLogger.info("Clicking on All Folders tab of New Provisions Tracker");
+        nav().clickOnAllFoldersTabOfNewProvisionsTracker();
     }
 
     @When("I open report {string}")

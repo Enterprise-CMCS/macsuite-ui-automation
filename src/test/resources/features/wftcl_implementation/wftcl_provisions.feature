@@ -8,8 +8,8 @@ Feature: WFTCL Implementation Provisions Lifecycle
   Scenario: Home page header verification
   Given I navigate to MAC Suite Application in "UAT" environment
     When I login as "WFTCL" user
-    And I open "WFTCL Implementation" app
-    Then the "WFTCL Provisions Dashboard" should be fully loaded
+    And I open "New Provisions Tracker" app
+    Then the "New Provisions Dashboard" should be fully loaded
 
   # ============================================================
   # TC_002: Full Provisions creation lifecycle

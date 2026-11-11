@@ -70,4 +70,18 @@ public class SfNavigator extends SfPage {
             return false;
         }
     }
+
+    public void clickOnAllFoldersTabOfNewProvisionsTracker() {
+       
+        Locator allFoldersTab = page.getByRole(AriaRole.TAB, new Page.GetByRoleOptions().setName("All Folders").setExact(true)).first();
+        try {
+            allFoldersTab.waitFor(new Locator.WaitForOptions()
+                    .setState(WaitForSelectorState.VISIBLE)
+                    .setTimeout(10000));
+            allFoldersTab.click();
+        } catch (Exception e) {
+            throw new AssertionError("Failed to click on All Folders tab of New Provisions Tracker", e);
+        }
+        page.waitForTimeout(2000);
+    }
 }
