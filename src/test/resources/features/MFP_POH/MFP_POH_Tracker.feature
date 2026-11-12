@@ -1,7 +1,7 @@
-@MFP_POH @smoke @regression
+@MFP_POH_Main @smoke @regression
 Feature: MFP POH Tracker
 
-  @MFP_Home @MFP_FO
+  @MFP_Home @MFP_FO 
   Scenario: verify home page navigation and basic details validation
     Given I navigate to MAC Suite Application in "UAT" environment
     When I login as "MFP" user
@@ -41,7 +41,7 @@ Feature: MFP POH Tracker
     When I clear the Section checklist one by one and verify the Funding memo navigation back
     Then I verify the details in checklist tab after clearing the checklist details
 
-  @MFP_POH_Tracker
+  @MFP_POH_Tracker @MFP_FO
   Scenario: verify the details in field history tracking tab
     Given I kill the previous browser session and launch new browser instance
     Given I navigate to MAC Suite Application in "UAT" environment
@@ -77,7 +77,6 @@ Feature: MFP POH Tracker
     Given I kill the previous browser session and launch new browser instance
     Given I navigate to MAC Suite Application in "UAT" environment
     When I login as "MFP" user
-    And I open "MFP POH" app
     Given I navigate to Account Creation page in "MFP POH" app
     When I navigte to already created account details page
     Then I open document review modal popup and verify mandatory fields
@@ -96,7 +95,7 @@ Feature: MFP POH Tracker
     Given I kill the previous browser session and launch new browser instance
     Given I navigate to MAC Suite Application in "UAT" environment
     When I login as "MFP" user
-    And I open "MFP POH" app
+    # And I open "MFP POH" app
     Given I navigate to Account Creation page in "MFP POH" app
     When I navigte to already created account details page
     Then I open document review modal popup and verify mandatory fields

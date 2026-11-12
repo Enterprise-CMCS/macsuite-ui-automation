@@ -34,7 +34,7 @@ Feature: MFP POH Tracker
     When I select a random record from the list view
     Then I can navigate to the random record
 
-  @MFP_POH_Accounts_ListView
+  @MFP_POH_My_MFP_Accounts_ListView
   Scenario: Verify My MFP Accounts view validation
     When I click on "Accounts" menu
     Then I should see the "My MFP Accounts" list view

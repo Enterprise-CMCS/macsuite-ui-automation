@@ -1,5 +1,7 @@
 package com.macsuite.common.steps;
 
+import javax.print.attribute.standard.MediaSize.Other;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +14,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.FrameLocator;
 import com.microsoft.playwright.options.AriaRole;
 
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -184,6 +187,12 @@ public class CommonSteps extends StepBase {
         screenshot("Error Toast");
     }
 
+    @Then("I should see error toast Other Organization is required if state is selected as Other.")
+    public void verifyOtherOrganizationErrorToast() {
+        nav().verifyOtherOrganizationErrorToast();
+        screenshot("Error Toast: Other Organization is required if state is selected as Other.");
+    }   
+
     @Then("I should see error {string}")
     public void verifyErrorMessage(String errorMessage) {
         nav().dismissErrorBannerIfPresent();
@@ -196,6 +205,18 @@ public class CommonSteps extends StepBase {
     public void verifyAppDashboardFullyLoaded(String appName) {
         nav().verifyDashboardHeaderDetails(appName);
         screenshot("Dashboard Loaded: " + appName);
+    }
+
+    @Then("I can verify that New button is NOT visible")
+    public void verifyNewButtonNotVisible() {
+        nav().verifyNewButtonNotVisible();
+        screenshot("New Button Not Displayed");
+    }
+
+    @Then("I validate the printable view screen")
+    public void validatePrintableViewScreen() {
+        nav().validatePrintableViewScreen();
+        screenshot("Printable View Screen");
     }
 
     @Then("I can validate printable view of random record")
@@ -261,6 +282,7 @@ public class CommonSteps extends StepBase {
 
     @When("I click on {string} tab")
     public void clickOnTab(String tabName) {
+        page().waitForTimeout(3000); // Wait for 1 second before clicking the tab
         page().getByRole(AriaRole.TAB, new com.microsoft.playwright.Page.GetByRoleOptions()
                 .setName(tabName)).first().click();
         screenshot(tabName + " Tab");
@@ -271,6 +293,12 @@ public class CommonSteps extends StepBase {
         stepLogger.info("Opening a random dashboard");
         nav().openRandomDashboard();
         nav().openChildDashboard();
+    }
+
+    @When("I click on All Folders tab of New Provisions Tracker")
+    public void clickOnAllFoldersTabOfNewProvisionsTracker() {
+        stepLogger.info("Clicking on All Folders tab of New Provisions Tracker");
+        nav().clickOnAllFoldersTabOfNewProvisionsTracker();
     }
 
     @When("I open report {string}")

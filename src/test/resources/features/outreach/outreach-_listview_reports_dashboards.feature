@@ -1,4 +1,4 @@
-@outreach_report @smoke @regression
+@outreach_report @smoke @regression @outreach
 Feature: CMCS Outreach List View, Dashboard, and Reports
 
   # ============================================================
@@ -49,6 +49,11 @@ Feature: CMCS Outreach List View, Dashboard, and Reports
 
   @outreach_dashboards
   Scenario: Verify dashboard navigation
+  Given I kill the previous browser session and launch new browser instance
+   Given I navigate to MAC Suite Application in "UAT" environment
+    When I login as "SO" user
+    And I open "CMCS Inquiry Tracker" app
+    When I click on "CMCS Outreach" menu
     When I click on "Dashboards" menu
     And I click on "All Folders" tab
     And I select a random dashboard

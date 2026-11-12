@@ -3,6 +3,7 @@ Feature: CMCS TA Reports Validation
 
   @smoke @cmcs-ta-reports-validation
   Scenario Outline: Validate CMCS TA report "<reportName>" record counts
+    Given I kill the previous browser session and launch new browser instance
     Given I navigate to MAC Suite Application in "UAT" environment
     When I login as "TA" user
     And I open "CMCS Inquiry Tracker" app
@@ -13,7 +14,7 @@ Feature: CMCS TA Reports Validation
     And I scroll to bottom of report
     And I capture the bottom record count
     Then the top and bottom record counts should match
-    When I close the current report tab
+    # When I close the current report tab
 
     Examples:
       | reportName                               |

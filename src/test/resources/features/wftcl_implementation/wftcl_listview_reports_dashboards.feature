@@ -1,5 +1,5 @@
 @wftcl_listview_dashboard_reports @regression
-Feature: WFTCL Implementation Provisions Lifecycle
+Feature: New Provisions Tracker Provisions Lifecycle
 
   # ============================================================
   # TC_003: List view — create, delete, clone
@@ -9,7 +9,7 @@ Feature: WFTCL Implementation Provisions Lifecycle
   Scenario: Manage WFTCL Provisions list views
     Given I navigate to MAC Suite Application in "UAT" environment
     When I login as "WFTCL" user
-    And I open "WFTCL Implementation" app
+    And I open "New Provisions Tracker" app
     When I navigate to WFTCL Provisions
     And I create a "New" list with name "WFTCL-${timestamp-short}"
     Then I should see the list view "WFTCL-${timestamp-short}" is active
@@ -37,8 +37,12 @@ Feature: WFTCL Implementation Provisions Lifecycle
 
   @wftcl_impl_dashboards
   Scenario: Verify dashboards navigation
+   Given I kill the previous browser session and launch new browser instance
+    Given I navigate to MAC Suite Application in "UAT" environment
+    When I login as "WFTCL" user
+    And I open "New Provisions Tracker" app
     When I click on "Dashboards" menu
-    And I click on "All Folders" tab
+    And I click on All Folders tab of New Provisions Tracker
     And I select a random dashboard
     Then I verify refresh time and admin details are displayed on the dashboard
 
@@ -47,7 +51,7 @@ Feature: WFTCL Implementation Provisions Lifecycle
     Given I kill the previous browser session and launch new browser instance
     Given I navigate to MAC Suite Application in "UAT" environment
     When I login as "WFTCL" user
-    And I open "WFTCL Implementation" app
+    And I open "New Provisions Tracker" app
     When I click on "Provisions" menu
     Then I should see the "All" list view
     Then I can validate the "All" table columns
