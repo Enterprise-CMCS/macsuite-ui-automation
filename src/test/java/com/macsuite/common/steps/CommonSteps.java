@@ -46,7 +46,7 @@ public class CommonSteps extends StepBase {
         stepLogger.info("Navigated to {} environment: {}", effectiveEnvironment, appUrl);
     }
 
-     @Given("I navigate to MAC Suite RHTP Application in {string} environment")
+    @Given("I navigate to MAC Suite RHTP Application in {string} environment")
     public void navigateToRHTPEnvironment(String environment) {
         LoginSteps.setCurrentEnvironment(environment);
         String appUrl = EnvironmentResolver.getRHTPEnvironmentUrl(environment);
@@ -127,7 +127,7 @@ public class CommonSteps extends StepBase {
     public void clickButton(String buttonName) {
         Locator button = page().getByRole(AriaRole.BUTTON)
                 .filter(new Locator.FilterOptions().setHasText(buttonName)).first();
-        int timeout = "Create Contract Action".equals(buttonName) ? 30000 : 10000;
+        int timeout = "Create Contract Action".contains(buttonName) ? 30000 : 10000;
         if (button.count() == 0 || !button.isVisible()) {
             Locator dashboardIframe = page().locator("iframe[title='dashboard']:visible").last();
             if (dashboardIframe.count() > 0) {

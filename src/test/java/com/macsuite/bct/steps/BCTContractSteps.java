@@ -63,6 +63,11 @@ public class BCTContractSteps extends StepBase {
         detailPage = detailPage().clickFirstContractOrderNumberLink();
     }
 
+    @Then("I click on the first record link in the {string} column")
+    public void clickFirstRecordLinkInColumn(String columnName) {
+        detailPage = listPage().clickFirstRecordInColumn(columnName);
+    }
+
     @When("I edit the contract details")
     public void editContractDetails() {
         detailPage().navigateToTab("Details");
@@ -198,6 +203,11 @@ public class BCTContractSteps extends StepBase {
         detailPage().clickContractActionNumberLink();
     }
 
+    @When("I click on the hyperlink {string}")
+    public void clickHyperlink(String linkText) {
+        detailPage().clickLink(linkText);
+    }
+
     @Then("I should not see New button")
     public void verifyNewButtonNotVisible() {
         detailPage().verifyButtonVisibility("New", false);
@@ -322,36 +332,6 @@ public class BCTContractSteps extends StepBase {
     public void I_search_for_cloned_list_view() {
         listPage().searchClonedListView();
     }
-
-    // @When("I click on {string} menu")
-    // public void clickOnMenu(String menuName) {
-    // dashboardPage().clickOnMenu(menuName);
-    // screenshot("Menu: " + menuName);
-    // }
-
-    // @When("I click New button")
-    // public void clickNewButton() {
-    // listPage().clickNewButton();
-    // screenshot("New Button Clicked");
-    // }
-
-    // @When("I click the Save button")
-    // public void clickSaveButton() {
-    // formPage().clickSave();
-    // screenshot("Save Button Clicked");
-    // }
-
-    // @Then("I should see the success message")
-    // public void verifySuccessMessage() {
-    // formPage().verifySuccessMsg();
-    // screenshot("Success Message Displayed");
-    // }
-
-    // @When("I click on {string} button")
-    // public void clickOnButton(String buttonName) {
-    // detailPage().clickButton(buttonName);
-    // screenshot("Button Clicked: " + buttonName);
-    // }
 
     @Then("I should see the {string} modal is displayed")
     public void verifyModalIsDisplayed(String modalName) {
