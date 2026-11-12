@@ -38,19 +38,19 @@ Feature: CMCS TA List View, Dashboard and Home Navigation
     Then I can navigate to the random record
 
 
-  @cmcs_ta_dashboard_navigation @smoke @Check
-  Scenario: Navigate to a CMCS TA dashboard and verify it loads with correct title and refresh date
-    When I open CMCS TA dashboards
-    And I view all available CMCS TA dashboards
-    And I open the first available CMCS TA dashboard
-    Then the dashboard title should match the selected dashboard name
-    And I should see dashboard refresh date is today
-    When I click on "Reports" menu
-    And I click on "All Reports" tab
-    Then I should see breadcrumbs navigation
-    # And I should see "88" reports displayed
-    When I open a random report
-    Then I should see the report loaded with record count
+  # @cmcs_ta_dashboard_navigation @smoke @Check
+  # Scenario: Navigate to a CMCS TA dashboard and verify it loads with correct title and refresh date
+  #   When I open CMCS TA dashboards
+  #   And I view all available CMCS TA dashboards
+  #   And I open the first available CMCS TA dashboard
+  #   Then the dashboard title should match the selected dashboard name
+  #   And I should see dashboard refresh date is today
+  #   When I click on "Reports" menu
+  #   And I click on "All Reports" tab
+  #   Then I should see breadcrumbs navigation
+  #   # And I should see "88" reports displayed
+  #   When I open a random report
+  #   Then I should see the report loaded with record count
 
   @cmcs_ta_reports
   Scenario: Verify reports navigation

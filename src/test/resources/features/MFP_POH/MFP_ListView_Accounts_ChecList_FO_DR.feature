@@ -34,8 +34,11 @@ Feature: MFP POH Tracker
     When I select a random record from the list view
     Then I can navigate to the random record
 
-  @MFP_POH_Accounts_ListView
+  @MFP_POH_My_MFP_Accounts_ListView
   Scenario: Verify My MFP Accounts view validation
+   Given I navigate to MAC Suite Application in "UAT" environment
+    When I login as "MFP" user
+    And I open "MFP POH" app
     When I click on "Accounts" menu
     Then I should see the "My MFP Accounts" list view
     Then I can validate the "My MFP Accounts" table columns
