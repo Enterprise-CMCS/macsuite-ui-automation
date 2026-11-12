@@ -214,6 +214,13 @@ public abstract class SfPage extends BasePage {
         helper.waitForToast("error", expectedMessage);
     }
 
+    public void verifyOtherOrganizationErrorToast() {
+       String text = page.locator("//*[text()='Other Organization is required if state is selected as Other.']").first().textContent();
+       if (!"Other Organization is required if state is selected as Other.".equals(text)) {
+           logger.error("Expected error toast message not found");
+       }
+    }
+
     // ─── Record actions ───────────────────────────────────────────────────────
 
     public void deleteCurrentRecord() {

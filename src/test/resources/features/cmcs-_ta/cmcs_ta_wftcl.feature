@@ -41,7 +41,7 @@ Feature: CMCS TA WFTCL Inquiry Creation and Validation
     Then I should see error "First name value is required"
     And I should see error "Last name value is required"
     And I should see error "Email value is required"
-    Then I should see error toast "Other Organization is required if state is selected as Other."
+    Then I should see error toast Other Organization is required if state is selected as Other.
     When I fill "Other Organization" with 76 characters
     Then I should see error "Limit reached. You can only use 75 characters in this field."
     When I close the inquiry form

@@ -1,5 +1,7 @@
 package com.macsuite.common.steps;
 
+import javax.print.attribute.standard.MediaSize.Other;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -184,6 +186,12 @@ public class CommonSteps extends StepBase {
         nav().verifyErrorToastMessage(errorMessage);
         screenshot("Error Toast");
     }
+
+    @Then("I should see error toast Other Organization is required if state is selected as Other.")
+    public void verifyOtherOrganizationErrorToast() {
+        nav().verifyOtherOrganizationErrorToast();
+        screenshot("Error Toast: Other Organization is required if state is selected as Other.");
+    }   
 
     @Then("I should see error {string}")
     public void verifyErrorMessage(String errorMessage) {
