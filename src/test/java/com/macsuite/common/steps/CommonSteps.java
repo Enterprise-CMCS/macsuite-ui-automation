@@ -207,6 +207,18 @@ public class CommonSteps extends StepBase {
         screenshot("Dashboard Loaded: " + appName);
     }
 
+    @Then("I can verify that New button is NOT visible")
+    public void verifyNewButtonNotVisible() {
+        nav().verifyNewButtonNotVisible();
+        screenshot("New Button Not Displayed");
+    }
+
+    @Then("I validate the printable view screen")
+    public void validatePrintableViewScreen() {
+        nav().validatePrintableViewScreen();
+        screenshot("Printable View Screen");
+    }
+
     @Then("I can validate printable view of random record")
     public void validatePrintableViewOfRandomRecord() {
         getSalesforceBasePage().validatePrintableViewOfRandomRecord();

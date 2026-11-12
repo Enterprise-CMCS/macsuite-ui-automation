@@ -1,5 +1,5 @@
 @pra_ListView_All_readOnly @smoke
-Feature: PRA ICR Packages List View, Dashboard, and Reports Navigation
+Feature: PRA ICR Packages Read Only List View, Dashboard, and Reports Navigation, 
 
   # ============================================================
   # TC_001: Home page header + list view add/clone

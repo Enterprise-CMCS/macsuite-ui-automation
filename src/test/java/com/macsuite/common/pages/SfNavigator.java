@@ -3,17 +3,42 @@ package com.macsuite.common.pages;
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
+import com.macsuite.core.PlaywrightManager;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.assertions.LocatorAssertions;
 import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class SfNavigator extends SfPage {
     public SfNavigator(Page page) {
         super(page);
     }
+
+        public void verifyNewButtonNotVisible() {
+        Locator newButtons = page.getByRole(AriaRole.BUTTON,
+            new Page.GetByRoleOptions().setName("New").setExact(true));
+        assertThat(newButtons).hasCount(0);
+        logger.info("New button is not visible");
+        }
+
+        public void validatePrintableViewScreen() {
+        Locator printableViewButton = page.getByRole(AriaRole.BUTTON,
+            new Page.GetByRoleOptions().setName("Printable View").setExact(true)).first();
+        printableViewButton.waitFor(new Locator.WaitForOptions()
+            .setState(WaitForSelectorState.VISIBLE).setTimeout(10000));
+        Page popup = page.waitForPopup(printableViewButton::click);
+        popup.waitForLoadState(LoadState.DOMCONTENTLOADED,
+            new Page.WaitForLoadStateOptions().setTimeout(20000));
+        PlaywrightManager.setActivePage(popup);
+        popup.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions()
+            .setName(Pattern.compile("All Records - Printable View", Pattern.CASE_INSENSITIVE)))
+            .first().waitFor(new Locator.WaitForOptions().setTimeout(10000));
+        logger.info("Printable view screen validated");
+        }
 
     public void validateTableColumns(List<String> columnNames) {
         if (columnNames.isEmpty()) {
