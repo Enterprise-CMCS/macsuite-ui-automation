@@ -494,6 +494,7 @@ public abstract class SfPage extends BasePage {
     public String recordName = "";
 
     public void selectRandomRecord() {
+        waitFor(5);
         recordName = ""; // Reset the record name before selecting a new one
         Locator records = page.locator("xpath=//tbody/tr/th//a");
         int recordCount = records.count();

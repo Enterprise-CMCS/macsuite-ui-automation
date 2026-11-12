@@ -1,4 +1,4 @@
-@MFP_POH @smoke @regression
+@MFP_POH_Main @smoke @regression
 Feature: MFP POH Tracker
 
   @MFP_Home @MFP_FO
@@ -77,7 +77,6 @@ Feature: MFP POH Tracker
     Given I kill the previous browser session and launch new browser instance
     Given I navigate to MAC Suite Application in "UAT" environment
     When I login as "MFP" user
-    And I open "MFP POH" app
     Given I navigate to Account Creation page in "MFP POH" app
     When I navigte to already created account details page
     Then I open document review modal popup and verify mandatory fields
@@ -96,7 +95,7 @@ Feature: MFP POH Tracker
     Given I kill the previous browser session and launch new browser instance
     Given I navigate to MAC Suite Application in "UAT" environment
     When I login as "MFP" user
-    And I open "MFP POH" app
+    # And I open "MFP POH" app
     Given I navigate to Account Creation page in "MFP POH" app
     When I navigte to already created account details page
     Then I open document review modal popup and verify mandatory fields
