@@ -839,6 +839,7 @@ public class InquiryTrackerPage extends SfPage {
 	}
 
 	public void selectRandomOptionFromDropdown(String fieldName) {
+		waitFor(5);
 		String editButton = "//button[@title='Edit " + fieldName + "']";
 		System.out.println("Edit button locator: " + editButton);
 		page.locator(editButton).click();
