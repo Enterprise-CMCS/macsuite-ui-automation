@@ -45,7 +45,7 @@ Feature: CMCS TA WFTCL Inquiry Creation and Validation
     When I fill "Other Organization" with 76 characters
     Then I should see error "Limit reached. You can only use 75 characters in this field."
     When I close the inquiry form
-    # ---- Full WFTCL inquiry creation ----
+    ## ---- Full WFTCL inquiry creation ----
     When I click New button
     Then I should see the CMCS inquiry form
     When I fill CMCS inquiry details dynamically with:

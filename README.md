@@ -150,8 +150,8 @@ CMCS TA uses `TA_<ENV>_USERNAME` / `TA_<ENV>_PASSWORD`, and Outreach uses
 The full BCT workflow requires username/password secrets for six prefixes:
 `BCT`, `BCT_DSG_CRU`, `BCT_DSG_OSG_CRU`, `BCT_DSG_OSG_READ`, `BCT_OSG_CRU`,
 and `BCT_OSG_READ`. GitHub secret names use underscores, for example
-`BCT_DSG_CRU_UAT_USERNAME`; the workflow exports the framework's hyphenated
-role key `BCT-DSG-CRU_UAT_USERNAME`. Feature login role names stay unchanged.
+`BCT_DSG_CRU_UAT_USERNAME`; use the same names in `.env` for local runs.
+Feature login role names remain hyphenated, for example `BCT-DSG-CRU`.
 
 ### Parallel Lane Execution
 

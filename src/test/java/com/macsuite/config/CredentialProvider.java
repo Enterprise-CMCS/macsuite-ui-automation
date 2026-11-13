@@ -56,8 +56,12 @@ public class CredentialProvider {
      * @throws IllegalStateException if no credentials found
      */
     public static Credentials getCredentials(String role, String environment) {
-        String usernameKey = role.toUpperCase() + "_" + environment.toUpperCase() + "_USERNAME";
-        String passwordKey = role.toUpperCase() + "_" + environment.toUpperCase() + "_PASSWORD";
+        String credentialRole = role.toUpperCase();
+        if (credentialRole.startsWith("BCT-")) {
+            credentialRole = credentialRole.replace('-', '_');
+        }
+        String usernameKey = credentialRole + "_" + environment.toUpperCase() + "_USERNAME";
+        String passwordKey = credentialRole + "_" + environment.toUpperCase() + "_PASSWORD";
 
         String username = EnvLoader.get(usernameKey);
         String password = EnvLoader.get(passwordKey);
