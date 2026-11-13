@@ -127,12 +127,12 @@ jobs:
           -Dexec.mainClass=com.microsoft.playwright.CLI
           -Dexec.args="install --with-deps chromium"
 
-      - name: Run cmcs-_ta feature files
+      - name: Run remaining cmcs-_ta feature files
         env:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
         run: >
           mvn -B -ntp test
-          -Dcucumber.features=src/test/resources/features/cmcs-_ta
+          -Dcucumber.features=src/test/resources/features/cmcs-_ta/cmcs_ta_general.feature,src/test/resources/features/cmcs-_ta/cmcs_ta_listview.feature,src/test/resources/features/cmcs-_ta/cmcs_ta_reports_validation.feature
           -Dcucumber.filter.tags="$TAGS"
           -Dtags="$TAGS"
           -DHEADLESS=true

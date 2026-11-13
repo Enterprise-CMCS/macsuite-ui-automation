@@ -109,10 +109,25 @@ Feature: MFP POH Tracker
     Then I can navigate to the random record
 
   @MFP_POH_KnowledgeReview_ListView
-  Scenario: Verify Knowledge view validation
-  #  Given I navigate to MAC Suite Application in "UAT" environment
-  #   When I login as "MFP" user
-  #   And I open "MFP POH" app
+  Scenario: Verify Knowledge - Published Articles view validation
+   Given I kill the previous browser session and launch new browser instance
+    Given I navigate to MAC Suite Application in "QA" environment
+    When I login as "MFP" user
+    And I open "MFP POH" app
+    When I click on "Knowledge" menu
+    Then I should see the "Published Articles" list view
+    Then I can validate the "Published Articles" table columns
+      | Column Name    |
+      | Article Title  |
+      | Summary        |
+      | Article Number |
+      | Language       |
+      | Published Date |
+    When I select a random record from the list view
+    Then I can navigate to the random record
+
+  @MFP_POH_KnowledgeReview_ListView
+  Scenario: Verify Knowledge - Published MFP POH Articlesview validation
     When I click on "Knowledge" menu
     Then I should see the "Published MFP POH Articles" list view
     Then I can validate the "Published MFP POH Articles" table columns
