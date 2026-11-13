@@ -191,4 +191,60 @@ public class ContractListPage extends SfPage {
         newButton.click();
         logger.info("Clicked New button");
     }
+
+    public ContractDetailPage clickFirstRecordInColumn(String columnName) {
+        logger.info("Opening the first record link in the {} column", columnName);
+
+        // Find the grid/table on the list page
+        Locator table = page.getByRole(AriaRole.GRID).first();
+        table.waitFor(new Locator.WaitForOptions()
+                .setState(WaitForSelectorState.VISIBLE)
+                .setTimeout(10000));
+
+        logger.debug("Found grid/table on list page");
+
+        // Get the first row in tbody
+        Locator firstRow = table.locator("tbody tr").first();
+        firstRow.waitFor(new Locator.WaitForOptions()
+                .setState(WaitForSelectorState.VISIBLE)
+                .setTimeout(10000));
+
+        // Get the first link in the first row - this should be the Record Number link
+        Locator firstLink = firstRow.getByRole(AriaRole.LINK).first();
+
+        // If no link found with role, try the direct locator pattern
+        if (firstLink.count() == 0) {
+            firstLink = firstRow.locator("a").first();
+        }
+
+        firstLink.waitFor(new Locator.WaitForOptions()
+                .setState(WaitForSelectorState.VISIBLE)
+                .setTimeout(10000));
+
+        String recordNumber = firstLink.textContent().trim();
+        String href = firstLink.getAttribute("href");
+
+        logger.debug("Found record link: {} (href={})", recordNumber, href);
+        highlightElement(firstLink);
+
+        String target = firstLink.getAttribute("target");
+        Page recordPage;
+        if (target != null && !target.isBlank() && !"_self".equalsIgnoreCase(target)) {
+            recordPage = page.waitForPopup(firstLink::click);
+            recordPage.waitForLoadState(LoadState.DOMCONTENTLOADED);
+            PlaywrightManager.setActivePage(recordPage);
+        } else {
+            firstLink.click();
+            recordPage = page;
+        }
+
+        recordPage.getByRole(AriaRole.TAB,
+                new Page.GetByRoleOptions().setName("Details").setExact(true).setSelected(true))
+                .first().waitFor(new Locator.WaitForOptions().setTimeout(15000));
+
+        logger.info("Clicked first record '{}' in column '{}' (href={}, page={})",
+                recordNumber, columnName, href, recordPage.url());
+
+        return new ContractDetailPage(recordPage);
+    }
 }

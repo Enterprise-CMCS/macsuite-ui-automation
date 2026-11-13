@@ -133,9 +133,9 @@ public class ContractDetailPage extends SfPage {
 
     public void addNote(String noteText) {
         Locator noteField = page.getByRole(AriaRole.TEXTBOX,
-            new Page.GetByRoleOptions().setName("Add Note").setExact(true));
+                new Page.GetByRoleOptions().setName("Add Note").setExact(true));
         noteField.waitFor(new Locator.WaitForOptions()
-            .setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE).setTimeout(8000));
+                .setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE).setTimeout(8000));
         noteField.fill(noteText);
         clickLastVisibleSaveButton();
         logger.info("Note added: {}", noteText);
@@ -143,7 +143,7 @@ public class ContractDetailPage extends SfPage {
 
     private void clickLastVisibleSaveButton() {
         Locator saveButtons = page.getByRole(AriaRole.BUTTON,
-            new Page.GetByRoleOptions().setName("Save").setExact(true));
+                new Page.GetByRoleOptions().setName("Save").setExact(true));
         int count = saveButtons.count();
         for (int index = count - 1; index >= 0; index--) {
             Locator saveButton = saveButtons.nth(index);
@@ -234,7 +234,8 @@ public class ContractDetailPage extends SfPage {
             try {
                 Locator fieldCell = fieldCells.nth(index);
                 if (fieldCell.isVisible()
-                        && normalizeHistoryText(fieldCell.textContent()).equalsIgnoreCase(normalizeHistoryText(fieldName))) {
+                        && normalizeHistoryText(fieldCell.textContent())
+                                .equalsIgnoreCase(normalizeHistoryText(fieldName))) {
                     return true;
                 }
             } catch (Exception ignored) {
@@ -249,24 +250,24 @@ public class ContractDetailPage extends SfPage {
 
     public void verifyContractHeaderDetails(Map<String, String> expectedFields) {
         try {
-            page.waitForLoadState(com.microsoft.playwright.options.LoadState.NETWORKIDLE, 
-                new Page.WaitForLoadStateOptions().setTimeout(15000));
+            page.waitForLoadState(com.microsoft.playwright.options.LoadState.NETWORKIDLE,
+                    new Page.WaitForLoadStateOptions().setTimeout(15000));
         } catch (Exception e) {
             logger.debug("Network idle timeout, continuing anyway");
         }
-        
+
         for (Map.Entry<String, String> entry : expectedFields.entrySet()) {
             String label = entry.getKey();
             String value = entry.getValue();
-            
+
             // Find field by label, then verify value
             Locator fieldRow = page.locator("[data-target-selection-name*='" + label.replace(" ", "_") + "']:visible," +
-                "div:has(span.test-id__field-label:text-is('" + label + "')):visible").first();
+                    "div:has(span.test-id__field-label:text-is('" + label + "')):visible").first();
             fieldRow.waitFor(new Locator.WaitForOptions().setTimeout(15000));
             fieldRow.locator(".test-id__field-value:visible, lightning-formatted-text:visible")
-                .getByText(value).first()
-                .waitFor(new Locator.WaitForOptions().setTimeout(15000));
-            
+                    .getByText(value).first()
+                    .waitFor(new Locator.WaitForOptions().setTimeout(15000));
+
             logger.info("✓ Contract header shows {} = {}", label, value);
         }
     }
@@ -274,15 +275,19 @@ public class ContractDetailPage extends SfPage {
     public void verifyContractNumberAndOrderNumberInHeader() {
         try {
             page.waitForLoadState(com.microsoft.playwright.options.LoadState.NETWORKIDLE,
-                new Page.WaitForLoadStateOptions().setTimeout(5000));
+                    new Page.WaitForLoadStateOptions().setTimeout(5000));
         } catch (Exception e) {
             logger.debug("Network idle timeout, continuing anyway");
         }
-        // PREDICTED de-hollow (not runtime-verified): the prior version only waited for the static
-        // "Contract Number"/"Order Number" field LABEL (page chrome present regardless of data). Assert
+        // PREDICTED de-hollow (not runtime-verified): the prior version only waited for
+        // the static
+        // "Contract Number"/"Order Number" field LABEL (page chrome present regardless
+        // of data). Assert
         // the entered values actually rendered on the saved record. The scenario enters
-        // "AutoContract${timestamp}" / "ORD-${timestamp}", so assert the stable prefixes are present
-        // (timestamp-tolerant). Update these if the feature's contract-number convention changes.
+        // "AutoContract${timestamp}" / "ORD-${timestamp}", so assert the stable
+        // prefixes are present
+        // (timestamp-tolerant). Update these if the feature's contract-number
+        // convention changes.
         page.getByText("AutoContract", new Page.GetByTextOptions().setExact(false))
                 .first().waitFor(new Locator.WaitForOptions().setTimeout(8000));
         page.getByText("ORD-", new Page.GetByTextOptions().setExact(false))
@@ -293,15 +298,15 @@ public class ContractDetailPage extends SfPage {
     public void openContractActionsMenu() {
         // Navigate to Contract Actions tab
         page.getByRole(AriaRole.TAB, new Page.GetByRoleOptions()
-            .setName("Contract Actions")).first().click();
+                .setName("Contract Actions")).first().click();
         logger.info("Navigated to Contract Actions tab");
     }
 
     public void verifyContractActionsMenuIsDisplayed() {
         // Verify the Contract Actions section/related list is displayed on the tab
         Locator section = page.locator("h2.slds-card__header-title")
-            .filter(new Locator.FilterOptions().setHasText("Contract Actions"))
-            .first();
+                .filter(new Locator.FilterOptions().setHasText("Contract Actions"))
+                .first();
         section.waitFor(new Locator.WaitForOptions()
                 .setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE)
                 .setTimeout(10000));
@@ -312,9 +317,9 @@ public class ContractDetailPage extends SfPage {
     public void clickContractActionNumberLink() {
         Locator actionNumberLink = page.getByRole(AriaRole.LINK,
                 new Page.GetByRoleOptions().setName(Pattern.compile("^CA-\\d+$")))
-            .first();
+                .first();
         actionNumberLink.waitFor(new Locator.WaitForOptions()
-            .setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE).setTimeout(10000));
+                .setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE).setTimeout(10000));
         actionNumberLink.click();
         logger.info("Clicked Contract Action Number link in Contract Actions table");
     }
@@ -458,7 +463,8 @@ public class ContractDetailPage extends SfPage {
 
     public void hoverDropdownIcon() {
         Locator dropdown = page.locator(
-                "button[aria-label*='Show More'], button[title*='Show More'], .slds-dropdown-trigger button, [data-label='Actions']").first();
+                "button[aria-label*='Show More'], button[title*='Show More'], .slds-dropdown-trigger button, [data-label='Actions']")
+                .first();
         if (dropdown.count() == 0) {
             dropdown = page.locator("button").filter(new Locator.FilterOptions().setHasText("Show More")).first();
         }
@@ -538,7 +544,8 @@ public class ContractDetailPage extends SfPage {
             throw new AssertionError("Could not parse displayed total for '" + totalLabel + "': " + displayedText);
         }
         if (displayedValue.compareTo(currentColumnSum) != 0) {
-            throw new AssertionError("Displayed total '" + displayedValue + "' does not match sum '" + currentColumnSum + "' for '" + totalLabel + "'");
+            throw new AssertionError("Displayed total '" + displayedValue + "' does not match sum '" + currentColumnSum
+                    + "' for '" + totalLabel + "'");
         }
         logger.info("Total '{}' matches computed table sum {}", totalLabel, currentColumnSum);
     }
@@ -576,7 +583,7 @@ public class ContractDetailPage extends SfPage {
 
     public void verifyMessageDisplayed(String message) {
         page.getByText(message, new Page.GetByTextOptions().setExact(true))
-            .first().waitFor(new Locator.WaitForOptions().setTimeout(10000));
+                .first().waitFor(new Locator.WaitForOptions().setTimeout(10000));
         logger.info("Message verified: {}", message);
     }
 
@@ -607,14 +614,14 @@ public class ContractDetailPage extends SfPage {
         }
         Locator lastEditButton = notes.get(notes.size() - 1);
         lastEditButton.click();
-        
+
         Locator textarea = page.locator("textarea").last();
         textarea.waitFor(new Locator.WaitForOptions()
                 .setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE)
                 .setTimeout(10000));
         textarea.clear();
         textarea.fill(newNoteText);
-        
+
         Locator saveButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions()
                 .setName("Save").setExact(true)).last();
         saveButton.click();
@@ -627,7 +634,7 @@ public class ContractDetailPage extends SfPage {
             throw new AssertionError("No notes found to delete");
         }
         deleteButtons.get(deleteButtons.size() - 1).click();
-        
+
         // Confirm deletion if dialog appears
         Locator confirmButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions()
                 .setName("Delete").setExact(true)).last();
@@ -656,7 +663,7 @@ public class ContractDetailPage extends SfPage {
         modal.waitFor(new Locator.WaitForOptions()
                 .setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE)
                 .setTimeout(10000));
-        
+
         for (String task : tasks) {
             Locator taskElement = modal.getByText(task);
             taskElement.first().waitFor(new Locator.WaitForOptions().setTimeout(10000));
@@ -670,21 +677,29 @@ public class ContractDetailPage extends SfPage {
         modal.waitFor(new Locator.WaitForOptions()
                 .setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE)
                 .setTimeout(10000));
-        
+
         for (String task : tasks) {
-            Locator checkbox = modal.locator("input[type='checkbox']")
-                    .filter(new Locator.FilterOptions()
-                            .setHas(page.getByText(task)))
-                    .first();
-            checkbox.waitFor(new Locator.WaitForOptions().setTimeout(10000));
-            checkbox.check();
+            Locator checkbox = modal.getByRole(AriaRole.CHECKBOX,
+                    new Locator.GetByRoleOptions().setName(task).setExact(true)).first();
+            Locator taskLabel = modal.getByText(task,
+                    new Locator.GetByTextOptions().setExact(true)).first();
+            taskLabel.waitFor(new Locator.WaitForOptions()
+                    .setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE)
+                    .setTimeout(10000));
+            if (!checkbox.isChecked()) {
+                highlightElement(taskLabel);
+                taskLabel.click();
+            }
+            if (!checkbox.isChecked()) {
+                throw new AssertionError("Task checkbox was not selected: " + task);
+            }
         }
         logger.info("Selected {} tasks in {} modal", tasks.size(), modalName);
     }
 
     public void verifyTasksDisplayedInTab(String tabName, List<String> tasks) {
         navigateToTab(tabName);
-        
+
         for (String task : tasks) {
             Locator taskElement = page.getByText(task);
             taskElement.first().waitFor(new Locator.WaitForOptions().setTimeout(10000));
@@ -717,11 +732,11 @@ public class ContractDetailPage extends SfPage {
         field.waitFor(new Locator.WaitForOptions()
                 .setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE)
                 .setTimeout(10000));
-        
+
         String fieldValue = field.inputValue();
         if (!fieldValue.contains(userName)) {
-            throw new AssertionError(String.format("Field '%s' is not pre-populated with user '%s', but contains '%s'", 
-                fieldName, userName, fieldValue));
+            throw new AssertionError(String.format("Field '%s' is not pre-populated with user '%s', but contains '%s'",
+                    fieldName, userName, fieldValue));
         }
         logger.info("Field {} is pre-populated with user {}", fieldName, userName);
     }
@@ -736,12 +751,48 @@ public class ContractDetailPage extends SfPage {
     }
 
     public void verifySectionDisplayed(String sectionName) {
-        Locator section = page.locator("h3:has-text('" + sectionName + "'), .slds-section__title:has-text('" + sectionName + "')")
+        Locator section = page
+                .locator("h3:has-text('" + sectionName + "'), .slds-section__title:has-text('" + sectionName + "')")
                 .first();
         section.waitFor(new Locator.WaitForOptions()
                 .setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE)
                 .setTimeout(10000));
         highlightElement(section);
         logger.info("Section displayed: {}", sectionName);
+    }
+
+    public void clickCreateOptionalMilestoneTasksButton() {
+        logger.info("Clicking 'Create Optional Milestone Tasks' button");
+
+        // First, try to find the button by role and exact name
+        Locator button = page.getByRole(AriaRole.BUTTON)
+                .filter(new Locator.FilterOptions().setHasText("Create Optional Milestone Tasks"))
+                .first();
+
+        // If not found, try with partial match (in case of extra spaces or formatting)
+        if (button.count() == 0) {
+            button = page.getByRole(AriaRole.BUTTON)
+                    .filter(new Locator.FilterOptions().setHasText(
+                            Pattern.compile(".*Create.*Optional.*Milestone.*Tasks.*", Pattern.CASE_INSENSITIVE)))
+                    .first();
+        }
+
+        // If still not found, try looking for the button by aria-label
+        if (button.count() == 0) {
+            button = page.locator(
+                    "button[aria-label*='Create Optional Milestone Tasks'], button[title*='Create Optional Milestone Tasks']")
+                    .first();
+        }
+
+        button.waitFor(new Locator.WaitForOptions()
+                .setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE)
+                .setTimeout(10000));
+
+        logger.debug("Found button: {}", button.getAttribute("aria-label"));
+        highlightElement(button);
+        button.scrollIntoViewIfNeeded();
+        button.click();
+
+        logger.info("Clicked 'Create Optional Milestone Tasks' button");
     }
 }
