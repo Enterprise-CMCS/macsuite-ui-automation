@@ -38,7 +38,6 @@ jobs:
       TAGS: ${{ github.event.inputs.tags || 'not @ignore' }}
       PIPELINE_ENVIRONMENT: ${{ github.event.inputs.environment || 'UAT' }}
       PIPELINE_APP_URL: ${{ secrets[format('APP_URL_{0}', github.event.inputs.environment || 'UAT')] }}
-      # GitHub secret names use underscores; role names are restored to hyphens below.
       PIPELINE_BCT_USERNAME: ${{ secrets[format('BCT_{0}_USERNAME', github.event.inputs.environment || 'UAT')] }}
       PIPELINE_BCT_PASSWORD: ${{ secrets[format('BCT_{0}_PASSWORD', github.event.inputs.environment || 'UAT')] }}
       PIPELINE_BCT_DSG_CRU_USERNAME: ${{ secrets[format('BCT_DSG_CRU_{0}_USERNAME', github.event.inputs.environment || 'UAT')] }}
@@ -111,12 +110,11 @@ jobs:
           fi
           printf '%s=%s\n' "APP_URL_${PIPELINE_ENVIRONMENT}" "$PIPELINE_APP_URL" >> "$GITHUB_ENV"
           for role in "${roles[@]}"; do
-            credential_role="${role//_/-}"
             username_variable="PIPELINE_${role}_USERNAME"
             password_variable="PIPELINE_${role}_PASSWORD"
             printf '%s=%s\n' \
-              "${credential_role}_${PIPELINE_ENVIRONMENT}_USERNAME" "${!username_variable}" \
-              "${credential_role}_${PIPELINE_ENVIRONMENT}_PASSWORD" "${!password_variable}" >> "$GITHUB_ENV"
+              "${role}_${PIPELINE_ENVIRONMENT}_USERNAME" "${!username_variable}" \
+              "${role}_${PIPELINE_ENVIRONMENT}_PASSWORD" "${!password_variable}" >> "$GITHUB_ENV"
           done
           echo "Required Salesforce URL and all six BCT role credentials passed format checks; values are not logged."
 
