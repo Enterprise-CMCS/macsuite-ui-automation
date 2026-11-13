@@ -89,6 +89,10 @@ Feature: PRA ICR Packages Read Only List View, Dashboard, and Reports Navigation
 
   @Knowledge_ListView_PRA_readOnly
   Scenario: Verify Knowledge Published PRA Articles view validation
+  Given I kill the previous browser session and launch new browser instance
+    Given I navigate to MAC Suite Application in "QA" environment
+    When I login as "PRAREADONLY" user
+    And I open "CMCS PRA Tracker" app
     When I click on "Knowledge" menu
     Then I should see the "Published PRA Articles" list view
     Then I can validate the "Published PRA Articles" table columns
