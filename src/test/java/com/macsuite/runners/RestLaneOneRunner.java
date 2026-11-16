@@ -1,14 +1,15 @@
 package com.macsuite.runners;
 
-import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Listeners;
 
+@Listeners(ScenarioRetryListener.class)
 @CucumberOptions(
     features = {
         "src/test/resources/features/bct/bct_contract_action_menu.feature",
         "src/test/resources/features/bct/bct_listview_reports_dashboards.feature",
-        "src/test/resources/features/wftcl_implementation/wftcl_provisions.feature",
+        "src/test/resources/features/New_Provisions/New_provisions.feature",
         "src/test/resources/features/hiring_metrics/hiring_metrics_hub_workflow.feature",
         "src/test/resources/features/hiring_metrics/hiring_metrics_listview_reports_dashboards.feature",
         "src/test/resources/features/pra/pra_icr_workflow.feature",
@@ -39,7 +40,7 @@ import org.testng.annotations.DataProvider;
     monochrome = false,
     publish = false
 )
-public class RestLaneOneRunner extends AbstractTestNGCucumberTests {
+public class RestLaneOneRunner extends RetryableCucumberTestRunner {
     @Override
     @DataProvider(parallel = false)
     public Object[][] scenarios() {

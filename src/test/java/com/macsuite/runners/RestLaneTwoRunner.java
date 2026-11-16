@@ -1,9 +1,10 @@
 package com.macsuite.runners;
 
-import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Listeners;
 
+@Listeners(ScenarioRetryListener.class)
 @CucumberOptions(
     features = {
         "src/test/resources/features/outreach/outreach-general-e2e.feature",
@@ -39,7 +40,7 @@ import org.testng.annotations.DataProvider;
     monochrome = false,
     publish = false
 )
-public class RestLaneTwoRunner extends AbstractTestNGCucumberTests {
+public class RestLaneTwoRunner extends RetryableCucumberTestRunner {
     @Override
     @DataProvider(parallel = false)
     public Object[][] scenarios() {

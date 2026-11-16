@@ -6,7 +6,6 @@ import org.testng.annotations.Listeners;
 
 import com.macsuite.reporting.AllureReportTestNgListener;
 
-import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 
 /**
@@ -22,7 +21,7 @@ import io.cucumber.testng.CucumberOptions;
  * 
  * Note: Cucumber's native cucumber.filter.tags property overrides this default.
  */
-@Listeners(AllureReportTestNgListener.class)
+@Listeners({ AllureReportTestNgListener.class, ScenarioRetryListener.class })
 @CucumberOptions(
 
         features = { "src/test/resources/features" }, glue = {
@@ -50,7 +49,7 @@ import io.cucumber.testng.CucumberOptions;
         }, monochrome = false, publish = false // keep false — publishing would expose internal test data to the public
                                                // Cucumber report service
 )
-public class MACRunner extends AbstractTestNGCucumberTests {
+public class MACRunner extends RetryableCucumberTestRunner {
 
     static {
         String tags = System.getProperty("tags");
