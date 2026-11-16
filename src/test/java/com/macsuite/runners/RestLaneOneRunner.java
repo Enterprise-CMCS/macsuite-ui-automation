@@ -9,7 +9,7 @@ import org.testng.annotations.Listeners;
     features = {
         "src/test/resources/features/bct/bct_contract_action_menu.feature",
         "src/test/resources/features/bct/bct_listview_reports_dashboards.feature",
-        "src/test/resources/features/New_Provisions/wftcl_provisions.feature",
+        "src/test/resources/features/New_Provisions/New_provisions.feature",
         "src/test/resources/features/hiring_metrics/hiring_metrics_hub_workflow.feature",
         "src/test/resources/features/hiring_metrics/hiring_metrics_listview_reports_dashboards.feature",
         "src/test/resources/features/pra/pra_icr_workflow.feature",

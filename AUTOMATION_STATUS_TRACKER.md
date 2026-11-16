@@ -338,7 +338,7 @@
 | **Gherkin Coverage** | **5 / 5 (100%)** |
 | **Implementation Coverage** | **0 / 5 (0%)** |
 | **Status** | 🟡 **Feature Files Written — Needs Step Defs** |
-| **Feature Files** | 1 file |
+| **Feature Files** | 2 files |
 
 **Legacy Test Breakdown:**
 
@@ -346,11 +346,11 @@
 
 **Feature File Written, Needs Step Defs + Locators (5 tests):**
 
-- 🟡 TC_001: WFTCL Home Screen + header details (`wftcl-provisions-e2e.feature`)
-- 🟡 TC_002: Provisions Creation — overview, dates, meetings, documents, file upload, notes, chatter, field history (`wftcl-provisions-e2e.feature`)
-- 🟡 TC_003: Provisions List View — add + clone (`wftcl-provisions-e2e.feature`)
-- 🟡 TC_004: Dashboard Navigation (`wftcl-provisions-e2e.feature`)
-- 🟡 TC_005: Reports Navigation (`wftcl-provisions-e2e.feature`)
+- 🟡 TC_001: WFTCL Home Screen + header details (`New_provisions.feature`)
+- 🟡 TC_002: Provisions Creation — overview, dates, meetings, documents, file upload, notes, chatter, field history (`New_provisions.feature`)
+- 🟡 TC_003: Provisions List View — add + clone (`New_Provisions_listview_reports_dashboards.feature`)
+- 🟡 TC_004: Reports Navigation (`New_Provisions_listview_reports_dashboards.feature`)
+- 🟡 TC_005: Dashboard Navigation (`New_Provisions_listview_reports_dashboards.feature`)
 
 **Blockers / Unknowns:**
 - Login user role label (distinct from CMCS TA "WFTCL" role?) needs confirmation `[LOCATOR NEEDED]`
