@@ -2912,8 +2912,6 @@ public class InquiryTrackerPage extends SfPage {
 				throw new AssertionError("Expected stage 'Triage' to be selected by default", e2);
 			}
 		}
-		}
-		
 	}
 
 	public void changeSubmittedDateToLastYear() {
