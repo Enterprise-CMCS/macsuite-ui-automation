@@ -1,4 +1,4 @@
-name: WFTCL Implementation Tests
+name: New Provisions Tests
 
 on:
   schedule:
@@ -16,7 +16,7 @@ on:
           - UAT
           - SEI
       tags:
-        description: 'Cucumber tag expression within features/wftcl_implementation (include prerequisite scenarios for chained flows)'
+        description: 'Cucumber tag expression within features/New_Provisions (include prerequisite scenarios for chained flows)'
         required: false
         default: 'not @ignore'
         type: string
@@ -127,12 +127,12 @@ jobs:
           -Dexec.mainClass=com.microsoft.playwright.CLI
           -Dexec.args="install --with-deps chromium"
 
-      - name: Run wftcl_implementation feature files
+      - name: Run New Provisions feature files
         env:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
         run: >
           mvn -B -ntp test
-          -Dcucumber.features=src/test/resources/features/wftcl_implementation
+          -Dcucumber.features=src/test/resources/features/New_Provisions
           -Dcucumber.filter.tags="$TAGS"
           -Dtags="$TAGS"
           -DHEADLESS=true
