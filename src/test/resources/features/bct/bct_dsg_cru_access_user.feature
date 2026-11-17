@@ -4,7 +4,7 @@ Feature: BCT Contract Creation, Validation and Actions
   @contract_creation_and_actions @field_history @regression @critical
   Scenario: Create a contract, validate header, edit fields, open actions menu, add a note and verify field history
     Given I navigate to MAC Suite Application in "UAT" environment
-    When I login as "BCT-DSG-CRU" user
+    When I login as "BCT_DSG_CRU" user
     And I open "CMCS Budget & Contract Tracker" app
     Then the "CMCS Budget & Contract Tracker" should be fully loaded
     When I click on "Contracts" menu

@@ -6,7 +6,7 @@ Feature: BCT CMCS Contracts and View Contract Action permissions for OSG readonl
 
   @bct @read-only @regression
   Scenario Outline: Read-only BCT users can open and review contracts and contract actions
-    When I login as "BCT-OSG-READ" user
+    When I login as "BCT_OSG_READ" user
     And I open "CMCS Budget & Contract Tracker" app
     Then the "CMCS Contracts Dashboard" should be fully loaded
     And I click on "CMCS Contracts" menu
@@ -21,11 +21,11 @@ Feature: BCT CMCS Contracts and View Contract Action permissions for OSG readonl
       | Contract Status             |
       | Component                   |
     When I click on "View Contract Actions" button
-    Then I verify "View CMCS Contract" button is displayed
-    And I click on "View CMCS Contract" button
+    Then I verify "View CMCS Contracts" button is displayed
+    And I click on "View CMCS Contracts" button
     And I click on "View Contract Actions" button
     And Verify "All Contract Action" list view is displayed
-    And I click the first Contract Order Number link
+    And I click the Contract Order Number link
     And I should not see Edit button
     And I should not see Create Contract Action button
     When I navigate to the "Contract Option Years" tab

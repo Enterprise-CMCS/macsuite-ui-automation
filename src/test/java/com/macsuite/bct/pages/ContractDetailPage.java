@@ -10,6 +10,8 @@ import com.microsoft.playwright.options.AriaRole;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
 public class ContractDetailPage extends SfPage {
@@ -18,18 +20,18 @@ public class ContractDetailPage extends SfPage {
         super(page);
     }
 
-    public ContractDetailPage clickFirstContractOrderNumberLink() {
-        logger.info("Opening the first Contract / Order Number link");
+    public ContractDetailPage clickContractOrderNumberLink() {
+        logger.info("Opening the Contract / Order Number link");
         Locator contractGrid = page.getByRole(AriaRole.GRID)
                 .filter(new Locator.FilterOptions().setHasText("Contract / Order Number"))
                 .first();
-        Locator firstLink = contractGrid.locator("tbody tr").first().getByRole(AriaRole.LINK).first();
-        firstLink.waitFor(new Locator.WaitForOptions()
+        Locator contractLink = contractGrid.locator("tbody tr").nth(9).getByRole(AriaRole.LINK).first();
+        contractLink.waitFor(new Locator.WaitForOptions()
                 .setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE)
                 .setTimeout(10000));
-        String contractNumber = firstLink.textContent().trim();
-        String href = firstLink.getAttribute("href");
-        Page contractPage = page.waitForPopup(firstLink::click);
+        String contractNumber = contractLink.textContent().trim();
+        String href = contractLink.getAttribute("href");
+        Page contractPage = page.waitForPopup(contractLink::click);
         contractPage.waitForLoadState(com.microsoft.playwright.options.LoadState.DOMCONTENTLOADED);
         PlaywrightManager.setActivePage(contractPage);
         logger.info("Clicked contract link '{}' (href={}, page={}, openPages={})",
@@ -93,7 +95,10 @@ public class ContractDetailPage extends SfPage {
     }
 
     public void navigateToTab(String tabName) {
-        page.getByRole(AriaRole.TAB, new Page.GetByRoleOptions().setName(tabName)).first().click();
+        Locator tabElement = page.getByRole(AriaRole.TAB, new Page.GetByRoleOptions().setName(tabName)).first();
+        tabElement.click();
+        com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat(tabElement)
+                .hasAttribute("aria-selected", "true");
         logger.info("Navigated to tab: {}", tabName);
     }
 
@@ -114,16 +119,21 @@ public class ContractDetailPage extends SfPage {
                     .last();
         }
         recordLink.waitFor(new Locator.WaitForOptions().setTimeout(10000));
-        String target = recordLink.getAttribute("target");
+        String originalUrl = page.url();
+        AtomicReference<Page> popup = new AtomicReference<>();
+        Consumer<Page> popupListener = popup::set;
         Page contractPage;
-        if (target != null && !target.isBlank() && !"_self".equalsIgnoreCase(target)) {
-            contractPage = page.waitForPopup(recordLink::click);
-            contractPage.waitForLoadState(com.microsoft.playwright.options.LoadState.DOMCONTENTLOADED);
-            PlaywrightManager.setActivePage(contractPage);
-        } else {
+        page.onPopup(popupListener);
+        try {
             recordLink.click();
-            contractPage = page;
+            // Lightning can intercept a target="_blank" link and navigate the current page.
+            page.waitForCondition(() -> popup.get() != null || !page.url().equals(originalUrl),
+                    new Page.WaitForConditionOptions().setTimeout(15000));
+            contractPage = popup.get() != null ? popup.get() : page;
+        } finally {
+            page.offPopup(popupListener);
         }
+        PlaywrightManager.setActivePage(contractPage);
         contractPage.getByRole(AriaRole.TAB,
                 new Page.GetByRoleOptions().setName("Details").setExact(true).setSelected(true))
                 .first().waitFor(new Locator.WaitForOptions().setTimeout(15000));

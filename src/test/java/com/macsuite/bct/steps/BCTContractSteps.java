@@ -58,9 +58,9 @@ public class BCTContractSteps extends StepBase {
         screenshot("Contract Created");
     }
 
-    @When("I click the first Contract Order Number link")
-    public void clickFirstContractOrderNumberLink() {
-        detailPage = detailPage().clickFirstContractOrderNumberLink();
+    @And("I click the Contract Order Number link")
+    public void clickContractOrderNumberLink() {
+        detailPage = detailPage().clickContractOrderNumberLink();
     }
 
     @Then("I click on the first record link in the {string} column")
