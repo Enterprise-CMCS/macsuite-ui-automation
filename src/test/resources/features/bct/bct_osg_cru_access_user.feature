@@ -5,7 +5,7 @@ Feature: BCT CMCS Contracts Create, Read, Update permissions for OSG users
   @bct @cmcs-contracts-tab @regression @critical
   Scenario: BCT OSG users can create, read and update CMCS Contracts, and manage notes on CMCS Contracts
     Given I navigate to MAC Suite Application in "UAT" environment
-    When I login as "BCT-OSG-CRU" user
+    When I login as "BCT_OSG_CRU" user
     And I open "CMCS Budget & Contract Tracker" app
     Then the "CMCS Contracts Dashboard" should be fully loaded
     And I click on "CMCS Contracts" menu
@@ -13,10 +13,15 @@ Feature: BCT CMCS Contracts Create, Read, Update permissions for OSG users
     #===================================================
     #TC_01: Verify View Contract Actions functionality
     #===================================================
+
     When I click on "View Contract Actions" button
+    ##### Use the below step to directly navigate to the Contract details page #####
+    #### And I click the Contract Order Number link
+    ##### Use the below step to directlynavigate to the Contract Actiondetails page #####
+    #### And I click on the first record link in the "Contract Action Number" column
     And Verify "All Contract Action" list view is displayed
-    Then I verify "View CMCS Contract" button is displayed
-    And I click on "View CMCS Contract" button
+    Then I verify "View CMCS Contracts" button is displayed
+    And I click on "View CMCS Contracts" button
 
     #=================================
     #TC_02: Verify Contract Dashboard
@@ -33,7 +38,7 @@ Feature: BCT CMCS Contracts Create, Read, Update permissions for OSG users
     Then I should see the dashboard Legend and Contract Timeline Calendar
     And I verify "Clear" button is displayed
     And I verify the "All CMCS Contract Actions" table columns are correct:
-      | Contract Title | Contract Action | Contract Action Type | Fiscal Year | Anticipated Amount | Obligated Amount |
+      | Contract / Order Number | Contract Title | Contract Action | Fiscal Year | Anticipated Amount | Obligated Amount |
     Then I click on "View Contract Records" button
 
     #============================================================================
@@ -140,13 +145,13 @@ Feature: BCT CMCS Contracts Create, Read, Update permissions for OSG users
     Then I delete the last note
     Then I should see note deleted confirmation
 
-    #===============================================
-    #TC_07: Verify Create Contract Action Modal and fields
-    #===============================================
+    # ===============================================
+    # TC_07: Verify Create Contract Action Modal and fields
+    # ===============================================
 
     When I click on "Create Contract Action" button
-    And I fill the "Create Contract Action" modal with:
-      | Project # (required)        | Add or link Project # |
+    And I fill the "Add Contract Action" modal with:
+      | Project #                   | Add or link Project # |
       | Project # to add (required) | ${random}             |
       | Fiscal Year                 | FY25                  |
       | Contract Action             | OY1                   |
@@ -159,9 +164,9 @@ Feature: BCT CMCS Contracts Create, Read, Update permissions for OSG users
     And I click the Save button
     Then I should see the success message
 
-    #=======================================================================================================
-    #TC_08: Make updates to the fields under Contract Action Details page and verify Field History Tracking
-    #=======================================================================================================
+    # =======================================================================================================
+    # TC_08: Make updates to the fields under Contract Action Details page and verify Field History Tracking
+    # =======================================================================================================
 
     And I update the "Information" section with:
       | Fiscal Year        | FY26             |
@@ -175,13 +180,15 @@ Feature: BCT CMCS Contracts Create, Read, Update permissions for OSG users
     And I click the Save button
     When I navigate to the "Field History Tracking" tab
     Then I should see field history for the following changes:
-      | Created.               |
-      | Contract Action Number |
-      | Fiscal Year            |
-      | Contract Action        |
-      | Requirement #          |
-      | Anticipated Amount     |
-      | Obligated Amount       |
+      | Created.           |
+      | Fiscal Year        |
+      | Contract Action    |
+      | Requirement #      |
+      | P.O.P. Start Date  |
+      | P.O.P. End Date    |
+      | Anticipated Amount |
+      | Obligated Amount   |
+      | Funding Source     |
     When I navigate back to the record link
 
     #======================================================
@@ -196,33 +203,33 @@ Feature: BCT CMCS Contracts Create, Read, Update permissions for OSG users
     Then I delete the last note
     Then I should see note deleted confirmation
 
-    #============================================
-    #TC_10: Verify Add Projects Modal and fields
-    #============================================
+    # ============================================
+    # TC_10: Verify Add Projects Modal and fields
+    # ============================================
 
     When I verify "Add Projects" button is displayed
     Then I click on "Add Projects" button
     Then I fill the "Add Projects" modal with:
-      | Project # (required)        | Add or link Project # |
+      | Project #                   | Add or link Project # |
       | Project # to add (required) | ${random}             |
     And I select the "Add multiple Projects" checkbox
     Then I verify "Add or link Project #" button is displayed
     When I click on "Add or link Project #" button
     And I fill the "Add Projects" modal with:
-      | Project # to add (required) | ${random} |
+      | Project # to add | ${random} |
     And I click the Save button
     And I should see the success message
 
-    #=================================================================
-    #TC_11: Verify Contract Action Details page and Edit capabilities
-    #=================================================================
+    # =================================================================
+    # TC_11: Verify Contract Action Details page and Edit capabilities
+    # =================================================================
 
-    # Then I verify the "Related Projects" table columns are correct:
-    #   | Project #: Project # |
+    Then I verify the "CMCS ConAct-Projects" table columns are correct:
+      | Project # |
 
-    #======================================================================================
-    #TC_12: Navigate back to CMCS Contract record and verify Contract Option Years section
-    #======================================================================================
+    # ======================================================================================
+    # TC_12: Navigate back to CMCS Contract record and verify Contract Option Years section
+    # ======================================================================================
 
     Then I navigate back to the record link
     When I navigate to the "Contract Option Years" tab
@@ -242,11 +249,3 @@ Feature: BCT CMCS Contracts Create, Read, Update permissions for OSG users
     Then I sum the "Obligated Amount" column in the "Contract Cost Details" table
     And match it with the "Total Obligated Amount" displayed
 
-    #====================================================
-    #TC_13: Verify CMCS Contract Field History Tracking
-    #====================================================
-
-    When I navigate to the "Field History Tracking" tab
-    Then I should see field history for the following changes:
-      | Created.              |
-      | CMCS Contracts Number |

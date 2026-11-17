@@ -193,29 +193,32 @@ public class ContractListPage extends SfPage {
     }
 
     public ContractDetailPage clickFirstRecordInColumn(String columnName) {
+        if (columnName == null || columnName.isBlank()) {
+            throw new IllegalArgumentException("A nonblank column name is required to open a record.");
+        }
         logger.info("Opening the first record link in the {} column", columnName);
 
-        // Find the grid/table on the list page
-        Locator table = page.getByRole(AriaRole.GRID).first();
+        Locator headerLabel = page.getByText(columnName.trim(), new Page.GetByTextOptions().setExact(true));
+        Locator matchingHeader = page.getByRole(AriaRole.COLUMNHEADER,
+                new Page.GetByRoleOptions().setName(columnName.trim()).setExact(true))
+                .or(page.getByRole(AriaRole.COLUMNHEADER)
+                        .filter(new Locator.FilterOptions().setHas(headerLabel)));
+        Locator table = page.getByRole(AriaRole.GRID)
+                .filter(new Locator.FilterOptions().setHas(matchingHeader)).first();
         table.waitFor(new Locator.WaitForOptions()
                 .setState(WaitForSelectorState.VISIBLE)
                 .setTimeout(10000));
 
-        logger.debug("Found grid/table on list page");
+        Locator header = table.getByRole(AriaRole.COLUMNHEADER).and(matchingHeader).first();
+        int columnIndex = ((Number) header.evaluate("header => header.cellIndex")).intValue();
 
-        // Get the first row in tbody
         Locator firstRow = table.locator("tbody tr").first();
         firstRow.waitFor(new Locator.WaitForOptions()
                 .setState(WaitForSelectorState.VISIBLE)
                 .setTimeout(10000));
 
-        // Get the first link in the first row - this should be the Record Number link
-        Locator firstLink = firstRow.getByRole(AriaRole.LINK).first();
-
-        // If no link found with role, try the direct locator pattern
-        if (firstLink.count() == 0) {
-            firstLink = firstRow.locator("a").first();
-        }
+        Locator firstLink = firstRow.locator("th, td").nth(columnIndex)
+                .getByRole(AriaRole.LINK).first();
 
         firstLink.waitFor(new Locator.WaitForOptions()
                 .setState(WaitForSelectorState.VISIBLE)
