@@ -126,6 +126,10 @@ mvn clean test -Dcucumber.filter.tags="@demo or @critical"
 mvn clean test -Dcucumber.filter.tags="@smoke and not @ignore"
 ```
 
+TestNG retries failed Cucumber scenarios once by default, starting from the first step.
+Use `@no-retry` for scenarios that must report the original failure without
+restarting, such as flows that create or update records.
+
 Run by tag with parallel execution:
 
 ```bash

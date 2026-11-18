@@ -1,14 +1,21 @@
 @bct-osg-readonly-access-user
 Feature: BCT CMCS Contracts and View Contract Action permissions for OSG readonly access users
 
-  Background:
-    Given I navigate to MAC Suite Application in "UAT" environment
-
   @bct @read-only @regression
-  Scenario Outline: Read-only BCT users can open and review contracts and contract actions
-    When I login as "BCT-OSG-READ" user
+  Scenario: Read-only BCT OSG users can open and review contracts and contract actions
+    Given I navigate to MAC Suite Application in "UAT" environment
+    When I login as "BCT_OSG_READ" user
     And I open "CMCS Budget & Contract Tracker" app
+
+    #======================================================
+    #TC_01: Verify "CMCS Contracts Dashboard" for OSG User
+    #======================================================
+
     Then the "CMCS Contracts Dashboard" should be fully loaded
+
+    #===============================================================
+    #TC_02: Verify read only capabilities under "CMCS Contracts" tab
+    #================================================================
     And I click on "CMCS Contracts" menu
     And I should not see New button
     And Verify "All Contracts" list view is displayed
@@ -21,13 +28,17 @@ Feature: BCT CMCS Contracts and View Contract Action permissions for OSG readonl
       | Contract Status             |
       | Component                   |
     When I click on "View Contract Actions" button
-    Then I verify "View CMCS Contract" button is displayed
-    And I click on "View CMCS Contract" button
+    Then I verify "View CMCS Contracts" button is displayed
+    And I click on "View CMCS Contracts" button
     And I click on "View Contract Actions" button
     And Verify "All Contract Action" list view is displayed
-    And I click the first Contract Order Number link
+    And I click the Contract Order Number link
     And I should not see Edit button
     And I should not see Create Contract Action button
+
+    # =====================================================================
+    # TC_03: Verify Contract Option Years section under CMCS Contract page
+    # =====================================================================
     When I navigate to the "Contract Option Years" tab
     And I verify the "Total Contract Action Amounts" section is displayed
     Then I should see the summary value "Total Anticipated Amount" is displayed
@@ -45,6 +56,11 @@ Feature: BCT CMCS Contracts and View Contract Action permissions for OSG readonl
     And match it with the "Total Anticipated Amount" displayed
     Then I sum the "Obligated Amount" column in the "Contract Cost Details" table
     And match it with the "Total Obligated Amount" displayed
+
+    #======================================================
+    #TC_04: Verify Notes section under CMCS Contract page
+    #=======================================================
+
     When I navigate to the "Notes" tab
     And I add a note with text "Add note test"
     Then I should see the note "Add note test" displayed
@@ -52,6 +68,11 @@ Feature: BCT CMCS Contracts and View Contract Action permissions for OSG readonl
     Then I should see the note "Edit note test" displayed
     Then I delete the last note
     Then I should see note deleted confirmation
+
+    #=============================================================
+    #TC_05: Verify Field History Tracking under CMCS Contract page
+    #==============================================================
+
     When I navigate to the "Field History Tracking" tab
     Then I should see field history for the following changes:
       | Created.              |

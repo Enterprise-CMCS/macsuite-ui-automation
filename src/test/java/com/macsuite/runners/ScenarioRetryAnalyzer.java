@@ -15,6 +15,11 @@ public class ScenarioRetryAnalyzer implements IRetryAnalyzer {
 
     @Override
     public boolean retry(ITestResult result) {
+        Object[] parameters = result.getParameters();
+        if (parameters.length > 0 && parameters[0] instanceof PickleWrapper pickleWrapper
+                && pickleWrapper.getPickle().getTags().contains("@no-retry")) {
+            return false;
+        }
         return shouldRetry(scenarioKey(result), result.getStatus());
     }
 

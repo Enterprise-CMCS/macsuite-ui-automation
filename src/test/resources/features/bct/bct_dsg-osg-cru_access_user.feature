@@ -4,7 +4,7 @@ Feature: BCT Contracts, CMCS Contracts and Contract Action permissions for dsg+o
   @contract_creation_and_actions @regression @critical
   Scenario: BCT DSG+OSG cru access users can create and edit contracts
     Given I navigate to MAC Suite Application in "UAT" environment
-    When I login as "BCT-DSG-OSG-CRU" user
+    When I login as "BCT_DSG_OSG_CRU" user
     And I open "CMCS Budget & Contract Tracker" app
 #     Then the "CMCS Budget & Contract Tracker" should be fully loaded
 #     When I click on "Contracts" menu
