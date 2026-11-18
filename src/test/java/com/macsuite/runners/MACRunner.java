@@ -32,6 +32,7 @@ import io.cucumber.testng.CucumberOptions;
                 "com.macsuite.pier.steps",
                 "com.macsuite.pra.steps",
                 "com.macsuite.MFP_POH.steps",
+                "com.macsuite.RHTP.steps",
                 "com.macsuite.outreach.steps",
                 "com.macsuite.inquiry_tracker.steps",
                 "com.macsuite.sdp.steps",
