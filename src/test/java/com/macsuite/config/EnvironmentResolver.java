@@ -5,6 +5,8 @@ import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.macsuite.reporting.ExecutionMetadata;
+
 /**
  * Utility for resolving environment-specific URLs.
  * URLs are stored in .env file with format: APP_URL_{ENV}
@@ -38,34 +40,20 @@ public class EnvironmentResolver {
      * @throws IllegalStateException if no URL found for environment
      */
     public static String getEnvironmentUrl(String environment) {
-        String envKey = "APP_URL_" + environment.toUpperCase();
-        String url = EnvLoader.get(envKey);
-
-        if (url != null && !url.isEmpty()) {
-            logger.info("Using URL for environment '{}': {}", environment, url);
-            return url;
-        }
-
-        // Fallback to default APP_URL from TestConfig
-        logger.warn("No URL found for environment '{}' (key: {}). Using default URL from TestConfig.", environment, envKey);
-        url = TestConfig.getDefaultAppUrl();
-
-        if (url != null && !url.isEmpty()) {
-            logger.info("Using default URL: {}", url);
-            return url;
-        }
-
-        throw new IllegalStateException(
-                String.format("No URL configured for environment '%s'. Expected key: %s or default APP_URL", 
-                        environment, envKey)
-        );
+        return resolveUrl(environment, "APP_URL_");
     }
 
     public static String getRHTPEnvironmentUrl(String environment) {
-        String envKey = "RHTP_APP_URL_" + environment.toUpperCase();
+        return resolveUrl(environment, "RHTP_APP_URL_");
+    }
+
+    private static String resolveUrl(String environment, String envPrefix) {
+        ExecutionMetadata.clearTarget();
+        String envKey = envPrefix + environment.toUpperCase(Locale.ROOT);
         String url = EnvLoader.get(envKey);
 
         if (url != null && !url.isEmpty()) {
+            ExecutionMetadata.recordTarget(environment, false);
             logger.info("Using URL for environment '{}': {}", environment, url);
             return url;
         }
@@ -75,6 +63,7 @@ public class EnvironmentResolver {
         url = TestConfig.getDefaultAppUrl();
 
         if (url != null && !url.isEmpty()) {
+            ExecutionMetadata.recordTarget(environment, true);
             logger.info("Using default URL: {}", url);
             return url;
         }
