@@ -1,6 +1,9 @@
 package com.macsuite.runners;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.testng.Assert;
+import org.testng.TestNG;
 import org.testng.annotations.Test;
 
 import io.cucumber.testng.FeatureWrapper;
@@ -26,5 +29,29 @@ public class ScenarioRetryAnalyzerTest {
 
         Assert.assertNotNull(scenarioTest);
         Assert.assertEquals(scenarioTest.retryAnalyzer(), ScenarioRetryAnalyzer.class);
+    }
+
+    @Test
+    public void stopsAfterOneRetryWithTheSkipListenerRegistered() {
+        RetryFailureFixture.attempts.set(0);
+        TestNG runner = new TestNG();
+        runner.setUseDefaultListeners(false);
+        runner.setVerbose(0);
+        runner.addListener(new ScenarioRetryListener());
+        runner.setTestClasses(new Class<?>[] { RetryFailureFixture.class });
+
+        runner.run();
+
+        Assert.assertEquals(RetryFailureFixture.attempts.get(), 2);
+        Assert.assertTrue(runner.hasFailure());
+    }
+}
+
+class RetryFailureFixture {
+    static final AtomicInteger attempts = new AtomicInteger();
+
+    @Test(retryAnalyzer = ScenarioRetryAnalyzer.class)
+    public void failFirstTwoAttempts() {
+        Assert.assertTrue(attempts.incrementAndGet() > 2, "Intentional failure");
     }
 }

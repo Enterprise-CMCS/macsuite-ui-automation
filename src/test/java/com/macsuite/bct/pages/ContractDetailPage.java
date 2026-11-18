@@ -183,7 +183,8 @@ public class ContractDetailPage extends SfPage {
 
     public void verifyFieldHistoryTracking(List<String> expectedFields) {
         Locator viewAllLink = page
-                .locator("xpath=//*[contains(text(), 'Contract History')]/following::*[text()='View All']/parent::a")
+                .locator("a[aria-label*='History']")
+                .filter(new Locator.FilterOptions().setHasText("View All"))
                 .first();
         if (viewAllLink.count() > 0 && viewAllLink.isVisible()) {
             viewAllLink.click();
