@@ -214,6 +214,21 @@ mvn clean test -DargLine="-Xmx4g"
 
 ## Reports
 
+Each scenario in the Allure and Cucumber reports includes an **Execution metadata**
+attachment with the target environment and **Executed by**. In GitHub Actions,
+manual runs and re-runs show the triggering GitHub username; automatic runs are
+identified as scheduled and show the schedule actor when available. Local runs
+show the OS account running Java, not the Salesforce test login.
+
+Allure's **Overview** also shows the resolved target(s) in **Environment** and
+the person or schedule that launched the run in **Executors**.
+
+The reported environment reflects the URL selected by the framework (including
+the workflow override where applicable). Scenarios that reuse a feature's
+browser session retain its environment. If no target was resolved, the report
+says `Not resolved`; if the framework used a fallback URL, it says `Default URL`
+and includes the requested environment.
+
 Generate and view Allure report:
 
 ```bash

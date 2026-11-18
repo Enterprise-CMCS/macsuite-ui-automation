@@ -2,8 +2,9 @@ name: Outreach Tests
 
 on:
   schedule:
-    # Sunday/Thursday at 9:00 PM UTC.
-    - cron: '0 21 * * *'
+    # UAT on Sunday, Tuesday, Thursday, and Saturday; QA on Monday, Wednesday, and Friday.
+    - cron: '0 21 * * 0,2,4,6'
+    - cron: '0 21 * * 1,3,5'
   workflow_dispatch:
     inputs:
       environment:
@@ -36,10 +37,10 @@ jobs:
     env:
       HEADLESS: 'true'
       TAGS: ${{ github.event.inputs.tags || 'not @ignore' }}
-      PIPELINE_ENVIRONMENT: ${{ github.event.inputs.environment || 'UAT' }}
-      PIPELINE_APP_URL: ${{ secrets[format('APP_URL_{0}', github.event.inputs.environment || 'UAT')] }}
-      PIPELINE_USERNAME: ${{ secrets[format('SO_{0}_USERNAME', github.event.inputs.environment || 'UAT')] }}
-      PIPELINE_PASSWORD: ${{ secrets[format('SO_{0}_PASSWORD', github.event.inputs.environment || 'UAT')] }}
+      PIPELINE_ENVIRONMENT: ${{ github.event.inputs.environment || (github.event.schedule == '0 21 * * 1,3,5' && 'QA' || 'UAT') }}
+      PIPELINE_APP_URL: ${{ secrets[format('APP_URL_{0}', github.event.inputs.environment || (github.event.schedule == '0 21 * * 1,3,5' && 'QA' || 'UAT'))] }}
+      PIPELINE_USERNAME: ${{ secrets[format('SO_{0}_USERNAME', github.event.inputs.environment || (github.event.schedule == '0 21 * * 1,3,5' && 'QA' || 'UAT'))] }}
+      PIPELINE_PASSWORD: ${{ secrets[format('SO_{0}_PASSWORD', github.event.inputs.environment || (github.event.schedule == '0 21 * * 1,3,5' && 'QA' || 'UAT'))] }}
       MAILOSAUR_USERNAME: ${{ secrets.MAILOSAUR_USERNAME }}
       MAILOSAUR_PASSWORD: ${{ secrets.MAILOSAUR_PASSWORD }}
 

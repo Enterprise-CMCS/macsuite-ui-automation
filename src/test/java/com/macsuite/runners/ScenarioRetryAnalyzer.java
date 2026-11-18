@@ -20,20 +20,20 @@ public class ScenarioRetryAnalyzer implements IRetryAnalyzer {
                 && pickleWrapper.getPickle().getTags().contains("@no-retry")) {
             return false;
         }
-        return shouldRetry(scenarioKey(result));
+        return shouldRetry(scenarioKey(result), result.getStatus());
     }
 
-    static boolean shouldRetry(String scenarioKey) {
-        AtomicInteger retryCount = RETRY_COUNTS.computeIfAbsent(scenarioKey, key -> new AtomicInteger());
-        boolean shouldRetry = retryCount.getAndIncrement() == 0;
-        if (!shouldRetry) {
-            RETRY_COUNTS.remove(scenarioKey, retryCount);
+    static boolean shouldRetry(String scenarioKey, int status) {
+        if (status != ITestResult.FAILURE) {
+            return false;
         }
-        return shouldRetry;
+
+        AtomicInteger retryCount = RETRY_COUNTS.computeIfAbsent(scenarioKey, key -> new AtomicInteger());
+        return retryCount.getAndIncrement() == 0;
     }
 
-    static void clearRetry(ITestResult result) {
-        RETRY_COUNTS.remove(scenarioKey(result));
+    static void clearAllRetries() {
+        RETRY_COUNTS.clear();
     }
 
     private static String scenarioKey(ITestResult result) {

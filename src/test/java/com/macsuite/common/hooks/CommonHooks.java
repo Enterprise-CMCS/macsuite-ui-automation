@@ -9,6 +9,7 @@ import com.macsuite.config.EnvLoader;
 import com.macsuite.config.TestConfig;
 import com.macsuite.core.PlaywrightManager;
 import com.macsuite.core.TraceAttachmentHelper;
+import com.macsuite.reporting.ExecutionMetadata;
 
 import io.cucumber.java.After;
 import io.cucumber.java.AfterAll;
@@ -48,6 +49,7 @@ public class CommonHooks {
         }
 
         if (!PlaywrightManager.isInitialized()) {
+            ExecutionMetadata.clearTarget();
             // Generate video name: feature-scenario-timestamp
             String featureName = featureUri
                     .replaceAll(".*/features/", "")
@@ -88,6 +90,11 @@ public class CommonHooks {
         } catch (Exception e) {
             logger.debug("Could not capture step screenshot: {}", e.getMessage());
         }
+    }
+
+    @After(order = Integer.MAX_VALUE)
+    public void attachExecutionMetadata(Scenario scenario) {
+        ExecutionMetadata.attach(scenario);
     }
 
     @After
@@ -143,11 +150,13 @@ public class CommonHooks {
 
     @AfterAll
     public static void afterAll() {
+        ExecutionMetadata.writeAllureOverview();
         if (PlaywrightManager.isInitialized()) {
             logger.info("Closing remaining browser session at end of test run on thread {}",
                     Thread.currentThread().getId());
             PlaywrightManager.close(false, null);
         }
         activeFeatureUri.remove();
+        ExecutionMetadata.clearTarget();
     }
 }

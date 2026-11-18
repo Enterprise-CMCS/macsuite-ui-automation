@@ -3,6 +3,7 @@ package com.macsuite.runners;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.testng.Assert;
+import org.testng.ITestResult;
 import org.testng.TestNG;
 import org.testng.annotations.Test;
 
@@ -16,9 +17,23 @@ public class ScenarioRetryAnalyzerTest {
         String firstScenario = "first-scenario-" + System.nanoTime();
         String secondScenario = "second-scenario-" + System.nanoTime();
 
-        Assert.assertTrue(ScenarioRetryAnalyzer.shouldRetry(firstScenario));
-        Assert.assertFalse(ScenarioRetryAnalyzer.shouldRetry(firstScenario));
-        Assert.assertTrue(ScenarioRetryAnalyzer.shouldRetry(secondScenario));
+        Assert.assertTrue(ScenarioRetryAnalyzer.shouldRetry(firstScenario, ITestResult.FAILURE));
+        Assert.assertFalse(ScenarioRetryAnalyzer.shouldRetry(firstScenario, ITestResult.FAILURE));
+        Assert.assertFalse(ScenarioRetryAnalyzer.shouldRetry(firstScenario, ITestResult.FAILURE));
+        Assert.assertTrue(ScenarioRetryAnalyzer.shouldRetry(secondScenario, ITestResult.FAILURE));
+        Assert.assertFalse(ScenarioRetryAnalyzer.shouldRetry(secondScenario, ITestResult.FAILURE));
+        Assert.assertFalse(ScenarioRetryAnalyzer.shouldRetry(secondScenario, ITestResult.FAILURE));
+    }
+
+    @Test
+    public void doesNotRetryPassingOrSkippedScenarios() {
+        String scenario = "completed-scenario-" + System.nanoTime();
+
+        Assert.assertFalse(ScenarioRetryAnalyzer.shouldRetry(scenario, ITestResult.SUCCESS));
+        Assert.assertFalse(ScenarioRetryAnalyzer.shouldRetry(scenario, ITestResult.SKIP));
+        Assert.assertTrue(ScenarioRetryAnalyzer.shouldRetry(scenario, ITestResult.FAILURE));
+        Assert.assertFalse(ScenarioRetryAnalyzer.shouldRetry(scenario, ITestResult.FAILURE));
+        Assert.assertFalse(ScenarioRetryAnalyzer.shouldRetry(scenario, ITestResult.FAILURE));
     }
 
     @Test
