@@ -2,7 +2,7 @@
 Feature: BCT CMCS Contracts Create, Read, Update permissions for OSG users
 
 
-  @bct @cmcs-contracts-tab @regression @critical
+  @bct @cmcs-contracts-tab @regression @critical @no-retry
   Scenario: BCT OSG users can create, read and update CMCS Contracts, and manage notes on CMCS Contracts
     Given I navigate to MAC Suite Application in "UAT" environment
     When I login as "BCT_OSG_CRU" user
@@ -145,9 +145,9 @@ Feature: BCT CMCS Contracts Create, Read, Update permissions for OSG users
     Then I delete the last note
     Then I should see note deleted confirmation
 
-    # ===============================================
+    # ======================================================
     # TC_07: Verify Create Contract Action Modal and fields
-    # ===============================================
+    # ======================================================
 
     When I click on "Create Contract Action" button
     And I fill the "Add Contract Action" modal with:
@@ -224,9 +224,9 @@ Feature: BCT CMCS Contracts Create, Read, Update permissions for OSG users
     # TC_11: Verify Contract Action Details page and Edit capabilities
     # =================================================================
 
-    Then I verify the "CMCS ConAct-Projects" table columns are correct:
-      | Project # |
-
+    Then I verify the "CMCS ConAct-Projects" section is displayed
+    And I verify the "CMCS ConAct-Projects" table columns are correct:
+     | Project # |
     # ======================================================================================
     # TC_12: Navigate back to CMCS Contract record and verify Contract Option Years section
     # ======================================================================================

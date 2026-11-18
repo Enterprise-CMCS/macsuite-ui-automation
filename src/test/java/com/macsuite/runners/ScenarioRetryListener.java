@@ -12,6 +12,9 @@ public class ScenarioRetryListener implements ITestListener {
 
     @Override
     public void onTestSkipped(ITestResult result) {
-        ScenarioRetryAnalyzer.clearRetry(result);
+        // TestNG reports a failed attempt scheduled for retry as skipped.
+        if (!result.wasRetried()) {
+            ScenarioRetryAnalyzer.clearRetry(result);
+        }
     }
 }
