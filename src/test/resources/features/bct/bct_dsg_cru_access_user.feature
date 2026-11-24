@@ -1,13 +1,18 @@
-@bct-contract
+@bct_dsg_cru_access_user
 Feature: BCT Contract Creation, Validation and Actions
 
-  @contract_creation_and_actions @field_history @regression @critical
+  @contract_creation_and_actions @field_history @regression
   Scenario: Create a contract, validate header, edit fields, open actions menu, add a note and verify field history
     Given I navigate to MAC Suite Application in "UAT" environment
     When I login as "BCT_DSG_CRU" user
     And I open "CMCS Budget & Contract Tracker" app
     Then the "CMCS Budget & Contract Tracker" should be fully loaded
     When I click on "Contracts" menu
+
+    #============================================================================
+    #TC_01: Verify Contracts Modal with Sections, Fields and record creation
+    #============================================================================
+
     And I click New button
     And I fill the "Information" section with:
       | Component         | CMCS                                      |
@@ -37,12 +42,24 @@ Feature: BCT Contract Creation, Validation and Actions
       | Vendor Vehicle                  | Stand Alone Contract  |
     And I click the Save button
     Then I should see the success message
+
+    #=========================================
+    #TC_02: Verify Contract Details Page
+    #=========================================
+
+
     And I should see the contract header shows:
       | Group           | DSG        |
       | Division Owner  | DBES       |
       | Product         | AMIT - New |
       | Contract Status | Active     |
     And I should see the contract number and order number in the header
+
+    #=====================================================================================================
+    #TC_03: Make updates to the Fields under Contract Details page and verify Field History Tracking
+    #=====================================================================================================
+
+
     When I edit the contract details
     And I update the "Information" section with:
       | Component            | Other                                     |
@@ -117,6 +134,11 @@ Feature: BCT Contract Creation, Validation and Actions
       | Contract Officer Representative |
       | Vendor                          |
     When I navigate back to the record link
+
+    #==================================================
+    #TC_04: Verify Notes section under Contracts tab.
+    #==================================================
+
     When I navigate to the "Notes" tab
     And I add a note with text "Add note test"
     Then I should see the note "Add note test" displayed
@@ -124,6 +146,12 @@ Feature: BCT Contract Creation, Validation and Actions
     Then I should see the note "Edit note test" displayed
     Then I delete the last note
     Then I should see note deleted confirmation
+
+    #===============================================
+    #TC_05: Verify Create Contract Action Modal and fields
+    #===============================================
+
+
     When I click on "Create Contract Action" button
     And I fill the "Create Contract Action" modal with:
       | Fiscal Year             | FY26       |
@@ -139,6 +167,11 @@ Feature: BCT Contract Creation, Validation and Actions
     When I open the contract actions menu
     Then I should see the contract actions menu is displayed
     Then I click on Contract Action Number under Contract Actions table
+
+    #=======================================================================================================
+    #TC_06: Make updates to the fields under Contract Action Details page and verify Field History Tracking
+    #=======================================================================================================
+
     When I edit the details page
     And I update the "Information" section with:
       | Fiscal Year             | FY27       |
@@ -161,6 +194,11 @@ Feature: BCT Contract Creation, Validation and Actions
       | P.O.P. Start Date      |
       | P.O.P. End Date        |
     When I navigate back to the record link
+
+    #======================================================
+    #TC_07: Verify Notes section under Contract Action page
+    #=======================================================
+
     When I navigate to the "Notes" tab
     And I add a note with text "Add note test"
     Then I should see the note "Add note test" displayed

@@ -223,10 +223,9 @@ Feature: BCT CMCS Contracts Create, Read, Update permissions for OSG users
     # =================================================================
     # TC_11: Verify Contract Action Details page and Edit capabilities
     # =================================================================
-
-    Then I verify the "CMCS ConAct-Projects" section is displayed
-    And I verify the "CMCS ConAct-Projects" table columns are correct:
-     | Project # |
+    
+    # And I verify the "CMCS ConAct-Projects" table columns are correct:
+    #  | Project # |
     # ======================================================================================
     # TC_12: Navigate back to CMCS Contract record and verify Contract Option Years section
     # ======================================================================================

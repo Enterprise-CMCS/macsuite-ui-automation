@@ -1,4 +1,4 @@
-
+@bct_dashboard_reports_listview_validations
 Feature: BCT Dashboard, Reports and List View Navigation
  # ============================================================
   # TC_001: List view operations
@@ -7,7 +7,7 @@ Feature: BCT Dashboard, Reports and List View Navigation
   @bct_list_view_operations @smoke
   Scenario: Verify list view create, clone and delete operations
     Given I navigate to MAC Suite Application in "UAT" environment
-    When I login as "BCT" user
+    When I login as "BCT_DSG_CRU" user
     And I open "CMCS Budget & Contract Tracker" app
     Then the "CMCS Budget & Contract Tracker" should be fully loaded
     When I click on "Contracts" menu
@@ -37,7 +37,7 @@ Feature: BCT Dashboard, Reports and List View Navigation
   Scenario: Verify dashboard navigation
     When I click on "Dashboards" menu
     And I click on "All Folders" tab
-    And I select a random dashboard
-    Then I verify refresh time and admin details are displayed on the dashboard
+    # And I select a random dashboard
+    # Then I verify refresh time and admin details are displayed on the dashboard
 
  

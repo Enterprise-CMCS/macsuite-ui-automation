@@ -41,6 +41,10 @@ public class ContractDetailPage extends SfPage {
     }
 
     public void editContractFields(Map<String, String> updates) {
+        editContractFields(updates, false);
+    }
+
+    private void editContractFields(Map<String, String> updates, boolean taskInformation) {
         Locator saveButton = page.locator("button[name='SaveEdit']:visible").first();
         Locator dialog = page.getByRole(AriaRole.DIALOG).last();
         Locator dialogSaveButton = dialog.getByRole(AriaRole.BUTTON,
@@ -54,7 +58,11 @@ public class ContractDetailPage extends SfPage {
             String label = entry.getKey();
             String value = entry.getValue();
             logger.info("Editing field: {}", label);
-            fillField(label, value);
+            if (taskInformation && "Name".equals(label)) {
+                helper.selectSearchableLookup(dialog, "Search Contacts...", value);
+            } else {
+                fillField(label, value);
+            }
             waitForDependentField(label, value);
         }
         logger.info("All fields updated");
@@ -428,36 +436,56 @@ public class ContractDetailPage extends SfPage {
             throw new IllegalArgumentException("At least one expected table column is required");
         }
 
+        logger.info("Verifying table columns for table '{}' with expected columns: {}", tableName, expectedColumns);
+
         Locator table = contractCostDetailsGrid(tableName);
         table.waitFor(new Locator.WaitForOptions()
                 .setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE)
                 .setTimeout(10000));
 
+        highlightElement(table);
+
         for (String expected : expectedColumns) {
-            if (table.getByRole(AriaRole.COLUMNHEADER,
-                    new Locator.GetByRoleOptions().setName(expected.trim()).setExact(true)).count() == 0) {
-                throw new AssertionError("Expected table column '" + expected + "' was not found");
+            Locator columnHeader = table.getByRole(AriaRole.COLUMNHEADER,
+                    new Locator.GetByRoleOptions().setName(expected.trim()).setExact(true));
+            if (columnHeader.count() == 0) {
+                logger.error("Expected column '{}' not found in table '{}'. Available columns:", expected, tableName);
+                Locator allHeaders = table.getByRole(AriaRole.COLUMNHEADER);
+                for (int i = 0; i < allHeaders.count(); i++) {
+                    String headerText = allHeaders.nth(i).textContent().trim();
+                    logger.error("  - {}", headerText);
+                }
+                throw new AssertionError(
+                        "Expected table column '" + expected + "' was not found in table '" + tableName + "'");
             }
+            highlightElement(columnHeader);
         }
-        logger.info("Verified columns in table '{}': {}", tableName, expectedColumns);
+        logger.info("Verified all columns in table '{}': {}", tableName, expectedColumns);
     }
 
     private Locator contractCostDetailsGrid(String tableName) {
         Locator namedGrid = page.getByRole(AriaRole.GRID,
                 new Page.GetByRoleOptions().setName(tableName).setExact(true));
         if (namedGrid.count() > 0) {
+            logger.debug("Found table grid by name: {}", tableName);
             return namedGrid;
         }
 
+        logger.debug("Grid by name not found, searching for heading: {}", tableName);
         Locator heading = page.getByRole(AriaRole.HEADING,
                 new Page.GetByRoleOptions().setName(tableName).setExact(true)).first();
         heading.waitFor(new Locator.WaitForOptions()
                 .setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE)
                 .setTimeout(10000));
-        Locator grid = heading.locator("..").getByRole(AriaRole.GRID);
+
+        logger.debug("Found heading: {}", tableName);
+        highlightElement(heading);
+
+        Locator grid = heading.locator("..").getByRole(AriaRole.GRID).first();
         if (grid.count() == 0) {
-            throw new AssertionError("No table grid found in the section '" + tableName + "'");
+            throw new AssertionError("No table grid found under the heading '" + tableName + "'");
         }
+        logger.debug("Found grid under heading: {}", tableName);
         return grid;
     }
 
@@ -599,7 +627,7 @@ public class ContractDetailPage extends SfPage {
     }
 
     public void updateSection(String sectionName, Map<String, String> data) {
-        editContractFields(data);
+        editContractFields(data, "Task Information".equals(sectionName));
         logger.info("Updated '{}' section with data: {}", sectionName, data);
     }
 
@@ -712,8 +740,7 @@ public class ContractDetailPage extends SfPage {
         navigateToTab(tabName);
 
         for (String task : tasks) {
-            Locator taskElement = page.getByText(task);
-            taskElement.first().waitFor(new Locator.WaitForOptions().setTimeout(10000));
+            scrollToTaskLink(task);
         }
         logger.info("Verified {} tasks displayed in {} tab", tasks.size(), tabName);
     }
@@ -733,9 +760,15 @@ public class ContractDetailPage extends SfPage {
 
     public void verifyTaskDisplayedInTab(String taskName, String tabName) {
         navigateToTab(tabName);
-        Locator taskElement = page.getByText(taskName);
-        taskElement.first().waitFor(new Locator.WaitForOptions().setTimeout(10000));
+        scrollToTaskLink(taskName);
         logger.info("Task {} verified in {} tab", taskName, tabName);
+    }
+
+    private void scrollToTaskLink(String taskName) {
+        Locator taskLink = page.getByRole(AriaRole.LINK,
+                new Page.GetByRoleOptions().setName(taskName).setExact(true)).first();
+        taskLink.waitFor(new Locator.WaitForOptions().setTimeout(10000));
+        taskLink.scrollIntoViewIfNeeded(new Locator.ScrollIntoViewIfNeededOptions().setTimeout(10000));
     }
 
     public void verifyFieldPrePopulatedWithUser(String fieldName, String userName) {
