@@ -54,6 +54,39 @@ public class SfHelper {
                 .first().click();
     }
 
+    public void selectSearchableLookup(Locator context, String placeholder, String value) {
+        String query = TemplateValueResolver.resolve(value);
+        Locator byPlaceholder = page.getByPlaceholder(placeholder,
+                new Page.GetByPlaceholderOptions().setExact(true));
+        Locator input = context.locator(byPlaceholder);
+        input.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.ATTACHED).setTimeout(10000));
+        Locator lookup = context.locator(".forceSearchInputLookupDesktop")
+                .filter(new Locator.FilterOptions().setHas(byPlaceholder));
+        if (!input.isVisible()) {
+            Locator remove = lookup.getByRole(AriaRole.BUTTON,
+                    new Locator.GetByRoleOptions().setName(Pattern.compile("^Remove\\b", Pattern.CASE_INSENSITIVE)))
+                    .or(lookup.locator(".slds-pill__remove:visible"));
+            remove.waitFor(new Locator.WaitForOptions().setTimeout(5000));
+            highlightElement(remove, placeholder);
+            remove.click();
+        }
+
+        input.waitFor(new Locator.WaitForOptions().setTimeout(5000));
+        highlightElement(input, placeholder);
+        input.fill("");
+        input.pressSequentially(query, new Locator.PressSequentiallyOptions().setDelay(50));
+
+        Locator listbox = lookup.getByRole(AriaRole.LISTBOX);
+        Locator option = listbox.getByRole(AriaRole.OPTION,
+                new Locator.GetByRoleOptions().setName(query).setExact(true))
+                .or(listbox.getByRole(AriaRole.OPTION).filter(new Locator.FilterOptions()
+                        .setHas(page.getByText(query, new Page.GetByTextOptions().setExact(true)))));
+        option.waitFor(new Locator.WaitForOptions().setTimeout(10000));
+        highlightElement(option, query);
+        option.click();
+        input.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.HIDDEN).setTimeout(5000));
+    }
+
     public void selectLookup(Locator context, String label, String value) {
         logger.debug("selectLookup '{}' = '{}'", label, value);
         dismissTooltips();

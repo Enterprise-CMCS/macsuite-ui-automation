@@ -399,10 +399,7 @@ public class BCTContractSteps extends StepBase {
 
     @When("I update the task with:")
     public void updateTaskWithData(DataTable dataTable) {
-        Map<String, String> data = dataTable.asMap(String.class, String.class);
-        // Resolve placeholders in all values
-        data.replaceAll((key, value) -> com.macsuite.common.TemplateValueResolver.resolve(value));
-        detailPage().updateTask(data);
+        detailPage().updateTask(dataTable.asMap(String.class, String.class));
         screenshot("Task Updated");
     }
 
